@@ -95,6 +95,7 @@ export default class Map extends Component {
             this.handlePress(event.nativeEvent);
           }}
           customMapStyle={noRoads}
+          provider="google"
           zoomEnabled={debug}
           pitchEnabled={debug}
           rotateEnabled={debug}
