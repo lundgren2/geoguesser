@@ -5,6 +5,7 @@
     "entryPoint": "./src/index.js",
     "sdkVersion": "27.0.0",
     "privacy": "public",
+    "orientation": "portrait",
     "android": {
       "package": "com.liu.mappynative",
       "config": {

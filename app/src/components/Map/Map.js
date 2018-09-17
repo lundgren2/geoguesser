@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Dimensions, FlatList } from 'react-native';
 import { MapView } from 'expo';
 import { standard, roads, noRoads } from '../../constants/mapStyles';
 
-const { width, height } = Dimensions.get('window');
 const debug = true;
 
 const southernSwedenRegion = {
@@ -27,7 +26,12 @@ export default class Map extends Component {
     return (
       <View>
         <Text style={styles.regionHeader}>Current region</Text>
-        <Text style={styles.regionContent}>{JSON.stringify(region)}</Text>
+        <Text style={styles.regionContent}>
+          {`Latitude: ${Number(region.latitude).toFixed(4)}\n`}
+          {`Longitude: ${Number(region.longitude).toFixed(4)}\n`}
+          {`LatidudeDelta: ${Number(region.latitudeDelta).toFixed(4)}\n`}
+          {`LongitudeDelta: ${Number(region.longitudeDelta).toFixed(4)}\n`}
+        </Text>
       </View>
     );
   };
@@ -55,15 +59,20 @@ export default class Map extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center'
+    flex: 1
   },
   map: {
     height: debug ? '75%' : '100%',
     width: '100%',
     margin: 'auto'
   },
-  text: {
-    margin: 'auto'
+  regionHeader: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginLeft: 10,
+    marginBottom: 5
+  },
+  regionContent: {
+    marginLeft: 10
   }
 });
