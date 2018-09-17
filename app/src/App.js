@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapView } from 'expo';
+import { standard, roads, noRoads } from './constants/mapStyles';
 
 export default class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ export default class App extends React.Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
+        customMapStyle={noRoads}
       />
     );
   }

@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "mappy-native",
-    "entryPoint": "./src/App.js",
     "slug": "mappy-native-app",
+    "entryPoint": "./src/index.js",
     "sdkVersion": "27.0.0",
     "privacy": "public",
     "android": {
