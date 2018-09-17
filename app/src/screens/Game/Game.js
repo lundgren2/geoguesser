@@ -1,3 +1,6 @@
+import React from 'react';
 import Map from '../../components/Map';
 
-export default 'test';
+export default () => {
+  return <Map />;
+};
