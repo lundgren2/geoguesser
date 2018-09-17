@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Text, View, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 import { standard, roads, noRoads } from '../../constants/mapStyles';
 
@@ -14,24 +14,71 @@ const southernSwedenRegion = {
 
 export default class Map extends Component {
   state = {
-    region: southernSwedenRegion
+    region: southernSwedenRegion,
+    debugMarker: null,
+    markers: [
+      {
+        title: 'Stockholm',
+        description: 'Swedens biggest city',
+        coordinate: {
+          latitude: 59.36,
+          longitude: 18.26
+        }
+      },
+      {
+        title: 'Gothenburg',
+        description: 'Swedens best city',
+        coordinate: {
+          latitude: 57.71,
+          longitude: 11.98
+        }
+      }
+    ]
   };
 
   onRegionChange = region => {
     this.setState({ region });
   };
 
+  handlePress(event) {
+    if (debug) {
+      this.setState({
+        debugMarker: {
+          coordinate: event.coordinate,
+          title: 'debug marker',
+          description: 'debug marker'
+        }
+      });
+    }
+  }
+
   renderRegionInfo = () => {
     let region = this.state.region;
+    let debugMarker = this.state.debugMarker;
     return (
-      <View>
-        <Text style={styles.regionHeader}>Current region</Text>
-        <Text style={styles.regionContent}>
-          {`Latitude: ${Number(region.latitude).toFixed(4)}\n`}
-          {`Longitude: ${Number(region.longitude).toFixed(4)}\n`}
-          {`LatidudeDelta: ${Number(region.latitudeDelta).toFixed(4)}\n`}
-          {`LongitudeDelta: ${Number(region.longitudeDelta).toFixed(4)}\n`}
-        </Text>
+      <View style={styles.debugContainer}>
+        <View style={styles.debugRegion}>
+          <Text style={styles.debugRegionHeader}>Current region</Text>
+          <Text style={styles.debugRegionContent}>
+            {`Latitude: ${Number(region.latitude).toFixed(4)}\n`}
+            {`Longitude: ${Number(region.longitude).toFixed(4)}\n`}
+            {`LatidudeDelta: ${Number(region.latitudeDelta).toFixed(4)}\n`}
+            {`LongitudeDelta: ${Number(region.longitudeDelta).toFixed(4)}\n`}
+          </Text>
+        </View>
+        <View style={styles.debugRegion}>
+          <Text style={styles.debugRegionHeader}>Debug Marker</Text>
+          {this.state.debugMarker && (
+            <Text style={styles.debugRegionContent}>
+              {`Latitude: ${Number(debugMarker.coordinate.latitude).toFixed(
+                4
+              )}\n`}
+              {`Longitude: ${Number(debugMarker.coordinate.longitude).toFixed(
+                4
+              )}\n`}
+            </Text>
+          )}
+        </View>
       </View>
     );
   };
@@ -44,12 +91,35 @@ export default class Map extends Component {
           initialRegion={this.state.region}
           // region={this.state.region}
           onRegionChange={this.onRegionChange}
+          onPress={event => {
+            this.handlePress(event.nativeEvent);
+          }}
           customMapStyle={noRoads}
           zoomEnabled={debug}
           pitchEnabled={debug}
           rotateEnabled={debug}
           scrollEnabled={debug}
-        />
+        >
+          {debug &&
+            this.state.debugMarker && (
+              <MapView.Marker
+                coordinate={this.state.debugMarker.coordinate}
+                title={this.state.debugMarker.title}
+                description={this.state.debugMarker.description}
+              />
+            )}
+
+          {this.state.markers.map((marker, index) => {
+            return (
+              <MapView.Marker
+                key={index}
+                coordinate={marker.coordinate}
+                title={marker.title}
+                description={marker.description}
+              />
+            );
+          })}
+        </MapView>
 
         {debug && this.renderRegionInfo()}
       </View>
@@ -62,17 +132,26 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: debug ? '75%' : '100%',
+    height: debug ? '85%' : '100%',
     width: '100%',
     margin: 'auto'
   },
-  regionHeader: {
+  debugContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  debugRegion: {
+    flex: 1,
+    flexDirection: 'column',
+    width: '50%'
+  },
+  debugRegionHeader: {
     fontWeight: 'bold',
     fontSize: 18,
     marginLeft: 10,
     marginBottom: 5
   },
-  regionContent: {
+  debugRegionContent: {
     marginLeft: 10
   }
 });
