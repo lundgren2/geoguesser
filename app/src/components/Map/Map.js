@@ -90,6 +90,7 @@ export default class Map extends Component {
           style={styles.map}
           initialRegion={this.state.region}
           // region={this.state.region}
+          fitToSuppliedMarkers={this.state.markers}
           onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);
@@ -109,7 +110,6 @@ export default class Map extends Component {
                 description={this.state.debugMarker.description}
               />
             )}
-
           {this.state.markers.map((marker, index) => {
             return (
               <MapView.Marker
@@ -133,13 +133,17 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: debug ? '85%' : '100%',
+    height: '100%',
     width: '100%',
     margin: 'auto'
   },
   debugContainer: {
     flex: 1,
-    flexDirection: 'row'
+    zIndex: 2,
+    position: 'absolute',
+    flexDirection: 'row',
+    backgroundColor: 'rgba(255, 20, 20, 0.7)',
+    paddingTop: 40
   },
   debugRegion: {
     flex: 1,
