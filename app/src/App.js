@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
 import GameScreen from './screens/Game';
 
-export default class App extends Component {
-  render() {
-    return <GameScreen />;
-  }
-}
+const defaultState = {
+  debug: true
+};
+
+const store = createStore(rootReducer, defaultState);
+
+export default () => {
+  return (
+    <Provider store={store}>
+      <GameScreen />
+    </Provider>
+  );
+};

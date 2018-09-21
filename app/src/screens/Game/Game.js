@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { StatusBar } from 'react-native';
 import Map from '../../components/Map';
 
 export default () => {
-  return <Map />;
+  return (
+    <Fragment>
+      <StatusBar hidden />
+      <Map />
+    </Fragment>
+  );
 };

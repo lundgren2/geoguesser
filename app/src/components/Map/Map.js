@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import { standard, roads, noRoads } from '../../constants/mapStyles';
-
-const debug = true;
 
 const southernSwedenRegion = {
   latitude: 59.3,
@@ -12,7 +11,7 @@ const southernSwedenRegion = {
   longitudeDelta: 0
 };
 
-export default class Map extends Component {
+class Map extends Component {
   state = {
     region: southernSwedenRegion,
     debugMarker: null,
@@ -41,7 +40,7 @@ export default class Map extends Component {
   };
 
   handlePress(event) {
-    if (debug) {
+    if (this.props.debug) {
       this.setState({
         debugMarker: {
           coordinate: event.coordinate,
@@ -52,7 +51,7 @@ export default class Map extends Component {
     }
   }
 
-  renderRegionInfo = () => {
+  renderDebugInfo = () => {
     let region = this.state.region;
     let debugMarker = this.state.debugMarker;
     return (
@@ -84,6 +83,7 @@ export default class Map extends Component {
   };
 
   render() {
+    const debug = this.props.debug;
     return (
       <View style={styles.container}>
         <MapView
@@ -94,7 +94,7 @@ export default class Map extends Component {
           onPress={event => {
             this.handlePress(event.nativeEvent);
           }}
-          customMapStyle={noRoads}
+          customMapStyle={standard}
           provider="google"
           zoomEnabled={debug}
           pitchEnabled={debug}
@@ -122,22 +122,30 @@ export default class Map extends Component {
           })}
         </MapView>
 
-        {debug && this.renderRegionInfo()}
+        {debug && this.renderDebugInfo()}
       </View>
     );
   }
 }
+
+const mapStateToProps = ({ debug }) => ({
+  debug
+});
+
+export default connect(mapStateToProps)(Map);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   map: {
-    height: debug ? '85%' : '100%',
+    height: '100%',
     width: '100%',
     margin: 'auto'
   },
   debugContainer: {
+    position: 'absolute',
+    top: 0,
     flex: 1,
     flexDirection: 'row'
   },
