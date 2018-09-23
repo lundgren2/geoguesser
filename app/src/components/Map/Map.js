@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
   },
   debugContainer: {
     position: 'absolute',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     top: 0,
     flex: 1,
     flexDirection: 'row'
