@@ -1,7 +1,18 @@
 import React, { Component, Fragment } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { MapView } from 'expo';
-import { standard, roads, noRoads } from '../../constants/mapStyles';
+import { standard, roads, noRoads, brightColors } from '../../constants/mapStyles';
+import RegionInfo from './RegionInfo'
+
+const { width, height } = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
+// const LATITUDE = 37.78825;
+// const LONGITUDE = -122.4324;
+// const LATITUDE_DELTA = 0.0922;
+// const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+// const SPACE = 0.01;
+
 
 const debug = true;
 
@@ -14,6 +25,7 @@ const southernSwedenRegion = {
 
 export default class Map extends Component {
   state = {
+    isLoading: true,
     region: southernSwedenRegion,
     debugMarker: null,
     markers: [
@@ -36,12 +48,39 @@ export default class Map extends Component {
     ]
   };
 
+  componentDidMount() {
+    // this.fetchMarkerData();
+    // setTimeout(() => this.focusMap(['Marker1', 'Markers2'], true), 1500);
+    // this.focusMap(['Marker1', 'Marker2'], true);
+  }
+
+  // fetchMarkerData() {
+  //   fetch('https://feeds.citibikenyc.com/stations/stations.json')
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {
+  //       this.setState({
+  //         isLoading: false,
+  //         markers: responseJson.stationBeanList,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
+  focusMap(markers, animated) {
+    console.log(`Markers received to populate map: ${markers}`);
+    this.map.fitToSuppliedMarkers(markers, animated);
+  }
+
   onRegionChange = region => {
     this.setState({ region });
+    // this.map.fitToSuppliedMarkers(this.state.markers, true);
   };
 
   handlePress(event) {
     if (debug) {
+      
       this.setState({
         debugMarker: {
           coordinate: event.coordinate,
@@ -52,77 +91,52 @@ export default class Map extends Component {
     }
   }
 
-  renderRegionInfo = () => {
-    let region = this.state.region;
-    let debugMarker = this.state.debugMarker;
-    return (
-      <View style={styles.debugContainer}>
-        <View style={styles.debugRegion}>
-          <Text style={styles.debugRegionHeader}>Current region</Text>
-          <Text style={styles.debugRegionContent}>
-            {`Latitude: ${Number(region.latitude).toFixed(4)}\n`}
-            {`Longitude: ${Number(region.longitude).toFixed(4)}\n`}
-            {`LatidudeDelta: ${Number(region.latitudeDelta).toFixed(4)}\n`}
-            {`LongitudeDelta: ${Number(region.longitudeDelta).toFixed(4)}\n`}
-          </Text>
-        </View>
-        <View style={styles.debugRegion}>
-          <Text style={styles.debugRegionHeader}>Debug Marker</Text>
-          {this.state.debugMarker && (
-            <Text style={styles.debugRegionContent}>
-              {`Latitude: ${Number(debugMarker.coordinate.latitude).toFixed(
-                4
-              )}\n`}
-              {`Longitude: ${Number(debugMarker.coordinate.longitude).toFixed(
-                4
-              )}\n`}
-            </Text>
-          )}
-        </View>
-      </View>
-    );
-  };
-
   render() {
+    const { region, markers, debugMarker } = this.state;
+
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
-          initialRegion={this.state.region}
-          // region={this.state.region}
-          fitToSuppliedMarkers={this.state.markers}
-          onRegionChange={this.onRegionChange}
+          ref={ref => { this.map = ref; }}
+          initialRegion={region}
+          region={region}
+          // onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);
           }}
-          customMapStyle={noRoads}
-          provider="google"
+          customMapStyle={brightColors}
+          provider='google'
           zoomEnabled={debug}
           pitchEnabled={debug}
           rotateEnabled={debug}
           scrollEnabled={debug}
         >
-          {debug &&
-            this.state.debugMarker && (
+          {/* {debug &&
+            debugMarker && (
               <MapView.Marker
-                coordinate={this.state.debugMarker.coordinate}
-                title={this.state.debugMarker.title}
-                description={this.state.debugMarker.description}
+                coordinate={debugMarker.coordinate}
+                title={debugMarker.title}
+                description={debugMarker.description}
               />
-            )}
-          {this.state.markers.map((marker, index) => {
+            )} */}
+
+          {markers.map((marker, index) => {
+            console.log(marker);
             return (
               <MapView.Marker
                 key={index}
+                identifier={"Marker" + index+1}
                 coordinate={marker.coordinate}
                 title={marker.title}
                 description={marker.description}
               />
             );
           })}
+         
         </MapView>
 
-        {debug && this.renderRegionInfo()}
+        {debug && <RegionInfo region={region} debugMarker={debugMarker} />}
       </View>
     );
   }
@@ -133,30 +147,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: '100%',
+    height: '108%', // push Google label below screen
     width: '100%',
     margin: 'auto'
-  },
-  debugContainer: {
-    flex: 1,
-    zIndex: 2,
-    position: 'absolute',
-    flexDirection: 'row',
-    backgroundColor: 'rgba(255, 20, 20, 0.7)',
-    paddingTop: 40
-  },
-  debugRegion: {
-    flex: 1,
-    flexDirection: 'column',
-    width: '50%'
-  },
-  debugRegionHeader: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginLeft: 10,
-    marginBottom: 5
-  },
-  debugRegionContent: {
-    marginLeft: 10
   }
 });
