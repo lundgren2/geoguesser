@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default RegionInfo = ({region, debugMarker}) => {
+export default (RegionInfo = ({ region, debugMarker }) => {
   return (
     <View style={styles.debugContainer}>
       <View style={styles.debugRegion}>
@@ -28,7 +28,7 @@ export default RegionInfo = ({region, debugMarker}) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   debugContainer: {
