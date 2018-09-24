@@ -9,7 +9,6 @@ const debug = true;
 
 export default class Map extends Component {
   state = {
-    isLoading: true,
     region: regions.southernSwedenRegion,
     debugMarker: null,
     markers: [...markers.defaultMarkers]
@@ -22,7 +21,7 @@ export default class Map extends Component {
   }
 
   focusMap(markers, animated) {
-    console.log(`Markers received to populate map: ${markers}`);
+    // console.log(`Markers received to populate map: ${markers}`);
     this.map.fitToSuppliedMarkers(markers, animated);
   }
 
@@ -64,6 +63,7 @@ export default class Map extends Component {
           }}
           initialRegion={region}
           region={region}
+          mapPadding={{ bottom: 40 }}
           onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);
@@ -108,8 +108,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: '108%', // push Google label below screen
-    width: '100%',
     margin: 'auto'
   }
 });
