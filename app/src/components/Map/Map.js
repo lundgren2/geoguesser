@@ -22,6 +22,7 @@ export default class Map extends Component {
 
   focusMap(markers, animated) {
     const options = {
+      // TODO: These are constants. Put them somewhere safe.
       edgePadding: { top: 20, right: 50, left: 50, bottom: 80 }, // Height bottom padding since the map extends below the screen to hide google logo.
       animated
     };
