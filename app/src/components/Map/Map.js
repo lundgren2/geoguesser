@@ -1,40 +1,34 @@
-import React, { Component, Fragment } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
-import { standard, roads, noRoads } from '../../constants/mapStyles';
+import { markers, regions } from '../../constants';
+import { brightColors } from '../../constants/mapStyles';
+import RegionInfo from './RegionInfo';
 
 const debug = true;
 
-const southernSwedenRegion = {
-  latitude: 59.3,
-  longitude: 14.9675,
-  latitudeDelta: 8.14,
-  longitudeDelta: 0
-};
-
 export default class Map extends Component {
   state = {
-    region: southernSwedenRegion,
+    region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: [
-      {
-        title: 'Stockholm',
-        description: 'Swedens biggest city',
-        coordinate: {
-          latitude: 59.36,
-          longitude: 18.26
-        }
-      },
-      {
-        title: 'Gothenburg',
-        description: 'Swedens best city',
-        coordinate: {
-          latitude: 57.71,
-          longitude: 11.98
-        }
-      }
-    ]
+    markers: [...markers.defaultMarkers]
   };
+
+  componentDidMount() {
+    animationTimeout = setTimeout(() => {
+      this.focusMap(this.state.markers, true);
+    }, 2000);
+  }
+
+  focusMap(markers, animated) {
+    const options = {
+      // TODO: These are constants. Put them somewhere safe.
+      edgePadding: { top: 20, right: 50, left: 50, bottom: 80 }, // Height bottom padding since the map extends below the screen to hide google logo.
+      animated
+    };
+    const coords = markers.map(marker => marker.coordinate);
+    this.map.fitToCoordinates(coords, options);
+  }
 
   onRegionChange = region => {
     this.setState({ region });
@@ -42,6 +36,16 @@ export default class Map extends Component {
 
   handlePress(event) {
     if (debug) {
+      const debugMarker = {
+        coordinate: event.coordinate,
+        title: 'debug marker',
+        description: 'debug marker'
+      };
+
+      this.setState(prevState => ({
+        markers: [...prevState.markers, debugMarker]
+      }));
+
       this.setState({
         debugMarker: {
           coordinate: event.coordinate,
@@ -52,49 +56,22 @@ export default class Map extends Component {
     }
   }
 
-  renderRegionInfo = () => {
-    let region = this.state.region;
-    let debugMarker = this.state.debugMarker;
-    return (
-      <View style={styles.debugContainer}>
-        <View style={styles.debugRegion}>
-          <Text style={styles.debugRegionHeader}>Current region</Text>
-          <Text style={styles.debugRegionContent}>
-            {`Latitude: ${Number(region.latitude).toFixed(4)}\n`}
-            {`Longitude: ${Number(region.longitude).toFixed(4)}\n`}
-            {`LatidudeDelta: ${Number(region.latitudeDelta).toFixed(4)}\n`}
-            {`LongitudeDelta: ${Number(region.longitudeDelta).toFixed(4)}\n`}
-          </Text>
-        </View>
-        <View style={styles.debugRegion}>
-          <Text style={styles.debugRegionHeader}>Debug Marker</Text>
-          {this.state.debugMarker && (
-            <Text style={styles.debugRegionContent}>
-              {`Latitude: ${Number(debugMarker.coordinate.latitude).toFixed(
-                4
-              )}\n`}
-              {`Longitude: ${Number(debugMarker.coordinate.longitude).toFixed(
-                4
-              )}\n`}
-            </Text>
-          )}
-        </View>
-      </View>
-    );
-  };
-
   render() {
+    const { region, markers, debugMarker } = this.state;
+
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
-          initialRegion={this.state.region}
-          // region={this.state.region}
+          ref={ref => {
+            this.map = ref;
+          }}
+          initialRegion={region}
           onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);
           }}
-          customMapStyle={noRoads}
+          customMapStyle={brightColors}
           provider="google"
           zoomEnabled={debug}
           pitchEnabled={debug}
@@ -102,18 +79,18 @@ export default class Map extends Component {
           scrollEnabled={debug}
         >
           {debug &&
-            this.state.debugMarker && (
+            debugMarker && (
               <MapView.Marker
-                coordinate={this.state.debugMarker.coordinate}
-                title={this.state.debugMarker.title}
-                description={this.state.debugMarker.description}
+                coordinate={debugMarker.coordinate}
+                title={debugMarker.title}
+                description={debugMarker.description}
               />
             )}
-
-          {this.state.markers.map((marker, index) => {
+          {markers.map((marker, index) => {
             return (
               <MapView.Marker
                 key={index}
+                identifier={marker.title}
                 coordinate={marker.coordinate}
                 title={marker.title}
                 description={marker.description}
@@ -122,7 +99,7 @@ export default class Map extends Component {
           })}
         </MapView>
 
-        {debug && this.renderRegionInfo()}
+        {debug && <RegionInfo region={region} debugMarker={debugMarker} />}
       </View>
     );
   }
@@ -133,26 +110,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: debug ? '85%' : '100%',
+    height: '108%', // Uses height over 100% to hide the google logo.
     width: '100%',
     margin: 'auto'
-  },
-  debugContainer: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  debugRegion: {
-    flex: 1,
-    flexDirection: 'column',
-    width: '50%'
-  },
-  debugRegionHeader: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginLeft: 10,
-    marginBottom: 5
-  },
-  debugRegionContent: {
-    marginLeft: 10
   }
 });
