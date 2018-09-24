@@ -30,6 +30,11 @@ export default class Map extends Component {
     this.map.fitToCoordinates(coords, options);
   }
 
+  onRegionChange = region => {
+    console.log(region);
+    this.setState({ region });
+  };
+
   handlePress(event) {
     if (debug) {
       const debugMarker = {
@@ -63,7 +68,6 @@ export default class Map extends Component {
             this.map = ref;
           }}
           initialRegion={region}
-          region={region}
           onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);
