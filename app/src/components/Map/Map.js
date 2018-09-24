@@ -1,13 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
-import {
-  standard,
-  roads,
-  noRoads,
-  brightColors
-} from '../../constants/mapStyles';
-import { defaultMarkers, southernSwedenRegion } from '../../constants/markers';
+import { markers, regions } from '../../constants';
+import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 
 const debug = true;
@@ -15,9 +10,9 @@ const debug = true;
 export default class Map extends Component {
   state = {
     isLoading: true,
-    region: southernSwedenRegion,
+    region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: [...defaultMarkers]
+    markers: [...markers.defaultMarkers]
   };
 
   componentDidMount() {
