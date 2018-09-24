@@ -4,6 +4,7 @@ import { Header } from 'react-native-elements';
 import { View, StyleSheet, Platform } from 'react-native';
 import Map from '../../components/Map';
 
+// TODO: Break out the statusBarBackground view into its own component.
 export default () => {
   return (
     <Fragment>
