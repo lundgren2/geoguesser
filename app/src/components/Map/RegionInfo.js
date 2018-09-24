@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     backgroundColor: 'rgba(255, 20, 20, 0.7)',
-    paddingTop: 40
+    paddingTop: 25
   },
   debugRegion: {
     flex: 1,

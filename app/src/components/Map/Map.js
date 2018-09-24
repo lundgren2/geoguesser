@@ -22,7 +22,8 @@ export default class Map extends Component {
 
   focusMap(markers, animated) {
     const options = {
-      edgePadding: { top: 20, right: 50, left: 50, bottom: 20 },
+      edgePadding: { top: 20, right: 50, left: 50, bottom: 80 },
+
       animated
     };
     const coords = markers.map(marker => marker.coordinate);
@@ -63,7 +64,6 @@ export default class Map extends Component {
           }}
           initialRegion={region}
           region={region}
-          mapPadding={{ bottom: 40 }}
           onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: '100%',
+    height: '108%',
     width: '100%',
     margin: 'auto'
   }
