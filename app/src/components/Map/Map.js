@@ -16,18 +16,18 @@ export default class Map extends Component {
 
   componentDidMount() {
     animationTimeout = setTimeout(() => {
-      this.focusMap(['Stockholm', 'Gothenburg'], true);
+      this.focusMap(this.state.markers, true);
     }, 2000);
   }
 
   focusMap(markers, animated) {
-    // console.log(`Markers received to populate map: ${markers}`);
-    this.map.fitToSuppliedMarkers(markers, animated);
+    const options = {
+      edgePadding: { top: 20, right: 50, left: 50, bottom: 20 },
+      animated
+    };
+    const coords = markers.map(marker => marker.coordinate);
+    this.map.fitToCoordinates(coords, options);
   }
-
-  onRegionChange = region => {
-    this.setState({ region });
-  };
 
   handlePress(event) {
     if (debug) {
@@ -84,7 +84,6 @@ export default class Map extends Component {
               />
             )}
           {markers.map((marker, index) => {
-            console.log(marker);
             return (
               <MapView.Marker
                 key={index}
@@ -108,6 +107,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
+    height: '100%',
+    width: '100%',
     margin: 'auto'
   }
 });
