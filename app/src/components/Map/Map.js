@@ -22,8 +22,7 @@ export default class Map extends Component {
 
   focusMap(markers, animated) {
     const options = {
-      edgePadding: { top: 20, right: 50, left: 50, bottom: 80 },
-
+      edgePadding: { top: 20, right: 50, left: 50, bottom: 80 }, // Height bottom padding since the map extends below the screen to hide google logo.
       animated
     };
     const coords = markers.map(marker => marker.coordinate);
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   map: {
-    height: '108%',
+    height: '108%', // Uses height over 100% to hide the google logo.
     width: '100%',
     margin: 'auto'
   }

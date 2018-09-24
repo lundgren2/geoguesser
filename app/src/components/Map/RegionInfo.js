@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Platform } from 'react-native';
 
 export default (RegionInfo = ({ region, debugMarker }) => {
   return (
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     backgroundColor: 'rgba(255, 20, 20, 0.7)',
-    paddingTop: 25
+    paddingTop: Platform.OS === 'android' ? 25 : 40
   },
   debugRegion: {
     flex: 1,
