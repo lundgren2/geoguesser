@@ -31,7 +31,6 @@ export default class Map extends Component {
   }
 
   onRegionChange = region => {
-    console.log(region);
     this.setState({ region });
   };
 
