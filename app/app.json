@@ -3,7 +3,7 @@
     "name": "mappy-native",
     "slug": "mappy-native-app",
     "entryPoint": "./src/index.js",
-    "sdkVersion": "27.0.0",
+    "sdkVersion": "30.0.0",
     "privacy": "public",
     "orientation": "portrait",
     "android": {
