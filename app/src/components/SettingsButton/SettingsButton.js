@@ -9,9 +9,7 @@ class SettingsButton extends Component {
   }
 }
 
-const mapStateToProps = undefined;
-
 export default connect(
-  mapStateToProps,
+  null,
   { toggleDebug }
 )(SettingsButton);
