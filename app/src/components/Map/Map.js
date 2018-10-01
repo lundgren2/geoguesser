@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 import { markers, regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 
-const debug = true;
-
-export default class Map extends Component {
+class Map extends Component {
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
@@ -35,7 +34,7 @@ export default class Map extends Component {
   };
 
   handlePress(event) {
-    if (debug) {
+    if (this.props.debug) {
       const debugMarker = {
         coordinate: event.coordinate,
         title: 'debug marker',
@@ -57,6 +56,7 @@ export default class Map extends Component {
   }
 
   render() {
+    const debug = this.props.debug;
     const { region, markers, debugMarker } = this.state;
 
     return (
@@ -104,6 +104,12 @@ export default class Map extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ debug }) => ({
+  debug
+});
+
+export default connect(mapStateToProps)(Map);
 
 const styles = StyleSheet.create({
   container: {
