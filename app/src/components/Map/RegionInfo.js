@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     backgroundColor: 'rgba(255, 20, 20, 0.7)',
-    paddingTop: Platform.OS === 'android' ? 25 : 40
+    paddingTop: Platform.OS === 'android' ? 5 : 40
   },
   debugRegion: {
     flex: 1,
