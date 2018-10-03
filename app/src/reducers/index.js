@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import debugReducer from './debug';
+import settingsReducer from './settings';
 
 export default combineReducers({
-  debug: debugReducer
+  settings: settingsReducer
 });

@@ -1,23 +1,23 @@
-import React, { Fragment } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import Map from '../../components/Map';
-import SettingsButton from '../../components/SettingsButton'
+import GameMenu from '../../components/GameMenu';
+import SettingsButton from '../../components/SettingsButton';
 
-
-// TODO: Break out the statusBarBackground view into its own component.
 export default () => {
+  // The order of the components is important. onPress events prioritates the latest component first.
   return (
-    <Fragment>
-      <View style={styles.statusBarBackground} />
-      <SettingsButton />
+    <View style={styles.gameScreen}>
+      <StatusBar hidden={true} />
       <Map />
-    </Fragment>
+      <SettingsButton />
+      <GameMenu />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  statusBarBackground: {
-    height: Platform.OS === 'android' ? 24 : 0,
-    backgroundColor: 'black'
+  gameScreen: {
+    flex: 1
   }
 });
