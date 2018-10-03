@@ -24,28 +24,17 @@ export default class Filler extends Component {
       easing: Easing.linear
     }).start();
   };
+
   componentDidMount() {
-    // Animated.timing(this.state.progress, {
-    //   toValue: 0,
-    //   duration: 10000,
-    //   easing: Easing.linear
-    // }).start();
-    // Animated.timing(
-    //   // Animate over time
-    //   this.state.progress, // The animated value to drive
-    //   {
-    //     toValue: 0, // Animate to opacity: 1 (opaque)
-    //     duration: 10000 // Make it take a while
-    //   }
-    // ).start(); // Starts the animation
+    // this.toggleProgress();
   }
 
-  componentWillReceiveProps() {}
   render() {
     let { progress } = this.state;
 
     return (
       <AnimatedTouchable
+        activeOpacity={0.7}
         onPress={this.toggleProgress}
         style={[
           styles.filler,
@@ -62,11 +51,6 @@ export default class Filler extends Component {
 }
 
 const styles = StyleSheet.create({
-  button: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute'
-  },
   filler: {
     flex: 1,
     left: 0,
