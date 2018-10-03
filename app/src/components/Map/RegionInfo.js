@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
     position: 'absolute',
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 20, 20, 0.7)',
+    backgroundColor: 'rgba(223, 230, 233, 0.7)',
     paddingTop: Platform.OS === 'android' ? 5 : 40
   },
   debugRegion: {
