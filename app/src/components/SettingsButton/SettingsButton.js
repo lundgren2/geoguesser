@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
-import { toggleDebug } from '../../actions/settings';
+import { toggleGameMenu } from '../../actions/settings';
 
 const whiteButtonBackground = '#ECECEC';
 class SettingsButton extends Component {
@@ -16,7 +16,7 @@ class SettingsButton extends Component {
             backgroundColor: whiteButtonBackground,
             padding: 5
           }}
-          onPress={this.props.toggleDebug}
+          onPress={this.props.toggleGameMenu}
         />
       </View>
     );
@@ -25,7 +25,7 @@ class SettingsButton extends Component {
 
 export default connect(
   null,
-  { toggleDebug }
+  { toggleGameMenu }
 )(SettingsButton);
 
 const styles = StyleSheet.create({

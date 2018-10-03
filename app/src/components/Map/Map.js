@@ -104,8 +104,8 @@ class Map extends Component {
   }
 }
 
-const mapStateToProps = ({ debug }) => ({
-  debug
+const mapStateToProps = ({ settings }) => ({
+  debug: settings.debug
 });
 
 export default connect(mapStateToProps)(Map);
