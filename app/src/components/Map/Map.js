@@ -5,6 +5,7 @@ import { MapView } from 'expo';
 import { markers, regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
+import GameBar from '../GameBar';
 
 class Map extends Component {
   state = {
@@ -98,7 +99,7 @@ class Map extends Component {
             );
           })}
         </MapView>
-
+        <GameBar progress={80} text={'Hitta Stockholm'} />
         {debug && <RegionInfo region={region} debugMarker={debugMarker} />}
       </View>
     );
@@ -113,7 +114,8 @@ export default connect(mapStateToProps)(Map);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    marginTop: '-10%'
   },
   map: {
     height: '108%', // Uses height over 100% to hide the google logo.
