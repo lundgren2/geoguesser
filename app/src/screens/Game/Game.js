@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import GameLogic from '../../components/GameLogic';
 import Map from '../../components/Map';
 import SettingsButton from '../../components/SettingsButton';
+import GameMenu from '../../components/GameMenu';
 
-// TODO: Break out the statusBarBackground view into its own component.
 export default () => {
+  // The order of the components is important. onPress events prioritates the latest component first.
   return (
     <View style={styles.container}>
-      <View style={styles.statusBarBackground} />
-      <SettingsButton />
+      <StatusBar hidden={true} />
       <GameLogic>
         {({ markerPressed, currentMarkers }) => {
           return (
@@ -20,6 +20,8 @@ export default () => {
           );
         }}
       </GameLogic>
+      <SettingsButton />
+      <GameMenu />
     </View>
   );
 };
@@ -27,9 +29,5 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  statusBarBackground: {
-    height: Platform.OS === 'android' ? 24 : 0,
-    backgroundColor: 'black'
   }
 });
