@@ -12,14 +12,14 @@ export default () => {
     <View style={styles.container}>
       <StatusBar hidden={true} />
       <GameLogic>
-        {({ markerPressed, currentMarkers }) => {
+        {({ markerPressed, currentMarkers, findLocation, progress }) => {
           return (
             <View style={styles.container}>
               <Map
                 markerPressed={markerPressed}
                 currentMarkers={currentMarkers}
               />
-              <GameBar progress={80} text={'Hitta Stockholm'} />
+              <GameBar progress={progress} text={`Hitta ${findLocation}`} />
             </View>
           );
         }}

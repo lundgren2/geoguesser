@@ -1,47 +1,80 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { Animated, Easing } from 'react-native';
 
 class GameLogic extends Component {
   state = {
-    correctMarker: 2
+    currentMap: 0,
+    correctMarker: 0,
+    progress: new Animated.Value(100)
+  };
+
+  componentDidMount() {
+    this.currentMarkers();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.currentMap !== prevState.currentMap) {
+      this.currentMarkers();
+    }
+  }
+
+  toggleProgress = () => {
+    this.setState({ progress: new Animated.Value(100) }, () => {
+      setTimeout(() => {
+        Animated.timing(this.state.progress, {
+          toValue: 0,
+          duration: 14000,
+          easing: Easing.linear
+        }).start();
+      }, 1500);
+    });
   };
 
   currentMarkers = () => {
     // Decide current markers
-    const currentMarkers = [
-      {
-        id: 1,
-        title: 'Stockholm',
-        coordinate: { latitude: 59.36, longitude: 18.26 }
-      },
-      {
-        id: 2,
-        title: 'Göteborg',
-        coordinate: { latitude: 57.71, longitude: 11.98 }
-      }
-    ];
+    const currentMarkers = _.nth(this.props.levels, this.state.currentMap);
     // Decide correct marker
-    return currentMarkers;
+    const correctMarker = _.random(0, currentMarkers.length - 1);
+    this.setState({
+      currentMarkers,
+      correctMarker
+    });
+    // Start timer for next level
+    this.toggleProgress();
   };
 
   markerPressed = markerId => {
-    let success = true;
-    // Answer correct?
     if (markerId === this.state.correctMarker) {
-      console.log('##### Correct answer! #####');
+      // Correct answer
+      if (this.state.currentMap == this.props.levels.length - 1) {
+        this.setState({ currentMap: 0 });
+      } else {
+        this.setState({ currentMap: this.state.currentMap + 1 });
+      }
     } else {
-      console.log('##### Incorrect answer! #####');
-      success = false;
+      // Wrong answer
     }
-    return success;
   };
 
   render() {
     const gamelogic = {
-      currentMarkers: this.currentMarkers(),
-      markerPressed: this.markerPressed
+      currentMarkers: this.state.currentMarkers
+        ? this.state.currentMarkers
+        : [],
+      markerPressed: this.markerPressed,
+      findLocation: this.state.currentMarkers
+        ? this.state.currentMarkers[this.state.correctMarker].title
+        : '?',
+      progress: this.state.progress
     };
     return this.props.children(gamelogic);
   }
 }
 
-export default GameLogic;
+const mapStateToProps = ({ levels }) => ({
+  levels
+});
+
+export default connect(mapStateToProps)(GameLogic);

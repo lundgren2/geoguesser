@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
+import _ from 'lodash';
 import { markers, regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
@@ -23,10 +24,20 @@ class Map extends Component {
     }, 2000);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.currentMarkers, this.props.currentMarkers)) {
+      this.setState({ markers: this.props.currentMarkers });
+      animationTimeout = setTimeout(() => {
+        this.focusMap(this.state.markers, true);
+      }, 500);
+    }
+  }
+
   focusMap(markers, animated) {
+    if (markers.length == 0) return;
     const options = {
       // TODO: These are constants. Put them somewhere safe.
-      edgePadding: { top: 20, right: 50, left: 50, bottom: 80 }, // High bottom padding since the map extends below the screen to hide google logo.
+      edgePadding: { top: 200, right: 50, left: 50, bottom: 300 }, // High bottom padding since the map extends below the screen to hide google logo.
       animated
     };
     const coords = markers.map(marker => marker.coordinate);
@@ -97,8 +108,6 @@ class Map extends Component {
                 key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
-                title={marker.title}
-                description={marker.description}
                 onPress={event => {
                   this.props.markerPressed(marker.id);
                 }}

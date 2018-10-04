@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
-import { Animated, Easing, TouchableOpacity, StyleSheet } from 'react-native';
+import { Animated, TouchableOpacity, StyleSheet } from 'react-native';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 export default class Filler extends Component {
-  state = {
-    progress: new Animated.Value(100)
-  };
-
-  toggleProgress = () => {
-    Animated.timing(this.state.progress, {
-      toValue: 0,
-      duration: 14000,
-      easing: Easing.linear
-    }).start();
-  };
-
   render() {
-    let { progress } = this.state;
+    let { progress } = this.props;
     return (
       <AnimatedTouchable
         activeOpacity={0.7}
