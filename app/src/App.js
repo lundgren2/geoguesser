@@ -5,7 +5,7 @@ import rootReducer from './reducers';
 import GameScreen from './screens/Game';
 
 const defaultState = {
-  debug: true
+  debug: false
 };
 
 const store = createStore(rootReducer, defaultState);

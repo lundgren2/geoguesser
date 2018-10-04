@@ -10,10 +10,14 @@ class Map extends Component {
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: [...markers.defaultMarkers]
+    // markers: [...markers.defaultMarkers]
+    markers: []
   };
 
   componentDidMount() {
+    this.setState({
+      markers: this.props.currentMarkers
+    });
     animationTimeout = setTimeout(() => {
       this.focusMap(this.state.markers, true);
     }, 2000);
@@ -77,6 +81,7 @@ class Map extends Component {
           pitchEnabled={debug}
           rotateEnabled={debug}
           scrollEnabled={debug}
+          moveOnMarkerPress={false}
         >
           {debug &&
             debugMarker && (
@@ -86,14 +91,17 @@ class Map extends Component {
                 description={debugMarker.description}
               />
             )}
-          {markers.map((marker, index) => {
+          {markers.map(marker => {
             return (
               <MapView.Marker
-                key={index}
+                key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
                 title={marker.title}
                 description={marker.description}
+                onPress={event => {
+                  this.props.markerPressed(marker.id);
+                }}
               />
             );
           })}
