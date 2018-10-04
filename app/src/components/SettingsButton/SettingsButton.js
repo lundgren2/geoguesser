@@ -30,10 +30,10 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     position: 'absolute',
-    bottom: 10,
-    left: 10
+    top: 0,
+    right: 0,
+    margin: 10
   },
   button: {
     padding: 5

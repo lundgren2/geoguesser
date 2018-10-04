@@ -4,6 +4,7 @@ import GameLogic from '../../components/GameLogic';
 import Map from '../../components/Map';
 import SettingsButton from '../../components/SettingsButton';
 import GameMenu from '../../components/GameMenu';
+import GameBar from '../../components/GameBar';
 
 export default () => {
   // The order of the components is important. onPress events prioritates the latest component first.
@@ -13,10 +14,13 @@ export default () => {
       <GameLogic>
         {({ markerPressed, currentMarkers }) => {
           return (
-            <Map
-              markerPressed={markerPressed}
-              currentMarkers={currentMarkers}
-            />
+            <View style={styles.container}>
+              <Map
+                markerPressed={markerPressed}
+                currentMarkers={currentMarkers}
+              />
+              <GameBar progress={80} text={'Hitta Stockholm'} />
+            </View>
           );
         }}
       </GameLogic>
