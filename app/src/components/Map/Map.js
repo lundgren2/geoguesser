@@ -5,7 +5,6 @@ import { MapView } from 'expo';
 import { markers, regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
-import GameBar from '../GameBar';
 
 class Map extends Component {
   state = {
@@ -99,7 +98,6 @@ class Map extends Component {
             );
           })}
         </MapView>
-        <GameBar progress={80} text={'Hitta Stockholm'} />
         {debug && <RegionInfo region={region} debugMarker={debugMarker} />}
       </View>
     );

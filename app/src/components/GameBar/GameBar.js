@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 6,
     zIndex: 10,
-    bottom: 40
+    bottom: 50
   },
   barText: {
     color: 'black',
