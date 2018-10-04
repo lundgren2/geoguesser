@@ -16,22 +16,15 @@ export default class Filler extends Component {
   };
 
   toggleProgress = () => {
-    toValue = this.state.progress < 100 ? 100 : 0;
-
     Animated.timing(this.state.progress, {
-      toValue: toValue,
+      toValue: 0,
       duration: 14000,
       easing: Easing.linear
     }).start();
   };
 
-  componentDidMount() {
-    // this.toggleProgress();
-  }
-
   render() {
     let { progress } = this.state;
-
     return (
       <AnimatedTouchable
         activeOpacity={0.7}

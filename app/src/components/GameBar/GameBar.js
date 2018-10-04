@@ -33,16 +33,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     zIndex: 30
-    // height: '100%'
-  },
-  barFiller: {
-    flex: 1,
-    left: 0,
-    zIndex: 30,
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    backgroundColor: 'rgba(245, 223, 76, .88)'
   }
 });
 

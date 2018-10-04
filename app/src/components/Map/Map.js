@@ -114,8 +114,7 @@ export default connect(mapStateToProps)(Map);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: '-10%'
+    flex: 1
   },
   map: {
     height: '108%', // Uses height over 100% to hide the google logo.
