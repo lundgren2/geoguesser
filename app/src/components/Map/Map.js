@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
-import { markers, regions } from '../../constants';
+import { getMarkersJSON } from './Pin/getMarkers';
+import { regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 
@@ -10,7 +11,7 @@ class Map extends Component {
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: [...markers.defaultMarkers]
+    markers: getMarkersJSON(2) //1: Linköping, 2: Östergötland, Annat: Sverige
   };
 
   componentDidMount() {
