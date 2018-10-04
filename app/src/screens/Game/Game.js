@@ -11,8 +11,8 @@ export default () => {
     <View style={styles.gameScreen}>
       <StatusBar hidden={true} />
       <Map />
-      <GameBar progress={80} text={'Hitta Stockholm'} />
       <SettingsButton />
+      <GameBar progress={80} text={'Hitta Stockholm'} />
       <GameMenu />
     </View>
   );
