@@ -2,7 +2,7 @@ import { TOGGLE_DEBUG, TOGGLE_GAME_MENU } from '../actions/settings';
 
 const initialState = {
   debug: false,
-  showGameMenu: true
+  showGameMenu: false
 };
 
 const debug = (state = initialState, action) => {
