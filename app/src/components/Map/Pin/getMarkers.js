@@ -1,39 +1,33 @@
-//Write ammount of markers to be shown
-const max_nr_markers = 6; //TODO: move this to a constant file
+//Write amount of markers to be shown
+const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
-export function getMarkersJSON(level) {
-  let file_JSON;
+function createMarker(city, index) {
+  return {
+    title: city.name,
+    description: city.fcodeName,
+    coordinate: {
+      latitude: parseFloat(city.lat),
+      longitude: parseFloat(city.lng)
+    }
+  };
+}
+
+export function getMarkers(level) {
+  let listCities;
   switch (level) {
     case 1:
-      file_JSON = require('../JSON/linkopingArea.json');
+      listCities = require('../JSON/linkopingArea.json').geonames;
       break;
     case 2:
-      file_JSON = require('../JSON/ostArea.json');
+      listCities = require('../JSON/ostArea.json').geonames;
       break;
     default:
-      file_JSON = require('../JSON/sverigeCities.json');
+      listCities = require('../JSON/sverigeCities.json').geonames;
   }
 
-  let list_cities = file_JSON['geonames'];
-  let list_markers = [];
+  const NR_MARKERS = listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
 
-  if (list_cities.length >= max_nr_markers) {
-    var nr_markers = max_nr_markers;
-  } else {
-    nr_markers = list_cities.length;
-  }
+  const MARKERS = listCities.slice(0, NR_MARKERS).map(createMarker)
 
-  for (var i = 0; i < nr_markers; i++) {
-    let marker = {
-      title: list_cities[i]['name'],
-      description: list_cities[i]['fcodeName'],
-      coordinate: {
-        latitude: parseFloat(list_cities[i]['lat']),
-        longitude: parseFloat(list_cities[i]['lng'])
-      }
-    };
-    list_markers.push(marker);
-  }
-
-  return list_markers;
+  return MARKERS;
 }
