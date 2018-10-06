@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 //Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
@@ -12,7 +14,7 @@ function createMarker(city) {
   };
 }
 
-export default function getMarkers(level) {
+export default function getMarkers(level, shuffle) {
   let listCities;
   switch (level) {
     case 1:
@@ -24,6 +26,8 @@ export default function getMarkers(level) {
     default:
       listCities = require('../JSON/sverigeCities.json').geonames;
   }
+
+  listCities = shuffle ? _.shuffle(listCities) : listCities;
 
   const NR_MARKERS = listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
 
