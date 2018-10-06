@@ -1,7 +1,7 @@
 //Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
-function createMarker(city, index) {
+function createMarker(city) {
   return {
     title: city.name,
     description: city.fcodeName,
