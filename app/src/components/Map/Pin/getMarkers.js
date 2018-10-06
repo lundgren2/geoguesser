@@ -12,7 +12,7 @@ function createMarker(city) {
   };
 }
 
-export function getMarkers(level) {
+export default function getMarkers(level) {
   let listCities;
   switch (level) {
     case 1:
@@ -27,7 +27,5 @@ export function getMarkers(level) {
 
   const NR_MARKERS = listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
 
-  const MARKERS = listCities.slice(0, NR_MARKERS).map(createMarker)
-
-  return MARKERS;
+  return listCities.slice(0, NR_MARKERS).map(createMarker);
 }
