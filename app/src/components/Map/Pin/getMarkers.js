@@ -14,7 +14,7 @@ function createMarker(city) {
   };
 }
 
-export default function getMarkers(level, shuffle) {
+export default function getMarkers(level, shuffle=false) {
   let listCities;
   switch (level) {
     case 1:

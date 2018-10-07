@@ -11,7 +11,7 @@ class Map extends Component {
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: getMarkers(2, true) //1: Linköping, 2: Östergötland, Annat: Sverige
+    markers: getMarkers(2, true) //1: Linköping, 2: Östergötland, Annat: Sverige; bool if it will shuffle
   };
 
   componentDidMount() {
