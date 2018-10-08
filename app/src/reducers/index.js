@@ -1,8 +1,21 @@
 import { combineReducers } from 'redux';
 import settingsReducer from './settingsReducer';
-import levelsReducer from './levelsReducer';
+import {
+  correctMarkerReducer,
+  markersReducer,
+  levelsReducer
+} from './gameReducers';
 
 export default combineReducers({
   settings: settingsReducer,
-  levels: levelsReducer
+  layers: layersReducer,
+  game: {
+    region: regionReducer,
+    markers: markersReducer,
+    correctMarker: correctMarkerReducer
+  },
+  map: {
+    activeRegion: {},
+    blurred: boolean
+  }
 });
