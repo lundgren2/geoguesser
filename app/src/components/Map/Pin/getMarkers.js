@@ -1,20 +1,9 @@
-import _ from 'lodash'
+import _ from 'lodash';
 
 //Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
-function createMarker(city) {
-  return {
-    title: city.name,
-    description: city.fcodeName,
-    coordinate: {
-      latitude: parseFloat(city.lat),
-      longitude: parseFloat(city.lng)
-    }
-  };
-}
-
-export default function getMarkers(level, shuffle=false) {
+const getMarkers = (level, shuffle = false) => {
   let listCities;
   switch (level) {
     case 1:
@@ -29,7 +18,17 @@ export default function getMarkers(level, shuffle=false) {
 
   listCities = shuffle ? _.shuffle(listCities) : listCities;
 
-  const NR_MARKERS = listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
+  const NR_MARKERS =
+    listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
 
-  return listCities.slice(0, NR_MARKERS).map(createMarker);
-}
+  return listCities.slice(0, NR_MARKERS).map(city => ({
+    title: city.name,
+    description: city.fcodeName,
+    coordinate: {
+      latitude: parseFloat(city.lat),
+      longitude: parseFloat(city.lng)
+    }
+  }));
+};
+
+export default getMarkers;
