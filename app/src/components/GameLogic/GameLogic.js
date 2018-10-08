@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Animated, Easing } from 'react-native';
 import _ from 'lodash';
+import { newLevels } from '../../actions/levels';
 
 class GameLogic extends Component {
   state = {
@@ -40,7 +41,7 @@ class GameLogic extends Component {
     const correctMarker = _.random(0, currentMarkers.length - 1);
     this.setState({
       currentMarkers,
-      correctMarker
+      correctMarker: currentMarkers[correctMarker].id
     });
     // Start timer for next level
     this.toggleProgress();
@@ -49,6 +50,7 @@ class GameLogic extends Component {
   handleMarkerPress = markerId => {
     if (markerId === this.state.correctMarker) {
       if (this.state.currentMap == this.props.levels.length - 1) {
+        this.props.newLevels();
         this.setState({ currentMap: 0 });
       } else {
         this.setState({ currentMap: this.state.currentMap + 1 });
@@ -57,13 +59,15 @@ class GameLogic extends Component {
   };
 
   render() {
+    let findLocation = '?';
+    if (this.state.currentMarkers.length !== 0)
+      findLocation = this.state.currentMarkers[this.state.correctMarker].title;
+
     const gamelogic = {
       currentMarkers: this.state.currentMarkers,
       handleMarkerPress: this.handleMarkerPress,
-      findLocation: this.state.currentMarkers
-        ? this.state.currentMarkers[this.state.correctMarker].title
-        : '?',
-      progress: this.state.progress
+      progress: this.state.progress,
+      findLocation
     };
     return this.props.children(gamelogic);
   }
@@ -73,4 +77,7 @@ const mapStateToProps = ({ levels }) => ({
   levels
 });
 
-export default connect(mapStateToProps)(GameLogic);
+export default connect(
+  mapStateToProps,
+  { newLevels }
+)(GameLogic);

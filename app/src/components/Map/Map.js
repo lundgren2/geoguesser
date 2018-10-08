@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
-import { markers, regions } from '../../constants';
+import { regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
+import getMarkers from './Pin/getMarkers';
 import RegionInfo from './RegionInfo';
 
 class Map extends Component {
@@ -12,7 +13,7 @@ class Map extends Component {
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: []
+    markers: getMarkers(2, true) //1: Linköping, 2: Östergötland, Annat: Sverige; bool if it will shuffle
   };
 
   componentDidMount() {
@@ -109,6 +110,7 @@ class Map extends Component {
                 identifier={marker.title}
                 coordinate={marker.coordinate}
                 onPress={event => {
+                  console.log(this.props);
                   this.props.handleMarkerPress(marker.id);
                 }}
               />
