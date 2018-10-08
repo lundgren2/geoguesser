@@ -8,10 +8,10 @@ import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 
 class Map extends Component {
+  //TODO: Add proptypes to verify correct props are passed.
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
-    // markers: [...markers.defaultMarkers]
     markers: []
   };
 
@@ -109,7 +109,7 @@ class Map extends Component {
                 identifier={marker.title}
                 coordinate={marker.coordinate}
                 onPress={event => {
-                  this.props.markerPressed(marker.id);
+                  this.props.handleMarkerPress(marker.id);
                 }}
               />
             );

@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { Animated, Easing } from 'react-native';
+import _ from 'lodash';
 
 class GameLogic extends Component {
   state = {
     currentMap: 0,
     correctMarker: 0,
+    currentMarkers: [],
     progress: new Animated.Value(100)
   };
 
   componentDidMount() {
-    this.currentMarkers();
+    this.setupLevel();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.currentMap !== prevState.currentMap) {
-      this.currentMarkers();
+      this.setupLevel();
     }
   }
 
@@ -32,7 +33,7 @@ class GameLogic extends Component {
     });
   };
 
-  currentMarkers = () => {
+  setupLevel = () => {
     // Decide current markers
     const currentMarkers = _.nth(this.props.levels, this.state.currentMap);
     // Decide correct marker
@@ -45,25 +46,20 @@ class GameLogic extends Component {
     this.toggleProgress();
   };
 
-  markerPressed = markerId => {
+  handleMarkerPress = markerId => {
     if (markerId === this.state.correctMarker) {
-      // Correct answer
       if (this.state.currentMap == this.props.levels.length - 1) {
         this.setState({ currentMap: 0 });
       } else {
         this.setState({ currentMap: this.state.currentMap + 1 });
       }
-    } else {
-      // Wrong answer
     }
   };
 
   render() {
     const gamelogic = {
-      currentMarkers: this.state.currentMarkers
-        ? this.state.currentMarkers
-        : [],
-      markerPressed: this.markerPressed,
+      currentMarkers: this.state.currentMarkers,
+      handleMarkerPress: this.handleMarkerPress,
       findLocation: this.state.currentMarkers
         ? this.state.currentMarkers[this.state.correctMarker].title
         : '?',
