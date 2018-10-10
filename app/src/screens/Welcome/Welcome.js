@@ -1,65 +1,52 @@
 import React, {Component} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import {Animated, StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import GameScreen from '../Game/Game';
 
 
 class FadeView extends Component {
-  constructor(props)  {
-    super(props);
-    let opacity;
-    if (props.isVisible) {
-      opacity = 1;
-    }
-    else  {
-      opacity = 0;
-    }
-
+  constructor()  {
+    super();
     this.state = {
-      fadeAnim: new Animated.Value(opacity),  // Initial value for opacity: 0
+      fadeAnim: new Animated.Value(0),
     };
   }
 
   componentWillReceiveProps(props) {
     const fadeDuration = 1000;
-    if (!props.isVisible && this.props.isVisible) {
-      this.fadeIn(fadeDuration);
-    }
-    else if (props.isVisible && !this.props.isVisible)  {
+    if (!props.isVisible && this.props.isVisible)  {
       this.fadeOut(fadeDuration);
     }
   }
 
-  fadeIn = (duration) => {
-    Animated.timing(                  // Animate over time
-      this.state.fadeAnim,            // The animated value to drive
+  componentWillMount()  {
+    const duration = 1000;
+    Animated.timing(
+      this.state.fadeAnim,
       {
-        toValue: 0,                   // Animate to opacity: 1 (opaque)
-        duration: duration,              // Make it take a while
+        toValue: 1,
+        duration: duration,
       }
-    ).start();
-  };
+    ).start()
+  }
 
   fadeOut = (duration) => {
-    Animated.timing(                  // Animate over time
-      this.state.fadeAnim,            // The animated value to drive
+    Animated.timing(
+      this.state.fadeAnim,
       {
-        toValue: 1,                   // Animate to opacity: 1 (opaque)
-        duration: duration,              // Make it take a while
+        toValue: 0,
+        duration: duration,
       }
-    ).start();
+    ).start(() => {
+      this.props.finished();
+    });
   };
 
   render() {
     let { fadeAnim } = this.state;
 
     return (
-      <Animated.View                 // Special animatable View
-        style={{
-          ...this.props.style,
-          opacity: fadeAnim,         // Bind opacity to animated value
-        }}
-      >
+      <Animated.View style={{...this.props.style, opacity: fadeAnim}}>
         {this.props.children}
       </Animated.View>
     );
@@ -70,9 +57,10 @@ class FadeView extends Component {
 export default class WelcomeView extends Component {
   constructor()  {
     super();
-
     this.state = {
-      isVisible: true,
+      welcome: true,
+      game: false,
+      currentScreen: "WELCOME",
     }
   }
 
@@ -87,24 +75,55 @@ export default class WelcomeView extends Component {
     />
   );
 
+  closeAllLayers = () => {
+    this.setState({
+      welcome: false,
+      game: false,
+    })
+  };
+
+  openGame = () => {
+    this.setState({
+      welcome: false,
+      game: true,
+      currentScreen: "GAME",
+    });
+  };
+
+  openWelcome = () => {
+    this.setState({
+      welcome: true,
+      game: false,
+      currentScreen: "WELCOME",
+    })
+  };
+
   render() {
     const buttons = [
-      {
-        title: 'Start Game', onPress: () => this.setState({isVisible: false})
-      },
+      {title: 'Start Game', onPress: () => {this.closeAllLayers()}},
     ];
 
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <FadeView style={{width: 250, height: 50, backgroundColor: 'powderblue'}} isVisible={this.state.isVisible}>
-          {buttons.map(button => this.menuButton(button))}
-        </FadeView>
+    if (this.state.currentScreen === "WELCOME")
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text>{this.state.welcome ? "True" : "False"}</Text>
 
-        <FadeView style={{width: '100%', height: '100%'}} isVisible={!this.state.isVisible}>
-          <GameScreen />
-        </FadeView>
-      </View>
-    )
+          <FadeView style={{width: 250, height: 50, backgroundColor: 'powderblue'}}
+                    isVisible={this.state.welcome} finished={this.openGame}>
+            {buttons.map(button => this.menuButton(button))}
+          </FadeView>
+        </View>
+      );
+
+    else if (this.state.currentScreen === "GAME")
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <FadeView style={{width: '100%', height: '100%'}}
+                    isVisible={this.state.game} finished={this.openWelcome}>
+            <GameScreen />
+          </FadeView>
+        </View>
+      )
   }
 }
 
