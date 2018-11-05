@@ -13,12 +13,12 @@ class GameLogic extends Component {
   };
 
   componentDidMount() {
-    this.setupLevel();
+    // this.setupLevel();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.currentMap !== prevState.currentMap) {
-      this.setupLevel();
+      // this.setupLevel();
     }
   }
 
@@ -73,8 +73,8 @@ class GameLogic extends Component {
   }
 }
 
-const mapStateToProps = ({ levels }) => ({
-  levels
+const mapStateToProps = ({ game }) => ({
+  markers: game.markers
 });
 
 export default connect(

@@ -1,19 +1,22 @@
 import _ from 'lodash';
 
-//Write amount of markers to be shown
+// Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
 const getMarkers = (level, shuffle = false) => {
   let listCities;
   switch (level) {
     case 1:
-      listCities = require('../JSON/linkopingArea.json').geonames;
+      listCities = require('../../../constants/levelsJson/linkopingArea.json')
+        .geonames;
       break;
     case 2:
-      listCities = require('../JSON/ostArea.json').geonames;
+      listCities = require('../../../constants/levelsJson/ostArea.json')
+        .geonames;
       break;
     default:
-      listCities = require('../JSON/sverigeCities.json').geonames;
+      listCities = require('../../../constants/levelsJson/sverigeCities.json')
+        .geonames;
   }
 
   listCities = shuffle ? _.shuffle(listCities) : listCities;

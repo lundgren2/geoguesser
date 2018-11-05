@@ -5,7 +5,6 @@ import { MapView } from 'expo';
 import _ from 'lodash';
 import { regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
-import getMarkers from './Pin/getMarkers';
 import RegionInfo from './RegionInfo';
 
 class Map extends Component {
@@ -13,7 +12,7 @@ class Map extends Component {
   state = {
     region: regions.southernSwedenRegion,
     debugMarker: null,
-    markers: getMarkers(2, true) //1: Linköping, 2: Östergötland, Annat: Sverige; bool if it will shuffle
+    markers: []
   };
 
   componentDidMount() {
