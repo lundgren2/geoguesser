@@ -1,12 +1,12 @@
 import getMarkers from './helpers/getMarkers';
-import { CHOOSE_MARKERS } from '../../actions/actions';
+import { SET_MARKERS } from '../../actions';
 
-const initialState = [];
+const initialState = getMarkers(2, true);
 
 const markers = (state = initialState, action) => {
   switch (action.type) {
-    case CHOOSE_MARKERS:
-      return getMarkers(state.game.region, true);
+    case SET_MARKERS:
+      return getMarkers(action.payload, true);
     default:
       return state;
   }

@@ -1,3 +1,11 @@
-export { default as markersReducer } from './markersReducer';
-export { default as correctMarkerReducer } from './correctMarkerReducer';
-export { default as regionReducer } from './regionReducer';
+import { combineReducers } from 'redux';
+
+import markersReducer from './markersReducer';
+import correctMarkerReducer from './correctMarkerReducer';
+import regionReducer from './regionReducer';
+
+export default combineReducers({
+  region: regionReducer,
+  markers: markersReducer,
+  correctMarker: correctMarkerReducer
+});

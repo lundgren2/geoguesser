@@ -1,13 +1,12 @@
 import _ from 'lodash';
+import { SET_CORRECT_MARKER } from '../../actions';
 
-const initialState = {};
+const initialState = null;
 
 const markers = (state = initialState, action) => {
   switch (action.type) {
-    case RANDOMIZE_CORRECT_MARKER:
-      const id = _.random(0, state.game.markers.length - 1);
-      const correctMarker = _.nth(state.game.markers, id);
-      return correctMarker.id;
+    case SET_CORRECT_MARKER:
+      return action.payload;
     default:
       return state;
   }

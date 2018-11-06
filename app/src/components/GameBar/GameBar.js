@@ -4,7 +4,7 @@ import Filler from './Filler';
 
 const GameBar = ({ progress, text }) => (
   <View style={styles.bar}>
-    <Filler progress={progress} />
+    {/* <Filler progress={progress} /> */}
     <Text style={styles.barText}>{text}</Text>
   </View>
 );

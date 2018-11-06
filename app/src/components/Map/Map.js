@@ -1,34 +1,34 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
-import { regions } from '../../constants';
 import { brightColors } from '../../constants/mapStyles';
+import { handleMarkerPress, setupLevel } from '../../actions/thunks';
 import RegionInfo from './RegionInfo';
 
 class Map extends Component {
-  //TODO: Add proptypes to verify correct props are passed.
   state = {
-    region: regions.southernSwedenRegion,
-    debugMarker: null,
-    markers: []
+    debugMarker: null
   };
 
+  // static propTypes = {
+  //   markers: PropTypes.arrayOf(PropTypes.object),
+  //   region: PropTypes.object
+  // };
+
   componentDidMount() {
-    this.setState({
-      markers: this.props.currentMarkers
-    });
+    this.props.setupLevel();
     animationTimeout = setTimeout(() => {
-      this.focusMap(this.state.markers, true);
+      this.focusMap(this.props.markers, true);
     }, 2000);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.currentMarkers, this.props.currentMarkers)) {
-      this.setState({ markers: this.props.currentMarkers });
+    if (!_.isEqual(prevProps.markers, this.props.markers)) {
       animationTimeout = setTimeout(() => {
-        this.focusMap(this.state.markers, true);
+        this.focusMap(this.props.markers, true);
       }, 500);
     }
   }
@@ -71,8 +71,8 @@ class Map extends Component {
   }
 
   render() {
-    const debug = this.props.debug;
-    const { region, markers, debugMarker } = this.state;
+    const { debugMarker } = this.state;
+    const { debug, region, markers } = this.props;
 
     return (
       <View style={styles.container}>
@@ -109,7 +109,6 @@ class Map extends Component {
                 identifier={marker.title}
                 coordinate={marker.coordinate}
                 onPress={event => {
-                  console.log(this.props);
                   this.props.handleMarkerPress(marker.id);
                 }}
               />
@@ -122,11 +121,16 @@ class Map extends Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => ({
-  debug: settings.debug
+const mapStateToProps = ({ game, settings }) => ({
+  debug: settings.debug,
+  markers: game.markers,
+  region: game.region
 });
 
-export default connect(mapStateToProps)(Map);
+export default connect(
+  mapStateToProps,
+  { handleMarkerPress, setupLevel }
+)(Map);
 
 const styles = StyleSheet.create({
   container: {
