@@ -81,7 +81,6 @@ class Map extends Component {
           ref={ref => {
             this.map = ref;
           }}
-          initialRegion={region}
           onRegionChange={this.onRegionChange}
           onPress={event => {
             this.handlePress(event.nativeEvent);

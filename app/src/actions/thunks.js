@@ -13,9 +13,9 @@ export const handleMarkerPress = markerId => {
     const {
       game: { correctMarker }
     } = getState();
-    console.log('MarkerID:', markerId, 'CorrectMarker:', correctMarker);
+    console.log('MarkerID:', markerId, 'CorrectMarker:', correctMarker.id);
 
-    if (markerId === correctMarker) {
+    if (markerId === correctMarker.id) {
       dispatch(setupLevel());
     }
   };
@@ -43,6 +43,6 @@ export const randomizeCorrectMarker = () => {
     const id = _.random(0, game.markers.length - 1);
     const correctMarker = _.nth(game.markers, id);
 
-    dispatch({ type: SET_CORRECT_MARKER, payload: correctMarker.id });
+    dispatch({ type: SET_CORRECT_MARKER, payload: correctMarker });
   };
 };

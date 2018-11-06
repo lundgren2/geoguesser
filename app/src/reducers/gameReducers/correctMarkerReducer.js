@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { SET_CORRECT_MARKER } from '../../actions';
 
-const initialState = null;
+const initialState = {};
 
 const markers = (state = initialState, action) => {
   switch (action.type) {

@@ -11,7 +11,7 @@ export default () => {
       <StatusBar hidden={true} />
       <View style={styles.container}>
         <Map />
-        <GameBar progress={null} text={`Hitta isAllFucked`} />
+        <GameBar />
       </View>
       <SettingsButton />
       <GameMenu />

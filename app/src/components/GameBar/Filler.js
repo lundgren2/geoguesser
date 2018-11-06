@@ -9,7 +9,7 @@ export default class Filler extends Component {
     return (
       <AnimatedTouchable
         activeOpacity={0.7}
-        onPress={() => this.toggleProgress()}
+        // onPress={() => this.toggleProgress()}
         style={[
           styles.filler,
           {
