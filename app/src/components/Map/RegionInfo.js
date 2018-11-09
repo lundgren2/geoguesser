@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet, Platform } from 'react-native';
+import { Text, View } from 'react-native';
+import styles from './styles';
 
 export default (RegionInfo = ({ region }) => {
   return (
@@ -15,29 +16,4 @@ export default (RegionInfo = ({ region }) => {
       </View>
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  debugContainer: {
-    flex: 1,
-    zIndex: 2,
-    position: 'absolute',
-    flexDirection: 'row',
-    backgroundColor: 'rgba(223, 230, 233, 0.7)',
-    paddingTop: Platform.OS === 'android' ? 5 : 40
-  },
-  debugRegion: {
-    flex: 1,
-    flexDirection: 'column',
-    width: '50%'
-  },
-  debugRegionHeader: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginLeft: 10,
-    marginBottom: 5
-  },
-  debugRegionContent: {
-    marginLeft: 10
-  }
 });

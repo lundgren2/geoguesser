@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Animated, StyleSheet, View, Text } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
 import FadeView from '../FadeView';
 import { startGame } from '../../actions/layers';
+import styles from './styles';
 
 export class MainMenu extends Component {
   menuButton = ({ title, onPress }) => (
@@ -53,27 +53,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(MainMenu);
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    width: '100%',
-    height: '108%',
-    width: '100%',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    zIndex: 100,
-  },
-  buttonContainer: {
-    marginBottom: 20,
-  },
-  button: {
-    width: '100%',
-    borderRadius: 5,
-    padding: 5,
-    backgroundColor: '#0984e3',
-  },
-  buttonText: {
-    color: '#dfe6e9',
-  },
-});

@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
 import { brightColors } from '../../constants/mapStyles';
 import { handleMarkerPress, setupLevel } from '../../actions/thunks';
-import { RegionInfo } from './components';
+import RegionInfo from './RegionInfo';
+import styles from './styles';
 
 class Map extends Component {
   state = {
     debugMarker: null,
-    mapRegion: null
+    mapRegion: null,
   };
-
-  // static propTypes = {
-  //   markers: PropTypes.arrayOf(PropTypes.object),
-  //   region: PropTypes.object
-  // };
 
   componentDidMount() {
     // TODO: Call this when the player intially presses "Start Game" on welcome screen.
@@ -40,7 +35,7 @@ class Map extends Component {
     const options = {
       // TODO: These are constants. Put them somewhere safe.
       edgePadding: { top: 200, right: 50, left: 50, bottom: 300 }, // High bottom padding since the map extends below the screen to hide google logo.
-      animated
+      animated,
     };
     const coords = markers.map(marker => marker.coordinate);
     this.map.fitToCoordinates(coords, options);
@@ -89,21 +84,10 @@ class Map extends Component {
 const mapStateToProps = ({ game, settings }) => ({
   debug: settings.debug,
   markers: game.markers,
-  region: game.region
+  region: game.region,
 });
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupLevel }
+  { handleMarkerPress, setupLevel },
 )(Map);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  map: {
-    height: '108%', // Uses height over 100% to hide the google logo.
-    width: '100%',
-    margin: 'auto'
-  }
-});

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
+import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
+import styles from './styles';
 
 class GameBar extends Component {
   state = {
@@ -74,38 +75,4 @@ const mapStateToProps = ({ game, layers }) => ({
   gameStatus: layers.gameStatus,
 });
 
-// const mapDispatchToProps = ({ layers }) => ({
-//   startGame,
-//   stopGame,
-//   togglePauseMenu,
-// });
-
-export default connect(
-  mapStateToProps,
-  // mapDispatchToProps,
-)(GameBar);
-
-const styles = StyleSheet.create({
-  bar: {
-    flex: 1,
-    position: 'absolute',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
-    width: '90%',
-    margin: 10,
-    height: '6%',
-    backgroundColor: 'rgba(255, 255, 255, 0.65)',
-    borderWidth: 3,
-    borderColor: 'rgba(245, 223, 76, .88)',
-    borderRadius: 6,
-  },
-  barText: {
-    color: 'black',
-    fontSize: 22,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    zIndex: 30,
-  },
-});
+export default connect(mapStateToProps)(GameBar);
