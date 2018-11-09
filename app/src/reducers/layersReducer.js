@@ -19,7 +19,11 @@ const debug = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
     case TOGGLE_PAUSE_MENU:
-      return { ...state, pauseMenu: !state.pauseMenu };
+      return {
+        ...state,
+        pauseMenu: !state.pauseMenu,
+        gameStatus: !state.pauseMenu ? 'GAME_PAUSED' : 'GAME_ON',
+      };
     case STOP_GAME:
       return {
         ...state,

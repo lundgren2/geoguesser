@@ -6,42 +6,84 @@ import Filler from './Filler';
 
 class GameBar extends Component {
   state = {
-    timer: new Animated.Value(100)
+    timer: new Animated.Value(100),
+    timerOn: false,
   };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.startTimer();
+    }, 1500);
+  }
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
-      this.startTimer();
+      this.stopTimer();
+      this.resetTimer();
+      setTimeout(() => {
+        this.startTimer();
+      }, 1500);
+    } else {
+      this.props.gameStatus === 'GAME_PAUSED' &&
+        this.state.timerOn &&
+        this.stopTimer();
+
+      prevProps.gameStatus === 'GAME_PAUSED' &&
+        this.props.gameStatus === 'GAME_ON' &&
+        !this.state.timerOn &&
+        this.startTimer();
     }
   }
 
   startTimer() {
-    this.setState({ timer: new Animated.Value(100) }, () => {
-      setTimeout(() => {
+    this.setState({ timerOn: true }, () => {
+      Animated.timing(
         Animated.timing(this.state.timer, {
           toValue: 0,
           duration: 14000,
-          easing: Easing.linear
-        }).start();
-      }, 1500);
+          easing: Easing.linear,
+        }).start(),
+      );
     });
   }
 
+  stopTimer() {
+    this.setState({ timerOn: false }, () => {
+      Animated.timing(this.state.timer).stop();
+    });
+  }
+
+  resetTimer() {
+    this.setState({ timer: new Animated.Value(100), timerOn: false });
+  }
+
   render() {
+    const { timer } = this.state;
+    const { correctMarker } = this.props;
     return (
       <View style={styles.bar}>
-        <Filler progress={this.state.timer} />
-        <Text style={styles.barText}>{this.props.correctMarker.title}</Text>
+        <Filler progress={timer} />
+        <Text style={styles.barText}>{correctMarker.title}</Text>
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ game }) => ({
-  correctMarker: game.correctMarker
+const mapStateToProps = ({ game, layers }) => ({
+  correctMarker: game.correctMarker,
+  gameStatus: layers.gameStatus,
 });
 
-export default connect(mapStateToProps)(GameBar);
+// const mapDispatchToProps = ({ layers }) => ({
+//   startGame,
+//   stopGame,
+//   togglePauseMenu,
+// });
+
+export default connect(
+  mapStateToProps,
+  // mapDispatchToProps,
+)(GameBar);
 
 const styles = StyleSheet.create({
   bar: {
@@ -58,13 +100,12 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'rgba(245, 223, 76, .88)',
     borderRadius: 6,
-    zIndex: 10
   },
   barText: {
     color: 'black',
     fontSize: 22,
     fontWeight: 'bold',
     alignSelf: 'center',
-    zIndex: 30
-  }
+    zIndex: 30,
+  },
 });

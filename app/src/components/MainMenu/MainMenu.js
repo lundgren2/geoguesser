@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Animated, StyleSheet, View, Text } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
-// import GameScreen from '../Game';
 import FadeView from '../FadeView';
 import { startGame } from '../../actions/layers';
 
