@@ -1,4 +1,4 @@
-import { TOGGLE_DEBUG } from '../actions/settings';
+import { TOGGLE_DEBUG } from '../actions';
 
 const initialState = {
   debug: false

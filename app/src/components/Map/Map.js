@@ -6,11 +6,12 @@ import { MapView } from 'expo';
 import _ from 'lodash';
 import { brightColors } from '../../constants/mapStyles';
 import { handleMarkerPress, setupLevel } from '../../actions/thunks';
-import RegionInfo from './RegionInfo';
+import { RegionInfo } from './components';
 
 class Map extends Component {
   state = {
-    debugMarker: null
+    debugMarker: null,
+    mapRegion: null
   };
 
   // static propTypes = {
@@ -19,13 +20,14 @@ class Map extends Component {
   // };
 
   componentDidMount() {
+    // TODO: Call this when the player intially presses "Start Game" on welcome screen.
     this.props.setupLevel();
     animationTimeout = setTimeout(() => {
       this.focusMap(this.props.markers, true);
     }, 2000);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.markers, this.props.markers)) {
       animationTimeout = setTimeout(() => {
         this.focusMap(this.props.markers, true);
@@ -44,35 +46,10 @@ class Map extends Component {
     this.map.fitToCoordinates(coords, options);
   }
 
-  onRegionChange = region => {
-    this.setState({ region });
-  };
-
-  handlePress(event) {
-    if (this.props.debug) {
-      const debugMarker = {
-        coordinate: event.coordinate,
-        title: 'debug marker',
-        description: 'debug marker'
-      };
-
-      this.setState(prevState => ({
-        markers: [...prevState.markers, debugMarker]
-      }));
-
-      this.setState({
-        debugMarker: {
-          coordinate: event.coordinate,
-          title: 'debug marker',
-          description: 'debug marker'
-        }
-      });
-    }
-  }
+  onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
   render() {
-    const { debugMarker } = this.state;
-    const { debug, region, markers } = this.props;
+    const { debug, markers } = this.props;
 
     return (
       <View style={styles.container}>
@@ -81,10 +58,7 @@ class Map extends Component {
           ref={ref => {
             this.map = ref;
           }}
-          onRegionChange={this.onRegionChange}
-          onPress={event => {
-            this.handlePress(event.nativeEvent);
-          }}
+          onRegionChange={region => this.onMapRegionChange(region)}
           customMapStyle={brightColors}
           provider="google"
           zoomEnabled={debug}
@@ -93,28 +67,20 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {debug &&
-            debugMarker && (
-              <MapView.Marker
-                coordinate={debugMarker.coordinate}
-                title={debugMarker.title}
-                description={debugMarker.description}
-              />
-            )}
           {markers.map(marker => {
             return (
               <MapView.Marker
                 key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
-                onPress={event => {
+                onPress={() => {
                   this.props.handleMarkerPress(marker.id);
                 }}
               />
             );
           })}
         </MapView>
-        {debug && <RegionInfo region={region} debugMarker={debugMarker} />}
+        {debug && <RegionInfo region={this.state.mapRegion} />}
       </View>
     );
   }

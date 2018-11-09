@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, Platform } from 'react-native';
 
-export default (RegionInfo = ({ region, debugMarker }) => {
+export default (RegionInfo = ({ region }) => {
   return (
     <View style={styles.debugContainer}>
       <View style={styles.debugRegion}>
@@ -12,19 +12,6 @@ export default (RegionInfo = ({ region, debugMarker }) => {
           {`LatidudeDelta: ${Number(region.latitudeDelta).toFixed(4)}\n`}
           {`LongitudeDelta: ${Number(region.longitudeDelta).toFixed(4)}\n`}
         </Text>
-      </View>
-      <View style={styles.debugRegion}>
-        <Text style={styles.debugRegionHeader}>Debug Marker</Text>
-        {debugMarker && (
-          <Text style={styles.debugRegionContent}>
-            {`Latitude: ${Number(debugMarker.coordinate.latitude).toFixed(
-              4
-            )}\n`}
-            {`Longitude: ${Number(debugMarker.coordinate.longitude).toFixed(
-              4
-            )}\n`}
-          </Text>
-        )}
       </View>
     </View>
   );

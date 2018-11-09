@@ -16,8 +16,15 @@ export const handleMarkerPress = markerId => {
     console.log('MarkerID:', markerId, 'CorrectMarker:', correctMarker.id);
 
     if (markerId === correctMarker.id) {
-      dispatch(setupLevel());
+      dispatch(correctMarkerChosen());
     }
+  };
+};
+
+export const correctMarkerChosen = () => {
+  return (dispatch, getstate) => {
+    // Start new level.
+    dispatch(setupLevel());
   };
 };
 
@@ -29,7 +36,6 @@ export const setupLevel = () => {
 
     // TEMPORARY
     const newRegion = region === 1 ? 0 : 1;
-    console.log('Region:', region, 'New Region:', newRegion);
     dispatch({ type: SET_REGION, payload: newRegion });
     dispatch({ type: SET_MARKERS, payload: newRegion });
     dispatch(randomizeCorrectMarker());
