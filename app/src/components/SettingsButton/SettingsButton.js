@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
-import { toggleOptionsMenu } from '../../actions/layers';
+import { togglePauseMenu } from '../../actions/layers';
 
 const whiteButtonBackground = '#ECECEC';
 class SettingsButton extends Component {
@@ -14,9 +14,9 @@ class SettingsButton extends Component {
           icon={{ name: 'settings' }}
           buttonStyle={{
             backgroundColor: whiteButtonBackground,
-            padding: 5
+            padding: 5,
           }}
-          onPress={this.props.toggleOptionsMenu}
+          onPress={this.props.togglePauseMenu}
         />
       </View>
     );
@@ -25,7 +25,7 @@ class SettingsButton extends Component {
 
 export default connect(
   null,
-  { toggleOptionsMenu }
+  { togglePauseMenu },
 )(SettingsButton);
 
 const styles = StyleSheet.create({
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
-    margin: 10
+    margin: 10,
   },
   button: {
-    padding: 5
-  }
+    padding: 5,
+  },
 });
