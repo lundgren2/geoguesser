@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
-import { toggleDebug, toggleGameMenu } from '../../actions/settings';
+import { toggleDebug } from '../../actions/settings';
+import { toggleOptionsMenu } from '../../actions/layers';
 
 export class GameMenu extends Component {
   menuButton = ({ title, onPress }) => (
@@ -20,11 +21,11 @@ export class GameMenu extends Component {
     const buttons = [
       {
         title: 'Resume Game',
-        onPress: this.props.toggleGameMenu
+        onPress: this.props.toggleOptionsMenu
       },
       {
         title: 'Main Menu',
-        onPress: this.props.toggleGameMenu
+        onPress: this.props.toggleOptionsMenu
       },
       {
         title: 'Options',
@@ -35,7 +36,7 @@ export class GameMenu extends Component {
     return (
       <Overlay
         overlayStyle={styles.overlay}
-        isVisible={this.props.showGameMenu}
+        isVisible={this.props.showOptionsMenu}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
@@ -46,13 +47,13 @@ export class GameMenu extends Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => ({
-  showGameMenu: settings.showGameMenu
+const mapStateToProps = ({ layers }) => ({
+  showOptionsMenu: layers.optionsMenu
 });
 
 const mapDispatchToProps = {
   toggleDebug,
-  toggleGameMenu
+  toggleOptionsMenu
 };
 
 export default connect(

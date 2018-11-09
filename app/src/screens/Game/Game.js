@@ -1,25 +1,26 @@
 import React from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import Map from '../../components/Map';
-import GameMenu from '../../components/GameMenu';
 import SettingsButton from '../../components/SettingsButton';
+import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
 
 export default () => {
-  // The order of the components is important. onPress events prioritates the latest component first.
   return (
-    <View style={styles.gameScreen}>
+    <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Map />
+      <View style={styles.container}>
+        <Map />
+        <GameBar />
+      </View>
       <SettingsButton />
-      <GameBar progress={80} text={'Hitta Stockholm'} />
       <GameMenu />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  gameScreen: {
+  container: {
     flex: 1
   }
 });

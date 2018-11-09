@@ -1,13 +1,47 @@
-import React from 'react';
-import { Animated, View, Text, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
 
-const GameBar = ({ progress, text }) => (
-  <View style={styles.bar}>
-    <Filler progress={progress} />
-    <Text style={styles.barText}>{text}</Text>
-  </View>
-);
+class GameBar extends Component {
+  state = {
+    timer: new Animated.Value(100)
+  };
+
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
+      this.startTimer();
+    }
+  }
+
+  startTimer() {
+    this.setState({ timer: new Animated.Value(100) }, () => {
+      setTimeout(() => {
+        Animated.timing(this.state.timer, {
+          toValue: 0,
+          duration: 14000,
+          easing: Easing.linear
+        }).start();
+      }, 1500);
+    });
+  }
+
+  render() {
+    return (
+      <View style={styles.bar}>
+        <Filler progress={this.state.timer} />
+        <Text style={styles.barText}>{this.props.correctMarker.title}</Text>
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = ({ game }) => ({
+  correctMarker: game.correctMarker
+});
+
+export default connect(mapStateToProps)(GameBar);
 
 const styles = StyleSheet.create({
   bar: {
@@ -34,5 +68,3 @@ const styles = StyleSheet.create({
     zIndex: 30
   }
 });
-
-export default GameBar;
