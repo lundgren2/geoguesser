@@ -1,1 +1,1 @@
-export { default } from './GameMenu.js';
+export { default } from './GameMenu';

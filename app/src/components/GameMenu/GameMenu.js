@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
 import { toggleDebug } from '../../actions/settings';
-import { toggleOptionsMenu } from '../../actions/layers';
+import { toggleMainMenu, toggleOptionsMenu } from '../../actions/layers';
 
 export class GameMenu extends Component {
   menuButton = ({ title, onPress }) => (
@@ -18,25 +18,32 @@ export class GameMenu extends Component {
   );
 
   render() {
+    const {
+      toggleOptionsMenu,
+      toggleMainMenu,
+      toggleDebug,
+      showOptionsMenu,
+    } = this.props;
+
     const buttons = [
       {
         title: 'Resume Game',
-        onPress: this.props.toggleOptionsMenu
+        onPress: toggleOptionsMenu,
       },
       {
         title: 'Main Menu',
-        onPress: this.props.toggleOptionsMenu
+        onPress: toggleMainMenu,
       },
       {
         title: 'Options',
-        onPress: this.props.toggleDebug
-      }
+        onPress: toggleDebug,
+      },
     ];
 
     return (
       <Overlay
         overlayStyle={styles.overlay}
-        isVisible={this.props.showOptionsMenu}
+        isVisible={showOptionsMenu}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
@@ -48,17 +55,18 @@ export class GameMenu extends Component {
 }
 
 const mapStateToProps = ({ layers }) => ({
-  showOptionsMenu: layers.optionsMenu
+  showOptionsMenu: layers.optionsMenu,
 });
 
 const mapDispatchToProps = {
   toggleDebug,
-  toggleOptionsMenu
+  toggleMainMenu,
+  toggleOptionsMenu,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(GameMenu);
 
 const styles = StyleSheet.create({
@@ -70,18 +78,18 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     maxHeight: 190,
     backgroundColor: '#00b894',
-    borderRadius: 5
+    borderRadius: 5,
   },
   buttonContainer: {
-    margin: 'auto'
+    margin: 'auto',
   },
   button: {
     width: '100%',
     borderRadius: 5,
     padding: 5,
-    backgroundColor: '#0984e3'
+    backgroundColor: '#0984e3',
   },
   buttonText: {
-    color: '#dfe6e9'
-  }
+    color: '#dfe6e9',
+  },
 });
