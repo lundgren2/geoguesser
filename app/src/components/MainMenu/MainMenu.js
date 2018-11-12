@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
+import { Location, Permissions } from 'expo';
 import FadeView from '../FadeView';
 import { startGame } from '../../actions/layers';
+import { setMarkersForce } from "../../actions/markers";
 import styles from './styles';
 
 export class MainMenu extends Component {
+  componentWillMount() {
+    this.getLocationAsync();
+  };
+
   menuButton = ({ title, onPress }) => (
     <Button
       key={title}
@@ -16,6 +22,24 @@ export class MainMenu extends Component {
       titleStyle={styles.buttonText}
     />
   );
+
+  getLocationAsync = async () => {
+    let { setMarkersForce } = this.props;
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      // TODO: Do something to tell the user that he does not has access
+    }
+    const location = await Location.getCurrentPositionAsync({});
+    setMarkersForce({
+      coordinate: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      },
+      description: "Your position",
+      id: 0,
+      title: "Your position",
+    });
+  };
 
   render() {
     const { startGame, showMainMenu } = this.props;
@@ -46,7 +70,7 @@ const mapStateToProps = ({ layers }) => ({
 });
 
 const mapDispatchToProps = {
-  startGame,
+  startGame, setMarkersForce
 };
 
 export default connect(

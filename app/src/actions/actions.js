@@ -11,3 +11,4 @@ export const PAUSE_GAME = 'PAUSE_GAME';
 export const SET_CORRECT_MARKER = 'SET_CORRECT_MARKER';
 export const SET_MARKERS = 'SET_MARKERS';
 export const SET_REGION = 'SET_REGION';
+export const SET_MARKERS_FORCE = 'SET_MARKERS_FORCE';
