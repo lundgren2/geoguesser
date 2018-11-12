@@ -26,7 +26,8 @@ class FadeView extends Component {
       toValue: 0,
       duration: duration,
     }).start(() => {
-      this.props.finished();
+      if (this.props.finished)
+        this.props.finished();
     });
   };
 

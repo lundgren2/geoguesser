@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
 import { brightColors } from '../../constants/mapStyles';
-import { handleMarkerPress, setupLevel } from '../../actions/thunks';
+import { handleMarkerPress } from '../../actions/thunks';
 import RegionInfo from './RegionInfo';
 import styles from './styles';
 
@@ -15,11 +15,7 @@ class Map extends Component {
   };
 
   componentDidMount() {
-    // TODO: Call this when the player intially presses "Start Game" on welcome screen.
-    this.props.setupLevel();
-    animationTimeout = setTimeout(() => {
-      this.focusMap(this.props.markers, true);
-    }, 2000);
+    this.focusMap(this.props.markers, true);
   }
 
   componentDidUpdate(prevProps) {
@@ -31,7 +27,7 @@ class Map extends Component {
   }
 
   focusMap(markers, animated) {
-    if (markers.length == 0) return;
+    if (markers.length === 0) return;
     const options = {
       // TODO: These are constants. Put them somewhere safe.
       edgePadding: { top: 200, right: 50, left: 50, bottom: 300 }, // High bottom padding since the map extends below the screen to hide google logo.
@@ -89,5 +85,5 @@ const mapStateToProps = ({ game, settings }) => ({
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupLevel },
+  { handleMarkerPress },
 )(Map);

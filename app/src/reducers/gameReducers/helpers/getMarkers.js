@@ -14,6 +14,9 @@ const getMarkers = (level, shuffle = false) => {
       listCities = require('../../../constants/levelsJson/ostArea.json')
         .geonames;
       break;
+    case 3:
+      listCities = [];
+      break;
     default:
       listCities = require('../../../constants/levelsJson/sverigeCities.json')
         .geonames;

@@ -1,7 +1,7 @@
 import getMarkers from './helpers/getMarkers';
 import { SET_MARKERS, SET_MARKERS_FORCE } from '../../actions';
 
-const initialState = getMarkers(2, true);
+const initialState = getMarkers(3, true);
 
 const markers = (state = initialState, action) => {
   switch (action.type) {

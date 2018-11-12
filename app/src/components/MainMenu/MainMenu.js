@@ -5,6 +5,7 @@ import { Location, Permissions } from 'expo';
 import FadeView from '../FadeView';
 import { startGame } from '../../actions/layers';
 import { setMarkersForce } from "../../actions/markers";
+import { setupLevel } from "../../actions/thunks";
 import styles from './styles';
 
 export class MainMenu extends Component {
@@ -41,12 +42,18 @@ export class MainMenu extends Component {
     });
   };
 
+  startGame = () => {
+      let { startGame, setupLevel } = this.props;
+      setupLevel();
+      startGame();
+  };
+
   render() {
-    const { startGame, showMainMenu } = this.props;
+    const { showMainMenu } = this.props;
     const buttons = [
-      { title: 'Start Game', onPress: startGame },
-      { title: 'Highscore', onPress: startGame },
-      { title: 'Settings', onPress: startGame },
+      { title: 'Start Game', onPress: this.startGame },
+      { title: 'Highscore', onPress: this.startGame },
+      { title: 'Settings', onPress: this.startGame },
     ];
 
     return (
@@ -57,7 +64,7 @@ export class MainMenu extends Component {
         width="auto"
         height="auto"
       >
-        <FadeView isVisible={showMainMenu} finished={startGame}>
+        <FadeView isVisible={showMainMenu}>
           {buttons.map(button => this.menuButton(button))}
         </FadeView>
       </Overlay>
@@ -70,7 +77,7 @@ const mapStateToProps = ({ layers }) => ({
 });
 
 const mapDispatchToProps = {
-  startGame, setMarkersForce
+  startGame, setMarkersForce, setupLevel,
 };
 
 export default connect(
