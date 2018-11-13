@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { SET_MARKERS, SET_REGION, SET_CORRECT_MARKER } from '../actions';
+import {addPoints} from "./score";
 
 // NOTE: Redux-thunks should never be async-await.
 
@@ -25,6 +26,9 @@ export const correctMarkerChosen = () => {
   return (dispatch, getstate) => {
     // Start new level.
     dispatch(setupLevel());
+    // Add points to score
+    const points = 100; // TODO: Fetch the time left and use that as points
+    dispatch(addPoints(points));
   };
 };
 

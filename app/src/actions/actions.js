@@ -8,3 +8,6 @@ export const TOGGLE_OPTIONS_MENU = 'TOGGLE_OPTIONS_MENU';
 export const SET_CORRECT_MARKER = 'SET_CORRECT_MARKER';
 export const SET_MARKERS = 'SET_MARKERS';
 export const SET_REGION = 'SET_REGION';
+
+// score
+export const ADD_POINTS = 'ADD_POINTS';

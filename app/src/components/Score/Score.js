@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export class Score extends Component {
   render()  {
     let { score } = this.props;
 
     return (
-      <View>
-        <Text>{score}</Text>
+      <View style={styles.wrapper}>
+        <Text>Score: {score}</Text>
       </View>
     )
   }
@@ -21,5 +21,11 @@ const mapStateToProps = ({ game }) => ({
 export default connect(
   mapStateToProps
 )(Score);
+
+const styles = StyleSheet.create({
+  wrapper: {
+    fontSize: 20,
+  }
+});
 
 
