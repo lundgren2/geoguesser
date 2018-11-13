@@ -7,8 +7,8 @@ export class Score extends Component {
     let { score } = this.props;
 
     return (
-      <View style={styles.wrapper}>
-        <Text>Score: {score}</Text>
+      <View style={styles.bar}>
+        <Text style={styles.text}>Score: {score}</Text>
       </View>
     )
   }
@@ -23,8 +23,16 @@ export default connect(
 )(Score);
 
 const styles = StyleSheet.create({
-  wrapper: {
+  bar: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 10,
+  },
+  text: {
     fontSize: 20,
+    color: 'black',
+    zIndex: 30,
   }
 });
 

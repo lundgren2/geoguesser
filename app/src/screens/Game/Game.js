@@ -11,8 +11,8 @@ export default () => {
     <View style={styles.container}>
       <StatusBar hidden={true} />
       <View style={styles.container}>
-        <Score />
         <Map />
+        <Score />
         <GameBar />
       </View>
       <SettingsButton />
