@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import country from '../../../constants/levelsJson/countries';
+import countries from '../../../constants/levelsJson/countries';
 
 // Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
@@ -8,22 +8,22 @@ const getMarkers = (level) => {
   let listCities;
   switch (level) {
     case 1:
-      listCities = country.se;
+      listCities = countries.se;
       break;
     case 2:
-      listCities = country.no;
+      listCities = countries.no;
       break;
     case 3:
-      listCities = country.dk;
+      listCities = countries.dk;
       break;
     case 4:
-      listCities = country.fi;
+      listCities = countries.fi;
       break;
     case 5:
-      listCities = country.de;
+      listCities = countries.de;
       break;
     default:
-      listCities = country.se;
+      listCities = countries.se;
   }
 
   const NR_MARKERS =
