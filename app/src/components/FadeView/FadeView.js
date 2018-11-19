@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import { Animated } from 'react-native';
 
+const FADE_DURATION = 1000;
+
 class FadeView extends Component {
   state = {
     fadeAnim: new Animated.Value(0),
   };
 
   componentWillReceiveProps(props) {
-    const fadeDuration = 1000;
     if (!props.isVisible && this.props.isVisible) {
-      this.fadeOut(fadeDuration);
+      this.fadeOut(FADE_DURATION);
     }
   }
 
   componentWillMount() {
-    const duration = 1000;
+    this.fadeIn(FADE_DURATION);
+  }
+
+  fadeIn = duration => {
     Animated.timing(this.state.fadeAnim, {
       toValue: 1,
       duration: duration,
     }).start();
-  }
+  };
 
   fadeOut = duration => {
     Animated.timing(this.state.fadeAnim, {
