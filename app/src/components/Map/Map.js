@@ -5,7 +5,11 @@ import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
 import { brightColors } from '../../constants/mapStyles';
-import { handleMarkerPress, setupLevel } from '../../actions/thunks';
+import {
+  handleMarkerPress,
+  setupInitialRegion,
+  setupNextRegion
+} from '../../actions/thunks';
 import { RegionInfo } from './components';
 
 class Map extends Component {
@@ -21,7 +25,7 @@ class Map extends Component {
 
   componentDidMount() {
     // TODO: Call this when the player intially presses "Start Game" on welcome screen.
-    this.props.setupLevel();
+    this.props.setupInitialRegion();
     animationTimeout = setTimeout(() => {
       this.focusMap(this.props.markers, true);
     }, 2000);
@@ -49,7 +53,21 @@ class Map extends Component {
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
   render() {
-    const { debug, markers } = this.props;
+    const { debug, markers, markersLeft } = this.props;
+
+    let markerLeftIds = markersLeft.map(marker => marker.id);
+    let markerIds = this.props.markers.map(marker => marker.id);
+    let correctMarkers = _.difference(markerIds, markerLeftIds);
+
+    console.log('##### Correct markers ###########', correctMarkers);
+
+    let greenMarkers = _.filter(markers, marker => {
+      console.log('Marker!!!!', marker);
+
+      _.includes(correctMarkers, marker.id);
+    });
+
+    console.log('############# Green markers ###########', greenMarkers);
 
     return (
       <View style={styles.container}>
@@ -88,13 +106,14 @@ class Map extends Component {
 
 const mapStateToProps = ({ game, settings }) => ({
   debug: settings.debug,
+  region: game.region,
   markers: game.markers,
-  region: game.region
+  markersLeft: game.markersLeft
 });
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupLevel }
+  { handleMarkerPress, setupInitialRegion, setupNextRegion }
 )(Map);
 
 const styles = StyleSheet.create({

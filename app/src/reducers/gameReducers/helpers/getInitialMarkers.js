@@ -3,32 +3,26 @@ import _ from 'lodash';
 // Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
-const getMarkers = (level) => {
+const getInitialMarkers = level => {
   let listCities;
   switch (level) {
     case 1:
-      listCities = require('../../../constants/levelsJson/se.json')
-        .geonames;
+      listCities = require('../../../constants/levelsJson/se.json').geonames;
       break;
     case 2:
-      listCities = require('../../../constants/levelsJson/fi.json')
-        .geonames;
+      listCities = require('../../../constants/levelsJson/fi.json').geonames;
       break;
     case 3:
-      listCities = require('../../../constants/levelsJson/dk.json')
-        .geonames;
+      listCities = require('../../../constants/levelsJson/dk.json').geonames;
       break;
     case 4:
-      listCities = require('../../../constants/levelsJson/no.json')
-        .geonames;
+      listCities = require('../../../constants/levelsJson/no.json').geonames;
       break;
     case 5:
-      listCities = require('../../../constants/levelsJson/de.json')
-        .geonames;
+      listCities = require('../../../constants/levelsJson/de.json').geonames;
       break;
     default:
-      listCities = require('../../../constants/levelsJson/se.json')
-        .geonames;
+      listCities = require('../../../constants/levelsJson/se.json').geonames;
   }
 
   const NR_MARKERS =
@@ -45,4 +39,4 @@ const getMarkers = (level) => {
   }));
 };
 
-export default getMarkers;
+export default getInitialMarkers;
