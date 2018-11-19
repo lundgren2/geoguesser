@@ -6,7 +6,7 @@ const initialState = getMarkers(2, true);
 const markers = (state = initialState, action) => {
   switch (action.type) {
     case SET_MARKERS:
-      return getMarkers(action.payload, true);
+      return getMarkers(action.payload);
     default:
       return state;
   }

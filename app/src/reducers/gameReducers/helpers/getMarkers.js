@@ -1,33 +1,38 @@
 import _ from 'lodash';
+import countries from '../../../constants/levelsJson/countries';
 
 // Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
-const getMarkers = (level, shuffle = false) => {
+const getMarkers = (level) => {
   let listCities;
   switch (level) {
     case 1:
-      listCities = require('../../../constants/levelsJson/linkopingArea.json')
-        .geonames;
+      listCities = countries.se;
       break;
     case 2:
-      listCities = require('../../../constants/levelsJson/ostArea.json')
-        .geonames;
+      listCities = countries.no;
+      break;
+    case 3:
+      listCities = countries.dk;
+      break;
+    case 4:
+      listCities = countries.fi;
+      break;
+    case 5:
+      listCities = countries.de;
       break;
     default:
-      listCities = require('../../../constants/levelsJson/sverigeCities.json')
-        .geonames;
+      listCities = countries.se;
   }
-
-  listCities = shuffle ? _.shuffle(listCities) : listCities;
 
   const NR_MARKERS =
     listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
 
-  return listCities.slice(0, NR_MARKERS).map((city, index) => ({
+  return listCities.geonames.slice(0, NR_MARKERS).map((city, index) => ({
     id: index,
     title: city.name,
-    description: city.fcodeName,
+    description: city.toponymName,
     coordinate: {
       latitude: parseFloat(city.lat),
       longitude: parseFloat(city.lng)
