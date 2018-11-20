@@ -60,7 +60,10 @@ class GameBar extends Component {
 
   render() {
     const { timer } = this.state;
-    const { correctMarker } = this.props;
+    const { correctMarker, showMainMenu } = this.props;
+
+    if (showMainMenu) return null;
+
     return (
       <View style={styles.bar}>
         <Filler progress={timer} />
@@ -73,6 +76,7 @@ class GameBar extends Component {
 const mapStateToProps = ({ game, layers }) => ({
   correctMarker: game.correctMarker,
   gameStatus: layers.gameStatus,
+  showMainMenu: layers.mainMenu,
 });
 
 export default connect(mapStateToProps)(GameBar);
