@@ -6,6 +6,7 @@ import {
   SET_CORRECT_MARKER,
   REMOVE_CORRECT_MARKER,
   TOGGLE_GAME_WON,
+  TOGGLE_GAME_LOST,
   TOGGLE_START_GAME
 } from '../actions';
 
@@ -32,7 +33,7 @@ export const handleMarkerPress = markerId => {
     if (markerId === correctMarker.id) {
       dispatch(correctMarkerChosen(correctMarker.id));
     } else {
-      // dispatch(wrongMarkerChosen());
+      dispatch(wrongMarkerChosen());
     }
   };
 };
@@ -55,10 +56,13 @@ export const correctMarkerChosen = markerId => {
   };
 };
 
-/* // The player has chosen an incorrect marker
+// The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = () => {
-  dispatch({ type: TOGGLE_LOST_GAME );
-}; */
+  return dispatch => {
+    // In the future we will probably add logic for multiple lifes here.
+    dispatch({ type: TOGGLE_GAME_LOST });
+  };
+};
 
 // The player has finished a region
 export const lastCorrectMarker = () => {

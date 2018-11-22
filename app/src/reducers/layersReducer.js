@@ -1,8 +1,13 @@
-import { TOGGLE_OPTIONS_MENU, TOGGLE_GAME_WON } from '../actions';
+import {
+  TOGGLE_OPTIONS_MENU,
+  TOGGLE_GAME_WON,
+  TOGGLE_GAME_LOST
+} from '../actions';
 
 const initialState = {
   optionsMenu: false,
-  gameWon: false
+  gameWon: false,
+  gameLost: false
 };
 
 const layers = (state = initialState, action) => {
@@ -11,6 +16,8 @@ const layers = (state = initialState, action) => {
       return { ...state, optionsMenu: !state.optionsMenu };
     case TOGGLE_GAME_WON:
       return { ...state, gameWon: !state.gameWon };
+    case TOGGLE_GAME_LOST:
+      return { ...state, gameLost: !state.gameLost };
     default:
       return state;
   }

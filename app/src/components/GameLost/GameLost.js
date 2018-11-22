@@ -2,30 +2,30 @@ import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
-import { toggleGameWon } from '../../actions/layers';
+import { toggleGameLost } from '../../actions/layers';
 import { toggleStartGame } from '../../actions/thunks';
 
-export class GameWon extends Component {
+export class GameLost extends Component {
   render() {
-    const buttonTitle = 'Play again';
-    const gameWonText = 'Congratulations, you won the game!';
+    const buttonTitle = 'Try again';
+    gameOverText = 'You lost the game!';
 
     return (
       <Overlay
         overlayStyle={styles.overlay}
-        isVisible={this.props.showGameWon}
+        isVisible={this.props.showGameLost}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
       >
-        <Text style={styles.text}>{gameWonText}</Text>
+        <Text style={styles.text}>{gameOverText}</Text>
         <Button
           key={buttonTitle}
           title={buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
             this.props.toggleStartGame();
-            this.props.toggleGameWon();
+            this.props.toggleGameLost();
           }}
           containerStyle={styles.buttonContainer}
           titleStyle={styles.buttonText}
@@ -36,18 +36,18 @@ export class GameWon extends Component {
 }
 
 mapStateToProps = ({ layers }) => ({
-  showGameWon: layers.gameWon
+  showGameLost: layers.gameLost
 });
 
 const mapDispatchToProps = {
-  toggleGameWon,
+  toggleGameLost,
   toggleStartGame
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(GameWon);
+)(GameLost);
 
 const styles = StyleSheet.create({
   overlay: {
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   text: {
+    textAlign: 'center',
     color: '#ffffff',
     fontSize: 20,
     fontWeight: 'bold'

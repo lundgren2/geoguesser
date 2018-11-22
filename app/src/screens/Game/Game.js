@@ -5,6 +5,7 @@ import SettingsButton from '../../components/SettingsButton';
 import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
 import GameWon from '../../components/GameWon';
+import GameLost from '../../components/GameLost';
 
 export default () => {
   return (
@@ -17,6 +18,7 @@ export default () => {
       <SettingsButton />
       <GameMenu />
       <GameWon />
+      <GameLost />
     </View>
   );
 };

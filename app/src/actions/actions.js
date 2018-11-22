@@ -4,6 +4,7 @@ export const TOGGLE_DEBUG = 'TOGGLE_DEBUG';
 // layers
 export const TOGGLE_OPTIONS_MENU = 'TOGGLE_OPTIONS_MENU';
 export const TOGGLE_GAME_WON = 'TOGGLE_GAME_WON';
+export const TOGGLE_GAME_LOST = 'TOGGLE_GAME_LOST';
 
 // game
 export const SET_REGION = 'SET_REGION';

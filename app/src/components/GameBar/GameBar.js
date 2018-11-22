@@ -13,7 +13,8 @@ class GameBar extends Component {
     if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
       this.startTimer();
     }
-    if (this.props.showGameWon) {
+    // If the played win or lose the game, stop the timer
+    if (this.props.showGameWon || this.props.showGameLost) {
       Animated.timing(this.state.timer).stop();
     }
   }
@@ -42,7 +43,8 @@ class GameBar extends Component {
 
 const mapStateToProps = ({ game, layers }) => ({
   correctMarker: game.correctMarker,
-  showGameWon: layers.gameWon
+  showGameWon: layers.gameWon,
+  showGameLost: layers.gameLost
 });
 
 export default connect(mapStateToProps)(GameBar);
