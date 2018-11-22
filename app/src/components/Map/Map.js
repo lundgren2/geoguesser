@@ -7,7 +7,8 @@ import { brightColors } from '../../constants/mapStyles';
 import {
   handleMarkerPress,
   setupInitialRegion,
-  setupNextRegion
+  setupNextRegion,
+  toggleStartGame
 } from '../../actions/thunks';
 import { RegionInfo } from './components';
 
@@ -27,6 +28,12 @@ class Map extends Component {
       animationTimeout = setTimeout(() => {
         this.focusMap(this.props.markers, true);
       }, 500);
+    }
+    if (this.props.startGame) {
+      // Toggle startGame back to false
+      this.props.toggleStartGame();
+      // Start a new game
+      this.startGame();
     }
   }
 
@@ -111,12 +118,13 @@ const mapStateToProps = ({ game, settings }) => ({
   debug: settings.debug,
   region: game.region,
   markers: game.markers,
-  markersLeft: game.markersLeft
+  markersLeft: game.markersLeft,
+  startGame: game.startGame
 });
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupInitialRegion, setupNextRegion }
+  { handleMarkerPress, setupInitialRegion, setupNextRegion, toggleStartGame }
 )(Map);
 
 const styles = StyleSheet.create({

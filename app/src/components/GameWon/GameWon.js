@@ -1,51 +1,46 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { OverLay, Button } from 'react-native-elements';
+import { Overlay, Button } from 'react-native-elements';
 import { toggleGameWon } from '../../actions/layers';
-import { setupInitialRegion } from '../../actions/thunks';
+import { toggleStartGame } from '../../actions/thunks';
 
 export class GameWon extends Component {
-  restartGameButton = ({ title }) => {
-    <Button
-      key={title}
-      title={title}
-      buttonStyle={styles.button}
-      onPress={() => {
-        this.props.toggleGameWon();
-        this.props.setupInitialRegion();
-        animationTimeout = setTimeout(() => {
-          this.focusMap(this.props.markers, true);
-        }, 2000);
-      }}
-      containerStyle={styles.buttonContainer}
-      titleStyle={styles.buttonText}
-    />;
-  };
-
   render() {
+    const title = 'Play again';
+
     return (
-      <OverLay
+      <Overlay
         overlayStyle={styles.overlay}
-        isVisible={this.props.showWonGame}
+        isVisible={this.props.showGameWon}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
       >
-        <Text>Congratulations, you won the game!</Text>
-        {this.restartGameButton('Restart game')}
-      </OverLay>
+        <Text style={styles.text}>Congratulations, you won the game!</Text>
+        <Button
+          key={title}
+          title={title}
+          buttonStyle={styles.button}
+          onPress={() => {
+            this.props.toggleStartGame();
+            this.props.toggleGameWon();
+          }}
+          containerStyle={styles.buttonContainer}
+          titleStyle={styles.buttonText}
+        />
+      </Overlay>
     );
   }
 }
 
 mapStateToProps = ({ layers }) => ({
-  showWonGame: layers.gameWon
+  showGameWon: layers.gameWon
 });
 
 const mapDispatchToProps = {
   toggleGameWon,
-  setupInitialRegion
+  toggleStartGame
 };
 
 export default connect(
@@ -74,6 +69,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0984e3'
   },
   buttonText: {
-    color: '#dfe6e9'
+    color: '#ffffff',
+    fontSize: 20
+  },
+  text: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 });

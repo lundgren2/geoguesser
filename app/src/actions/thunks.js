@@ -4,10 +4,19 @@ import {
   SET_INITIAL_MARKERS,
   SET_MARKERS,
   SET_CORRECT_MARKER,
-  REMOVE_CORRECT_MARKER
+  REMOVE_CORRECT_MARKER,
+  TOGGLE_GAME_WON,
+  TOGGLE_START_GAME
 } from '../actions';
 
 // NOTE: Redux-thunks should never be async-await.
+
+/* Start the game from the beginning */
+export const toggleStartGame = () => {
+  return dispatch => {
+    dispatch({ type: TOGGLE_START_GAME });
+  };
+};
 
 /**
  * Checks if pressed marker during game is correct.
@@ -48,7 +57,7 @@ export const correctMarkerChosen = markerId => {
 
 /* // The player has chosen an incorrect marker
 export const wrongMarkerChosen = () => {
-  dispatch({ type: LOST_GAME, payload: 0 });
+  dispatch({ type: TOGGLE_LOST_GAME );
 }; */
 
 // The player has finished a region
@@ -59,19 +68,19 @@ export const lastCorrectMarker = () => {
     } = getState();
 
     // Player wins the game if this was the last region
-    if (region === 5) console.log('Player won the game!!!');
-
-    // Setup next region
-    dispatch(setupNextRegion());
+    if (region === 5) {
+      dispatch({ type: TOGGLE_GAME_WON });
+    } else {
+      // Setup next region
+      dispatch(setupNextRegion());
+    }
   };
 };
 
 // Setup the initial region/level to play
 export const setupInitialRegion = () => {
-  return (dispatch, getState) => {
-    const {
-      game: { region }
-    } = getState();
+  return dispatch => {
+    const region = 1;
 
     dispatch({ type: SET_REGION, payload: region });
     dispatch({ type: SET_INITIAL_MARKERS, payload: region });
