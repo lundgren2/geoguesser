@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
+import { wrongMarkerChosen } from '../../actions/thunks';
 
 class GameBar extends Component {
   state = {
@@ -26,7 +27,12 @@ class GameBar extends Component {
           toValue: 0,
           duration: 14000,
           easing: Easing.linear
-        }).start();
+        }).start(({ finished }) => {
+          if (finished) {
+            // Time ran out, player lost the game
+            this.props.wrongMarkerChosen();
+          }
+        });
       }, 1500);
     });
   }
@@ -47,7 +53,10 @@ const mapStateToProps = ({ game, layers }) => ({
   showGameLost: layers.gameLost
 });
 
-export default connect(mapStateToProps)(GameBar);
+export default connect(
+  mapStateToProps,
+  { wrongMarkerChosen }
+)(GameBar);
 
 const styles = StyleSheet.create({
   bar: {
