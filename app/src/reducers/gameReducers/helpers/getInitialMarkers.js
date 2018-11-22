@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import countries from '../../../constants/levelsJson/countries';
 
 // Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
@@ -7,28 +8,28 @@ const getInitialMarkers = level => {
   let listCities;
   switch (level) {
     case 1:
-      listCities = require('../../../constants/levelsJson/se.json').geonames;
+      listCities = countries.se;
       break;
     case 2:
-      listCities = require('../../../constants/levelsJson/fi.json').geonames;
+      listCities = countries.no;
       break;
     case 3:
-      listCities = require('../../../constants/levelsJson/dk.json').geonames;
+      listCities = countries.dk;
       break;
     case 4:
-      listCities = require('../../../constants/levelsJson/no.json').geonames;
+      listCities = countries.fi;
       break;
     case 5:
-      listCities = require('../../../constants/levelsJson/de.json').geonames;
+      listCities = countries.de;
       break;
     default:
-      listCities = require('../../../constants/levelsJson/se.json').geonames;
+      listCities = countries.se;
   }
 
   const NR_MARKERS =
     listCities.length >= MAX_NR_MARKERS ? MAX_NR_MARKERS : listCities.length;
 
-  return listCities.slice(0, NR_MARKERS).map((city, index) => ({
+  return listCities.geonames.slice(0, NR_MARKERS).map((city, index) => ({
     id: index,
     title: city.name,
     description: city.toponymName,
