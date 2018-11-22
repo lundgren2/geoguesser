@@ -56,18 +56,13 @@ class Map extends Component {
     const { debug, markers, markersLeft } = this.props;
 
     let markerLeftIds = markersLeft.map(marker => marker.id);
-    let markerIds = this.props.markers.map(marker => marker.id);
-    let correctMarkers = _.difference(markerIds, markerLeftIds);
 
-    console.log('##### Correct markers ###########', correctMarkers);
-
-    let greenMarkers = _.filter(markers, marker => {
-      console.log('Marker!!!!', marker);
-
-      _.includes(correctMarkers, marker.id);
-    });
-
-    console.log('############# Green markers ###########', greenMarkers);
+    let redMarkers = markers.filter(marker =>
+      markerLeftIds.includes(marker.id)
+    );
+    let greenMarkers = markers.filter(
+      marker => !markerLeftIds.includes(marker.id)
+    );
 
     return (
       <View style={styles.container}>
@@ -85,7 +80,7 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {markers.map(marker => {
+          {redMarkers.map(marker => {
             return (
               <MapView.Marker
                 key={marker.id}
@@ -94,6 +89,16 @@ class Map extends Component {
                 onPress={() => {
                   this.props.handleMarkerPress(marker.id);
                 }}
+              />
+            );
+          })}
+          {greenMarkers.map(marker => {
+            return (
+              <MapView.Marker
+                key={marker.id}
+                identifier={marker.title}
+                coordinate={marker.coordinate}
+                pinColor={'green'}
               />
             );
           })}

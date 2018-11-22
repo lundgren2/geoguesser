@@ -107,6 +107,5 @@ export const randomizeCorrectMarker = () => {
     const correctMarker = _.nth(game.markersLeft, id);
 
     dispatch({ type: SET_CORRECT_MARKER, payload: correctMarker });
-    console.log(game);
   };
 };
