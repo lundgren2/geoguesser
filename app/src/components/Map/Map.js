@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
@@ -18,17 +17,9 @@ class Map extends Component {
     mapRegion: null
   };
 
-  // static propTypes = {
-  //   markers: PropTypes.arrayOf(PropTypes.object),
-  //   region: PropTypes.object
-  // };
-
   componentDidMount() {
     // TODO: Call this when the player intially presses "Start Game" on welcome screen.
-    this.props.setupInitialRegion();
-    animationTimeout = setTimeout(() => {
-      this.focusMap(this.props.markers, true);
-    }, 2000);
+    this.startGame();
   }
 
   componentDidUpdate(prevProps) {
@@ -51,6 +42,13 @@ class Map extends Component {
   }
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
+
+  startGame() {
+    this.props.setupInitialRegion();
+    animationTimeout = setTimeout(() => {
+      this.focusMap(this.props.markers, true);
+    }, 2000);
+  }
 
   render() {
     const { debug, markers, markersLeft } = this.props;

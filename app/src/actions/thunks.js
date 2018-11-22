@@ -6,7 +6,6 @@ import {
   SET_CORRECT_MARKER,
   REMOVE_CORRECT_MARKER
 } from '../actions';
-import gameReducers from '../reducers/gameReducers';
 
 // NOTE: Redux-thunks should never be async-await.
 

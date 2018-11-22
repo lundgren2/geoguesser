@@ -4,6 +4,7 @@ import Map from '../../components/Map';
 import SettingsButton from '../../components/SettingsButton';
 import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
+import GameWon from '../../components/GameWon';
 
 export default () => {
   return (
@@ -15,6 +16,7 @@ export default () => {
       </View>
       <SettingsButton />
       <GameMenu />
+      <GameWon />
     </View>
   );
 };
