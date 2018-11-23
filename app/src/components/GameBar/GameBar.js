@@ -44,7 +44,6 @@ class GameBar extends Component {
 
   stopTimer() {
     Animated.timing(this.state.timer).stop();
-    console.log('stoppar shit');
   }
 
   resetTimer() {
