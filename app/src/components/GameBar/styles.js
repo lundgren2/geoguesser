@@ -1,20 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-export default (styles = StyleSheet.create({
+export default StyleSheet.create({
   bar: {
     flex: 1,
     position: 'absolute',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 0,
+    bottom: 10,
     width: '90%',
     margin: 10,
-    height: '6%',
-    backgroundColor: 'rgba(255, 255, 255, 0.65)',
-    borderWidth: 3,
+    height: '7%',
+    borderWidth: 4,
+    borderRadius: 24,
     borderColor: 'rgba(245, 223, 76, .88)',
-    borderRadius: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.65)',
   },
   barText: {
     color: 'black',
@@ -26,9 +26,11 @@ export default (styles = StyleSheet.create({
   filler: {
     flex: 1,
     left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     zIndex: 30,
-    height: '100%',
     position: 'absolute',
     backgroundColor: 'rgba(245, 223, 76, .88)',
   },
-}));
+});

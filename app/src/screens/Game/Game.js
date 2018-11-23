@@ -6,28 +6,17 @@ import SettingsButton from '../../components/SettingsButton';
 import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
 import MainMenu from '../../components/MainMenu';
+import styles from './styles';
 
-const Game = ({ showMainMenu }) => {
+export default ({ showMainMenu }) => {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
       <Map />
-      {!showMainMenu && <GameBar />}
-      {!showMainMenu && <SettingsButton />}
+      <GameBar />
+      <SettingsButton />
       <GameMenu />
       <MainMenu />
     </View>
   );
 };
-
-const mapStateToProps = ({ layers }) => ({
-  showMainMenu: layers.mainMenu,
-});
-
-export default connect(mapStateToProps)(Game);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

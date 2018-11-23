@@ -4,11 +4,11 @@ import _ from 'lodash';
 import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
 import styles from './styles';
+import { GAME_PAUSED, GAME_ON, GAME_OFF } from '../../actions';
 
 class GameBar extends Component {
   state = {
     timer: new Animated.Value(100),
-    timerOn: false,
   };
 
   componentDidMount() {
@@ -18,49 +18,59 @@ class GameBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
+    const { correctMarker, gameStatus } = this.props;
+
+    switch (gameStatus) {
+      case GAME_PAUSED:
+        this.stopTimer();
+        break;
+      case GAME_ON:
+        this.startTimer();
+        break;
+      case GAME_OFF:
+        this.stopTimer();
+        // Reset timer once if gameStatus is GAME_OFF
+        if (prevProps.gameStatus !== gameStatus) this.resetTimer();
+        break;
+    }
+
+    this.checkCorrectMarker(prevProps.correctMarker, correctMarker);
+  }
+
+  checkCorrectMarker(prevMarker, correctMarker) {
+    if (!_.isEqual(prevMarker, correctMarker)) {
       this.stopTimer();
       this.resetTimer();
+
+      // Delay game to start after a correct marker is picked
       setTimeout(() => {
         this.startTimer();
       }, 1500);
-    } else {
-      this.props.gameStatus === 'GAME_PAUSED' &&
-        this.state.timerOn &&
-        this.stopTimer();
-
-      prevProps.gameStatus === 'GAME_PAUSED' &&
-        this.props.gameStatus === 'GAME_ON' &&
-        !this.state.timerOn &&
-        this.startTimer();
     }
   }
 
   startTimer() {
-    this.setState({ timerOn: true }, () => {
-      Animated.timing(
-        Animated.timing(this.state.timer, {
-          toValue: 0,
-          duration: 14000,
-          easing: Easing.linear,
-        }).start(),
-      );
-    });
+    Animated.timing(this.state.timer, {
+      toValue: 0,
+      duration: 14000,
+      easing: Easing.linear,
+    }).start();
   }
 
   stopTimer() {
-    this.setState({ timerOn: false }, () => {
-      Animated.timing(this.state.timer).stop();
-    });
+    Animated.timing(this.state.timer).stop();
   }
 
   resetTimer() {
-    this.setState({ timer: new Animated.Value(100), timerOn: false });
+    this.setState({ timer: new Animated.Value(100) });
   }
 
   render() {
     const { timer } = this.state;
-    const { correctMarker } = this.props;
+    const { correctMarker, showMainMenu } = this.props;
+
+    if (showMainMenu) return null;
+
     return (
       <View style={styles.bar}>
         <Filler progress={timer} />
@@ -73,6 +83,7 @@ class GameBar extends Component {
 const mapStateToProps = ({ game, layers }) => ({
   correctMarker: game.correctMarker,
   gameStatus: layers.gameStatus,
+  showMainMenu: layers.mainMenu,
 });
 
 export default connect(mapStateToProps)(GameBar);
