@@ -39,6 +39,48 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
+  getMarker = (marker) => {
+    if (marker.markerType === "CIRCLE")
+      return (
+        <MapView.Circle
+          key={marker.id}
+          identifier={marker.title}
+          coordinate={marker.coordinate}
+          onPress={() => {
+            this.props.handleMarkerPress(marker.id);
+          }}
+          center={marker.center}
+          radius={5}
+          fillColor="rgba(0, 0, 0, 0.2)"
+          strokeColor="rgba(0, 0, 0, 0.2)"
+        />
+      );
+
+    else if (marker.markerType === "MARKER")
+      return (
+        <MapView.Marker
+          key={marker.id}
+          identifier={marker.title}
+          coordinate={marker.coordinate}
+          onPress={() => {
+            this.props.handleMarkerPress(marker.id);
+          }}
+        />
+      );
+
+    else
+      return (
+        <MapView.Marker
+          key={marker.id}
+          identifier={marker.title}
+          coordinate={marker.coordinate}
+          onPress={() => {
+            this.props.handleMarkerPress(marker.id);
+          }}
+        />
+      );
+  };
+
   render() {
     const { debug, markers } = this.props;
 
@@ -58,18 +100,7 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {markers.map(marker => {
-            return (
-              <MapView.Marker
-                key={marker.id}
-                identifier={marker.title}
-                coordinate={marker.coordinate}
-                onPress={() => {
-                  this.props.handleMarkerPress(marker.id);
-                }}
-              />
-            );
-          })}
+          {markers.map(marker => this.getMarker(marker))}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
       </View>

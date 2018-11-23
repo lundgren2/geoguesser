@@ -6,6 +6,7 @@ import FadeView from '../FadeView';
 import { startGame } from '../../actions/layers';
 import { setMarkersForce } from "../../actions/markers";
 import { setupLevel } from "../../actions/thunks";
+import { MapView } from 'expo';
 import styles from './styles';
 
 export class MainMenu extends Component {
@@ -36,9 +37,9 @@ export class MainMenu extends Component {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       },
-      description: "Your position",
+      center: location.coords,
       id: 0,
-      title: "Your position",
+      markerType: "CIRCLE",
     });
   };
 

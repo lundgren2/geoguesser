@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { MapView } from 'expo';
 
 // Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
@@ -34,7 +35,8 @@ const getMarkers = (level, shuffle = false) => {
     coordinate: {
       latitude: parseFloat(city.lat),
       longitude: parseFloat(city.lng)
-    }
+    },
+    markerType: "MARKER",
   }));
 };
 
