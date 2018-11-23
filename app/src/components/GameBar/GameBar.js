@@ -33,13 +33,11 @@ class GameBar extends Component {
   }
 
   startTimer() {
-    Animated.timing(
-      Animated.timing(this.state.timer, {
-        toValue: 0,
-        duration: 14000,
-        easing: Easing.linear,
-      }).start(),
-    );
+    Animated.timing(this.state.timer, {
+      toValue: 0,
+      duration: 14000,
+      easing: Easing.linear,
+    }).start();
   }
 
   stopTimer() {
