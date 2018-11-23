@@ -4,11 +4,11 @@ import _ from 'lodash';
 import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
 import styles from './styles';
+import { GAME_PAUSED, GAME_ON } from '../../actions';
 
 class GameBar extends Component {
   state = {
     timer: new Animated.Value(100),
-    timerOn: false,
   };
 
   componentDidMount() {
@@ -21,41 +21,34 @@ class GameBar extends Component {
     if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
       this.stopTimer();
       this.resetTimer();
+
+      // Delay game to start after a correct marker is picked
       setTimeout(() => {
         this.startTimer();
       }, 1500);
     } else {
-      this.props.gameStatus === 'GAME_PAUSED' &&
-        this.state.timerOn &&
-        this.stopTimer();
-
-      prevProps.gameStatus === 'GAME_PAUSED' &&
-        this.props.gameStatus === 'GAME_ON' &&
-        !this.state.timerOn &&
-        this.startTimer();
+      this.props.gameStatus == GAME_PAUSED && this.stopTimer();
+      this.props.gameStatus === GAME_ON && this.startTimer();
     }
   }
 
   startTimer() {
-    this.setState({ timerOn: true }, () => {
-      Animated.timing(
-        Animated.timing(this.state.timer, {
-          toValue: 0,
-          duration: 14000,
-          easing: Easing.linear,
-        }).start(),
-      );
-    });
+    Animated.timing(
+      Animated.timing(this.state.timer, {
+        toValue: 0,
+        duration: 14000,
+        easing: Easing.linear,
+      }).start(),
+    );
   }
 
   stopTimer() {
-    this.setState({ timerOn: false }, () => {
-      Animated.timing(this.state.timer).stop();
-    });
+    Animated.timing(this.state.timer).stop();
+    console.log('stoppar shit');
   }
 
   resetTimer() {
-    this.setState({ timer: new Animated.Value(100), timerOn: false });
+    this.setState({ timer: new Animated.Value(100) });
   }
 
   render() {

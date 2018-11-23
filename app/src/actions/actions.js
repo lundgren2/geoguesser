@@ -6,6 +6,9 @@ export const TOGGLE_PAUSE_MENU = 'TOGGLE_PAUSE_MENU';
 export const START_GAME = 'START_GAME';
 export const STOP_GAME = 'STOP_GAME';
 export const PAUSE_GAME = 'PAUSE_GAME';
+export const GAME_OFF = 'GAME_OFF';
+export const GAME_ON = 'GAME_ON';
+export const GAME_PAUSED = 'GAME_PAUSED';
 
 // game
 export const SET_CORRECT_MARKER = 'SET_CORRECT_MARKER';

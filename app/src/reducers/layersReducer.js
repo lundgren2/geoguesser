@@ -3,11 +3,10 @@ import {
   START_GAME,
   STOP_GAME,
   PAUSE_GAME,
+  GAME_OFF,
+  GAME_ON,
+  GAME_PAUSED,
 } from '../actions';
-
-const GAME_OFF = 'GAME_OFF';
-const GAME_ON = 'GAME_ON';
-const GAME_PAUSED = 'GAME_PAUSED';
 
 const initialState = {
   pauseMenu: false,
@@ -22,7 +21,7 @@ const debug = (state = initialState, action) => {
       return {
         ...state,
         pauseMenu: !state.pauseMenu,
-        gameStatus: !state.pauseMenu ? 'GAME_PAUSED' : 'GAME_ON',
+        gameStatus: !state.pauseMenu ? GAME_PAUSED : GAME_ON,
       };
     case STOP_GAME:
       return {
