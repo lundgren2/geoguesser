@@ -27,7 +27,7 @@ class GameBar extends Component {
         this.startTimer();
       }, 1500);
     } else {
-      this.props.gameStatus == GAME_PAUSED && this.stopTimer();
+      this.props.gameStatus === GAME_PAUSED && this.stopTimer();
       this.props.gameStatus === GAME_ON && this.startTimer();
     }
   }
