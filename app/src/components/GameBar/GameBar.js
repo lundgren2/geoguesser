@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
 import styles from './styles';
-import { GAME_PAUSED, GAME_ON } from '../../actions';
+import { GAME_PAUSED, GAME_ON, GAME_OFF } from '../../actions';
 
 class GameBar extends Component {
   state = {
@@ -27,9 +27,18 @@ class GameBar extends Component {
       case GAME_ON:
         this.startTimer();
         break;
+      case GAME_OFF:
+        this.stopTimer();
+        // Reset timer once if gameStatus is GAME_OFF
+        if (prevProps.gameStatus !== gameStatus) this.resetTimer();
+        break;
     }
 
-    if (!_.isEqual(prevProps.correctMarker, correctMarker)) {
+    this.checkCorrectMarker(prevProps.correctMarker, correctMarker);
+  }
+
+  checkCorrectMarker(prevMarker, correctMarker) {
+    if (!_.isEqual(prevMarker, correctMarker)) {
       this.stopTimer();
       this.resetTimer();
 
