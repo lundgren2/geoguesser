@@ -18,7 +18,18 @@ class GameBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
+    const { correctMarker, gameStatus } = this.props;
+
+    switch (gameStatus) {
+      case GAME_PAUSED:
+        this.stopTimer();
+        break;
+      case GAME_ON:
+        this.startTimer();
+        break;
+    }
+
+    if (!_.isEqual(prevProps.correctMarker, correctMarker)) {
       this.stopTimer();
       this.resetTimer();
 
@@ -26,9 +37,6 @@ class GameBar extends Component {
       setTimeout(() => {
         this.startTimer();
       }, 1500);
-    } else {
-      this.props.gameStatus === GAME_PAUSED && this.stopTimer();
-      this.props.gameStatus === GAME_ON && this.startTimer();
     }
   }
 
