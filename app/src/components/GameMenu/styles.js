@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default (styles = StyleSheet.create({
+export default StyleSheet.create({
   overlay: {
     flex: 1,
     flexDirection: 'column',
@@ -23,4 +23,4 @@ export default (styles = StyleSheet.create({
   buttonText: {
     color: '#dfe6e9',
   },
-}));
+});

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default (styles = StyleSheet.create({
+export default StyleSheet.create({
   bar: {
     flex: 1,
     position: 'absolute',
@@ -33,4 +33,4 @@ export default (styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'rgba(245, 223, 76, .88)',
   },
-}));
+});
