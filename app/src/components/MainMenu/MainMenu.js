@@ -4,15 +4,15 @@ import { Overlay, Button } from 'react-native-elements';
 import { Location, Permissions } from 'expo';
 import FadeView from '../FadeView';
 import { startGame } from '../../actions/layers';
-import { setMarkersForce } from "../../actions/markers";
-import { setupLevel } from "../../actions/thunks";
+import { setMarkersForce } from '../../actions/markers';
+import { setupLevel } from '../../actions/thunks';
 import { MapView } from 'expo';
 import styles from './styles';
 
 export class MainMenu extends Component {
   componentWillMount() {
     this.getLocationAsync();
-  };
+  }
 
   menuButton = ({ title, onPress }) => (
     <Button
@@ -39,14 +39,14 @@ export class MainMenu extends Component {
       },
       center: location.coords,
       id: 0,
-      markerType: "CIRCLE",
+      markerType: 'CIRCLE',
     });
   };
 
   startGame = () => {
-      let { startGame, setupLevel } = this.props;
-      setupLevel();
-      startGame();
+    const { startGame, setupLevel } = this.props;
+    setupLevel();
+    startGame();
   };
 
   render() {
@@ -78,7 +78,9 @@ const mapStateToProps = ({ layers }) => ({
 });
 
 const mapDispatchToProps = {
-  startGame, setMarkersForce, setupLevel,
+  startGame,
+  setMarkersForce,
+  setupLevel,
 };
 
 export default connect(
