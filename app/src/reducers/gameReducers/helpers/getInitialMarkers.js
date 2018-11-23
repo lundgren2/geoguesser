@@ -4,7 +4,7 @@ import countries from '../../../constants/levelsJson/countries';
 // Write amount of markers to be shown
 const MAX_NR_MARKERS = 6; //TODO: move this to a constant file
 
-const getMarkers = (level) => {
+const getInitialMarkers = level => {
   let listCities;
   switch (level) {
     case 1:
@@ -40,4 +40,4 @@ const getMarkers = (level) => {
   }));
 };
 
-export default getMarkers;
+export default getInitialMarkers;

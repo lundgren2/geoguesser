@@ -1,17 +1,26 @@
-import { TOGGLE_OPTIONS_MENU } from '../actions';
+import {
+  TOGGLE_OPTIONS_MENU,
+  TOGGLE_GAME_WON,
+  TOGGLE_GAME_LOST
+} from '../actions';
 
 const initialState = {
-  optionsMenu: false
+  optionsMenu: false,
+  gameWon: false,
+  gameLost: false
 };
 
-const debug = (state = initialState, action) => {
+const layers = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_OPTIONS_MENU:
-      console.log(state);
       return { ...state, optionsMenu: !state.optionsMenu };
+    case TOGGLE_GAME_WON:
+      return { ...state, gameWon: !state.gameWon };
+    case TOGGLE_GAME_LOST:
+      return { ...state, gameLost: !state.gameLost };
     default:
       return state;
   }
 };
 
-export default debug;
+export default layers;
