@@ -8,7 +8,7 @@ class FadeView extends Component {
     fadeAnim: new Animated.Value(0),
   };
 
-  componentWillReceiveProps(props) {
+  componentDidUpdate(props) {
     if (!props.isVisible && this.props.isVisible) {
       this.fadeOut(FADE_DURATION);
     }
