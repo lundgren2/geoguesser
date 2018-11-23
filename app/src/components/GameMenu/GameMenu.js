@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
 import { toggleDebug } from '../../actions/settings';
-import { stopGame, togglePauseMenu } from '../../actions/layers';
+import { stopGame, toggleGameMenu } from '../../actions/layers';
 import styles from './styles';
 
 export class GameMenu extends Component {
@@ -18,17 +18,12 @@ export class GameMenu extends Component {
   );
 
   render() {
-    const {
-      togglePauseMenu,
-      stopGame,
-      toggleDebug,
-      showPauseMenu,
-    } = this.props;
+    const { toggleGameMenu, stopGame, toggleDebug, showGameMenu } = this.props;
 
     const buttons = [
       {
         title: 'Resume Game',
-        onPress: togglePauseMenu,
+        onPress: toggleGameMenu,
       },
       {
         title: 'Main Menu',
@@ -43,7 +38,7 @@ export class GameMenu extends Component {
     return (
       <Overlay
         overlayStyle={styles.overlay}
-        isVisible={showPauseMenu}
+        isVisible={showGameMenu}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
@@ -55,13 +50,13 @@ export class GameMenu extends Component {
 }
 
 const mapStateToProps = ({ layers }) => ({
-  showPauseMenu: layers.pauseMenu,
+  showGameMenu: layers.gameMenu,
 });
 
 const mapDispatchToProps = {
   toggleDebug,
   stopGame,
-  togglePauseMenu,
+  toggleGameMenu,
 };
 
 export default connect(

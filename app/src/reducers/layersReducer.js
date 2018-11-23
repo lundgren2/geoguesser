@@ -1,5 +1,5 @@
 import {
-  TOGGLE_PAUSE_MENU,
+  TOGGLE_GAME_MENU,
   START_GAME,
   STOP_GAME,
   PAUSE_GAME,
@@ -9,7 +9,7 @@ import {
 } from '../actions';
 
 const initialState = {
-  pauseMenu: false,
+  gameMenu: false,
   mainMenu: true,
   gameStatus: GAME_OFF,
 };
@@ -17,25 +17,25 @@ const initialState = {
 const debug = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
-    case TOGGLE_PAUSE_MENU:
+    case TOGGLE_GAME_MENU:
       return {
         ...state,
-        pauseMenu: !state.pauseMenu,
-        gameStatus: !state.pauseMenu ? GAME_PAUSED : GAME_ON,
+        gameMenu: !state.gameMenu,
+        gameStatus: !state.gameMenu ? GAME_PAUSED : GAME_ON,
       };
     case STOP_GAME:
       return {
         ...state,
-        mainMenu: true,
-        pauseMenu: false,
         gameStatus: GAME_OFF,
+        mainMenu: true,
+        gameMenu: false,
       };
     case START_GAME:
       return {
         ...state,
         gameStatus: GAME_ON,
         mainMenu: false,
-        pauseMenu: false,
+        gameMenu: false,
       };
     default:
       return state;

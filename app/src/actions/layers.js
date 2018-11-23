@@ -1,12 +1,12 @@
 import {
-  TOGGLE_PAUSE_MENU,
+  TOGGLE_GAME_MENU,
   TOGGLE_MAIN_MENU,
   START_GAME,
   STOP_GAME,
   PAUSE_GAME,
 } from './actions';
 
-export const togglePauseMenu = () => ({ type: TOGGLE_PAUSE_MENU });
+export const toggleGameMenu = () => ({ type: TOGGLE_GAME_MENU });
 
 export const toggleMainMenu = () => ({ type: TOGGLE_MAIN_MENU });
 
