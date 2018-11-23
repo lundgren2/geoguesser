@@ -57,20 +57,6 @@ class Map extends Component {
     }, 2000);
   }
 
-  renderMarkers(markers, color, onPress = null) {
-    return markers.map(marker => {
-      return (
-        <MapView.Marker
-          key={marker.id}
-          identifier={marker.title}
-          coordinate={marker.coordinate}
-          onPress={onPress ? onPress(marker.id) : null}
-          pinColor={color}
-        />
-      );
-    });
-  }
-
   render() {
     const { debug, markers, markersLeft } = this.props;
 
@@ -102,13 +88,34 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {this.renderMarkers(redMarkers, red, this.props.handleMarkerPress)};
-          {this.renderMarkers(greenMarkers, green, null)}
+          {redMarkers.map(marker => {
+            return (
+              <MapView.Marker
+                key={marker.id}
+                identifier={marker.title}
+                coordinate={marker.coordinate}
+                onPress={() => this.props.handleMarkerPress(marker.id)}
+                pinColor={red}
+              />
+            );
+          })}
+          {greenMarkers.map(marker => {
+            return (
+              <MapView.Marker
+                key={marker.id}
+                identifier={marker.title}
+                coordinate={marker.coordinate}
+                onPress={null}
+                pinColor={green}
+              />
+            );
+          })}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
       </View>
     );
   }
+  // {this.renderMarkers(greenMarkers, green)}
 }
 
 const mapStateToProps = ({ game, settings }) => ({
