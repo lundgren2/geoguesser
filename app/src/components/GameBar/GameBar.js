@@ -5,32 +5,10 @@ import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
 
 class GameBar extends Component {
-  state = {
-    timer: new Animated.Value(100)
-  };
-
-  componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
-      this.startTimer();
-    }
-  }
-
-  startTimer() {
-    this.setState({ timer: new Animated.Value(100) }, () => {
-      setTimeout(() => {
-        Animated.timing(this.state.timer, {
-          toValue: 0,
-          duration: 14000,
-          easing: Easing.linear
-        }).start();
-      }, 1500);
-    });
-  }
-
   render() {
     return (
       <View style={styles.bar}>
-        <Filler progress={this.state.timer} />
+        <Filler progress={this.props.timer} />
         <Text style={styles.barText}>{this.props.correctMarker.title}</Text>
       </View>
     );

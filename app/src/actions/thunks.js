@@ -9,25 +9,24 @@ import {addPoints} from "./score";
  * If true starts next level.
  * TODO: If false, alerts user.
  */
-export const handleMarkerPress = markerId => {
+export const handleMarkerPress = (markerId, points) => {
   return (dispatch, getState) => {
     const {
       game: { correctMarker }
     } = getState();
-    console.log('MarkerID:', markerId, 'CorrectMarker:', correctMarker.id);
+    console.log('MarkerID:', markerId, 'CorrectMarker:', correctMarker.id, 'Points: ', points);
 
     if (markerId === correctMarker.id) {
-      dispatch(correctMarkerChosen());
+      dispatch(correctMarkerChosen(points));
     }
   };
 };
 
-export const correctMarkerChosen = () => {
+export const correctMarkerChosen = (points) => {
   return (dispatch, getstate) => {
     // Start new level.
     dispatch(setupLevel());
     // Add points to score
-    const points = 100; // TODO: Fetch the time left and use that as points
     dispatch(addPoints(points));
   };
 };

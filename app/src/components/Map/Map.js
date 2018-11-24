@@ -50,7 +50,6 @@ class Map extends Component {
 
   render() {
     const { debug, markers } = this.props;
-
     return (
       <View style={styles.container}>
         <MapView
@@ -74,7 +73,8 @@ class Map extends Component {
                 identifier={marker.title}
                 coordinate={marker.coordinate}
                 onPress={() => {
-                  this.props.handleMarkerPress(marker.id);
+                  const points =  Math.floor(this.props.timer.__getValue());
+                  this.props.handleMarkerPress(marker.id, points);
                 }}
               />
             );
