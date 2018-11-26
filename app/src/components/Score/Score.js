@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet } from 'react-native';
 
-export class Score extends Component {
-  render()  {
-    let { score } = this.props;
-
-    return (
-      <View style={styles.bar}>
-        <Text style={styles.text}>Score: {score}</Text>
-      </View>
-    )
-  }
+const Score = props => {
+  return (
+    <View style={styles.bar}>
+      <Text style={styles.text}>Score: {props.score}</Text>
+    </View>
+  )
 }
 
 const mapStateToProps = ({ game }) => ({
