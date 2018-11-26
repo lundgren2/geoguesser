@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
-import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
 
-class GameBar extends Component {
-  render() {
-    return (
-      <View style={styles.bar}>
-        <Filler progress={this.props.timer} />
-        <Text style={styles.barText}>{this.props.correctMarker.title}</Text>
-      </View>
-    );
-  }
-}
+const GameBar = props =>  {
+  return (
+    <View style={styles.bar}>
+      <Filler progress={props.timer} />
+      <Text style={styles.barText}>{props.correctMarker.title}</Text>
+    </View>
+  );
+};
 
 const mapStateToProps = ({ game }) => ({
   correctMarker: game.correctMarker
