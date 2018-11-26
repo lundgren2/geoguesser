@@ -4,9 +4,8 @@ import Map from '../../components/Map';
 import SettingsButton from '../../components/SettingsButton';
 import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
-import Score from '../../components/Score';
-import {connect} from "react-redux";
-import _ from 'lodash';
+import GameWon from '../../components/GameWon';
+import GameLost from '../../components/GameLost';
 
 
 class Game extends Component {
@@ -44,16 +43,13 @@ class Game extends Component {
         <SettingsButton />
         <GameMenu />
       </View>
-    );
-  }
-}
-
-
-const mapStateToProps = ({ game }) => ({
-  correctMarker: game.correctMarker
-});
-
-export default connect(mapStateToProps)(Game);
+      <SettingsButton />
+      <GameMenu />
+      <GameWon />
+      <GameLost />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

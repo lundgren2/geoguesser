@@ -1,12 +1,12 @@
-import getMarkers from './helpers/getMarkers';
-import { SET_MARKERS } from '../../actions';
+import getInitialMarkers from './helpers/getInitialMarkers';
+import { SET_INITIAL_MARKERS } from '../../actions';
 
-const initialState = getMarkers(2, true);
+const initialState = getInitialMarkers(1);
 
 const markers = (state = initialState, action) => {
   switch (action.type) {
-    case SET_MARKERS:
-      return getMarkers(action.payload, true);
+    case SET_INITIAL_MARKERS:
+      return getInitialMarkers(action.payload);
     default:
       return state;
   }
