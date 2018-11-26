@@ -50,12 +50,12 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
-  startGame() {
+  startGame = () => {
     this.props.setupInitialRegion();
     animationTimeout = setTimeout(() => {
       this.focusMap(this.props.markers, true);
     }, 2000);
-  }
+  };
 
   render() {
     const { debug, markers, markersLeft } = this.props;
@@ -94,7 +94,10 @@ class Map extends Component {
                 key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
-                onPress={() => this.props.handleMarkerPress(marker.id)}
+                onPress={() => {
+                  const points = Math.floor(this.props.timer.__getValue());
+                  this.props.handleMarkerPress(marker.id, points);
+                }}
                 pinColor={red}
               />
             );

@@ -9,6 +9,7 @@ import {
   TOGGLE_GAME_LOST,
   TOGGLE_START_GAME
 } from '../actions';
+import {addPoints, clearScore} from "./score";
 
 // NOTE: Redux-thunks should never be async-await.
 
@@ -31,7 +32,7 @@ export const handleMarkerPress = (markerId, points) => {
     } = getState();
 
     if (markerId === correctMarker.id) {
-      dispatch(correctMarkerChosen(correctMarker.id));
+      dispatch(correctMarkerChosen(correctMarker.id, points));
     } else {
       dispatch(wrongMarkerChosen());
     }
@@ -39,9 +40,10 @@ export const handleMarkerPress = (markerId, points) => {
 };
 
 // The player has chosen the correct marker
-export const correctMarkerChosen = markerId => {
+export const correctMarkerChosen = (markerId, points) => {
   return (dispatch, getState) => {
     const { game } = getState();
+    dispatch(addPoints(points));
 
     // If markers left will be empty call lastCorrectMarker
     if (game.markersLeft.length === 1) {
@@ -61,6 +63,7 @@ export const wrongMarkerChosen = () => {
   return dispatch => {
     // In the future we will probably add logic for multiple lifes here.
     dispatch({ type: TOGGLE_GAME_LOST });
+    dispatch(clearScore());
   };
 };
 
