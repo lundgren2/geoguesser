@@ -17,3 +17,6 @@ export const TOGGLE_START_GAME = 'START_GAME';
 // score
 export const ADD_POINTS = 'ADD_POINTS';
 export const CLEAR_SCORE = 'CLEAR_SCORE';
+
+// progress
+export const SET_PROGRESS_TIMER = 'SET_PROGRESS_TIMER';

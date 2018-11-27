@@ -8,7 +8,8 @@ import {
   handleMarkerPress,
   setupInitialRegion,
   setupNextRegion,
-  toggleStartGame
+  toggleStartGame,
+  restartProgressTimer
 } from '../../actions/thunks';
 import { RegionInfo } from './components';
 
@@ -52,6 +53,7 @@ class Map extends Component {
 
   startGame = () => {
     this.props.setupInitialRegion();
+    this.props.restartProgressTimer();
     animationTimeout = setTimeout(() => {
       this.focusMap(this.props.markers, true);
     }, 2000);
@@ -95,8 +97,7 @@ class Map extends Component {
                 identifier={marker.title}
                 coordinate={marker.coordinate}
                 onPress={() => {
-                  const points = Math.floor(this.props.timer.__getValue());
-                  this.props.handleMarkerPress(marker.id, points);
+                  this.props.handleMarkerPress(marker.id);
                 }}
                 pinColor={red}
               />
@@ -131,7 +132,7 @@ const mapStateToProps = ({ game, settings }) => ({
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupInitialRegion, setupNextRegion, toggleStartGame }
+  { handleMarkerPress, setupInitialRegion, setupNextRegion, toggleStartGame, restartProgressTimer }
 )(Map);
 
 const styles = StyleSheet.create({
