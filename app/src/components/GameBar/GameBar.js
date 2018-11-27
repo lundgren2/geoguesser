@@ -12,14 +12,14 @@ class GameBar extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
-      this.startTimer();
-    }
-
     // Add points whenever they are requested
     if (this.props.scoreboard.requestPoints) {
       const points = Math.floor(this.state.timer.__getValue());
       this.props.addPoints(points);
+    }
+    
+    if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
+      this.startTimer();
     }
 
     // If the played win or lose the game, stop the timer
