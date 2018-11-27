@@ -8,7 +8,7 @@ const Score = props => {
       <Text style={styles.text}>Score: {props.score}</Text>
     </View>
   )
-};
+}
 
 const mapStateToProps = ({ game }) => ({
   score: game.scoreboard.score,

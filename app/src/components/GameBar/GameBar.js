@@ -1,29 +1,22 @@
-import React from 'react';
+import React  from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
-import { restartProgressTimer, stopProgressTimer } from '../../actions/thunks';
 
 const GameBar = props => {
-  return (
-    <View style={styles.bar}>
-      <Filler progress={props.time.progress} />
-      <Text style={styles.barText}>{props.correctMarker.title}</Text>
-    </View>
-  );
+    return (
+      <View style={styles.bar}>
+        <Filler progress={props.timer} />
+        <Text style={styles.barText}>{props.correctMarker.title}</Text>
+      </View>
+    );
 };
 
-const mapStateToProps = ({ game, layers }) => ({
+const mapStateToProps = ({ game }) => ({
   correctMarker: game.correctMarker,
-  showGameWon: layers.gameWon,
-  showGameLost: layers.gameLost,
-  time: game.time
 });
 
-export default connect(
-  mapStateToProps,
-  { restartProgressTimer, stopProgressTimer }
-)(GameBar);
+export default connect(mapStateToProps,)(GameBar);
 
 const styles = StyleSheet.create({
   bar: {

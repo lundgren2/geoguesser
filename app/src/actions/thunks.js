@@ -9,20 +9,14 @@ import {
   TOGGLE_GAME_LOST,
   TOGGLE_START_GAME
 } from '../actions';
-import { addPoints, clearScore } from "./score";
-import { SET_PROGRESS_TIMER } from "./actions";
-import { Animated, Easing } from "react-native";
+import {addPoints, clearScore} from "./score";
 
 // NOTE: Redux-thunks should never be async-await.
 
 /* Start the game from the beginning */
 export const toggleStartGame = () => {
-  return (dispatch, getState) => {
-    const { game: { startGame } } = getState();
+  return dispatch => {
     dispatch({ type: TOGGLE_START_GAME });
-    if (startGame) {
-      dispatch(restartProgressTimer());
-    }
   };
 };
 
@@ -31,14 +25,14 @@ export const toggleStartGame = () => {
  * If true starts next level.
  * TODO: If false, alerts user.
  */
-export const handleMarkerPress = (markerId) => {
+export const handleMarkerPress = (markerId, points) => {
   return (dispatch, getState) => {
     const {
       game: { correctMarker }
     } = getState();
 
     if (markerId === correctMarker.id) {
-      dispatch(correctMarkerChosen(correctMarker.id));
+      dispatch(correctMarkerChosen(correctMarker.id, points));
     } else {
       dispatch(wrongMarkerChosen());
     }
@@ -46,12 +40,9 @@ export const handleMarkerPress = (markerId) => {
 };
 
 // The player has chosen the correct marker
-export const correctMarkerChosen = (markerId) => {
+export const correctMarkerChosen = (markerId, points) => {
   return (dispatch, getState) => {
     const { game } = getState();
-
-    // Add points
-    const points = Math.floor(game.time.progress.__getValue());
     dispatch(addPoints(points));
 
     // If markers left will be empty call lastCorrectMarker
@@ -64,41 +55,7 @@ export const correctMarkerChosen = (markerId) => {
       // Setup next correct marker
       dispatch(randomizeCorrectMarker());
     }
-
-    // Restart timer
-    dispatch(restartProgressTimer());
   };
-};
-
-// Start game progress timer
-export const restartProgressTimer = () => {
-  return (dispatch, getState) => {
-    // Stop the current timer and create a new
-    const { game: { time } } = getState();
-    Animated.timing(time.progress).stop();
-
-    // Create a new one
-    const timer = new Animated.Value(100);
-    Animated.timing(timer, {
-      toValue: 0,
-      duration: 14000,
-      easing: Easing.linear
-    }).start(({ finished }) => {
-      if (finished) {
-        // Time ran out, player lost the game
-        dispatch(wrongMarkerChosen());
-      }
-    });
-    dispatch({ type: SET_PROGRESS_TIMER, payload: timer});
-  }
-};
-
-// Stop game progress timer
-export const stopProgressTimer = () => {
-  return (dispatch, getState) => {
-    const { game: { time } } = getState();
-    Animated.timing(time.progress).stop();
-  }
 };
 
 // The player has chosen an incorrect marker and lost the game
@@ -107,7 +64,6 @@ export const wrongMarkerChosen = () => {
     // In the future we will probably add logic for multiple lifes here.
     dispatch({ type: TOGGLE_GAME_LOST });
     dispatch(clearScore());
-    dispatch(stopProgressTimer());
   };
 };
 
