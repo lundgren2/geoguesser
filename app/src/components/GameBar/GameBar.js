@@ -12,7 +12,6 @@ class GameBar extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    // BUG: If the correct marker is the same when the game is over then the game won't restart
     if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
       this.startTimer();
     }
