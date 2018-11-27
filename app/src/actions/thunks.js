@@ -46,7 +46,7 @@ export const handleMarkerPress = (markerId) => {
 };
 
 // The player has chosen the correct marker
-export const correctMarkerChosen = (markerId) => {
+export const correctMarkerChosen = markerId => {
   return (dispatch, getState) => {
     const { game } = getState();
 

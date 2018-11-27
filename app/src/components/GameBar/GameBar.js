@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
-import { restartProgressTimer, stopProgressTimer } from '../../actions/thunks';
 
 const GameBar = props => {
   return (
@@ -22,7 +21,6 @@ const mapStateToProps = ({ game, layers }) => ({
 
 export default connect(
   mapStateToProps,
-  { restartProgressTimer, stopProgressTimer }
 )(GameBar);
 
 const styles = StyleSheet.create({
