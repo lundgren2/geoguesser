@@ -15,5 +15,6 @@ export const REMOVE_CORRECT_MARKER = 'REMOVE_CORRECT_MARKER';
 export const TOGGLE_START_GAME = 'START_GAME';
 
 // score
+export const REQUEST_POINTS = 'REQUEST_POINTS';
 export const ADD_POINTS = 'ADD_POINTS';
 export const CLEAR_SCORE = 'CLEAR_SCORE';

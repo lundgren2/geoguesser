@@ -9,7 +9,7 @@ import {
   TOGGLE_GAME_LOST,
   TOGGLE_START_GAME
 } from '../actions';
-import {addPoints, clearScore} from "./score";
+import { requestPoints, clearScore } from "./score";
 
 // NOTE: Redux-thunks should never be async-await.
 
@@ -25,14 +25,14 @@ export const toggleStartGame = () => {
  * If true starts next level.
  * TODO: If false, alerts user.
  */
-export const handleMarkerPress = (markerId, points) => {
+export const handleMarkerPress = markerId => {
   return (dispatch, getState) => {
     const {
       game: { correctMarker }
     } = getState();
 
     if (markerId === correctMarker.id) {
-      dispatch(correctMarkerChosen(correctMarker.id, points));
+      dispatch(correctMarkerChosen(correctMarker.id));
     } else {
       dispatch(wrongMarkerChosen());
     }
@@ -40,10 +40,12 @@ export const handleMarkerPress = (markerId, points) => {
 };
 
 // The player has chosen the correct marker
-export const correctMarkerChosen = (markerId, points) => {
+export const correctMarkerChosen = markerId => {
   return (dispatch, getState) => {
     const { game } = getState();
-    dispatch(addPoints(points));
+
+    // Demand GameBar to add the remaining time to the current score
+    dispatch(requestPoints());
 
     // If markers left will be empty call lastCorrectMarker
     if (game.markersLeft.length === 1) {

@@ -94,10 +94,7 @@ class Map extends Component {
                 key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
-                onPress={() => {
-                  const points = Math.floor(this.props.timer.__getValue());
-                  this.props.handleMarkerPress(marker.id, points);
-                }}
+                onPress={() => this.props.handleMarkerPress(marker.id)}
                 pinColor={red}
               />
             );
