@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
 import { wrongMarkerChosen } from '../../actions/thunks';
-import { addPoints } from "../../actions/score";
+import { addPoints } from '../../actions/score';
 
 class GameBar extends Component {
   state = {
@@ -17,7 +17,7 @@ class GameBar extends Component {
       const points = Math.floor(this.state.timer.__getValue());
       this.props.addPoints(points);
     }
-    
+
     if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
       this.startTimer();
     }

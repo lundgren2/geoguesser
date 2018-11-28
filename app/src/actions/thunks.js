@@ -9,7 +9,7 @@ import {
   TOGGLE_GAME_LOST,
   TOGGLE_START_GAME
 } from '../actions';
-import { requestPoints, clearScore } from "./score";
+import { requestPoints, clearScore } from './score';
 
 // NOTE: Redux-thunks should never be async-await.
 
