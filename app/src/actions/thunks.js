@@ -9,6 +9,7 @@ import {
   TOGGLE_GAME_LOST,
   TOGGLE_START_GAME
 } from '../actions';
+import { requestPoints, clearScore } from './score';
 
 // NOTE: Redux-thunks should never be async-await.
 
@@ -43,6 +44,9 @@ export const correctMarkerChosen = markerId => {
   return (dispatch, getState) => {
     const { game } = getState();
 
+    // Demand GameBar to add the remaining time to the current score
+    dispatch(requestPoints());
+
     // If markers left will be empty call lastCorrectMarker
     if (game.markersLeft.length === 1) {
       dispatch(lastCorrectMarker());
@@ -61,6 +65,7 @@ export const wrongMarkerChosen = () => {
   return dispatch => {
     // In the future we will probably add logic for multiple lifes here.
     dispatch({ type: TOGGLE_GAME_LOST });
+    dispatch(clearScore());
   };
 };
 

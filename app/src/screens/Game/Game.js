@@ -6,6 +6,7 @@ import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
 import GameWon from '../../components/GameWon';
 import GameLost from '../../components/GameLost';
+import Score from '../../components/Score';
 
 export default () => {
   return (
@@ -15,6 +16,7 @@ export default () => {
         <Map />
         <GameBar />
       </View>
+      <Score />
       <SettingsButton />
       <GameMenu />
       <GameWon />

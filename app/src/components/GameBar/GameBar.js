@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Animated, Easing, View, Text, StyleSheet } from 'react-native';
 import Filler from './Filler';
 import { wrongMarkerChosen } from '../../actions/thunks';
+import { addPoints } from '../../actions/score';
 
 class GameBar extends Component {
   state = {
@@ -11,9 +12,16 @@ class GameBar extends Component {
   };
 
   componentDidUpdate(prevProps) {
+    // Add points whenever they are requested
+    if (this.props.scoreboard.requestPoints) {
+      const points = Math.floor(this.state.timer.__getValue());
+      this.props.addPoints(points);
+    }
+
     if (!_.isEqual(prevProps.correctMarker, this.props.correctMarker)) {
       this.startTimer();
     }
+
     // If the played win or lose the game, stop the timer
     if (this.props.showGameWon || this.props.showGameLost) {
       Animated.timing(this.state.timer).stop();
@@ -50,12 +58,13 @@ class GameBar extends Component {
 const mapStateToProps = ({ game, layers }) => ({
   correctMarker: game.correctMarker,
   showGameWon: layers.gameWon,
-  showGameLost: layers.gameLost
+  showGameLost: layers.gameLost,
+  scoreboard: game.scoreboard
 });
 
 export default connect(
   mapStateToProps,
-  { wrongMarkerChosen }
+  { wrongMarkerChosen, addPoints }
 )(GameBar);
 
 const styles = StyleSheet.create({
