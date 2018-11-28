@@ -3,15 +3,20 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Score = props => {
+  const { debug } = props;
+
   return (
-    <View style={styles.bar}>
-      <Text style={styles.text}>Score: {props.score}</Text>
-    </View>
+    !debug && (
+      <View style={styles.bar}>
+        <Text style={styles.text}>Score: {props.score}</Text>
+      </View>
+    )
   );
 };
 
-const mapStateToProps = ({ game }) => ({
-  score: game.scoreboard.score
+const mapStateToProps = ({ game, settings }) => ({
+  score: game.scoreboard.score,
+  debug: settings.debug
 });
 
 export default connect(mapStateToProps)(Score);
