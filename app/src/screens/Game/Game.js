@@ -11,7 +11,7 @@ import GameWon from '../../components/GameWon';
 import GameLost from '../../components/GameLost';
 import Score from '../../components/Score';
 
-export default ({ showMainMenu }) => {
+export default () => {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
@@ -21,9 +21,10 @@ export default ({ showMainMenu }) => {
       </View>
       <Score />
       <SettingsButton />
-      <GameMenu />
       <GameWon />
       <GameLost />
+      <GameMenu />
+      <MainMenu />
     </View>
   );
 };

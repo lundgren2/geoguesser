@@ -36,17 +36,17 @@ export class GameLost extends Component {
 }
 
 mapStateToProps = ({ layers }) => ({
-  showGameLost: layers.gameLost
+  showGameLost: layers.gameLost,
 });
 
 const mapDispatchToProps = {
   toggleGameLost,
-  toggleStartGame
+  toggleStartGame,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(GameLost);
 
 const styles = StyleSheet.create({
@@ -58,25 +58,25 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     maxHeight: 190,
     backgroundColor: '#00b894',
-    borderRadius: 5
+    borderRadius: 5,
   },
   buttonContainer: {
-    margin: 'auto'
+    margin: 'auto',
   },
   button: {
     width: '100%',
     borderRadius: 5,
     padding: 5,
-    backgroundColor: '#0984e3'
+    backgroundColor: '#0984e3',
   },
   buttonText: {
     color: '#ffffff',
-    fontSize: 20
+    fontSize: 20,
   },
   text: {
     textAlign: 'center',
     color: '#ffffff',
     fontSize: 20,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
