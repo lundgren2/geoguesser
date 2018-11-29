@@ -3,10 +3,16 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
-import { brightColors } from '../../constants/mapStyles';
-import { handleMarkerPress, setupLevel } from '../../actions/thunks';
-import RegionInfo from './RegionInfo';
 import styles from './styles';
+import { brightColors } from '../../constants/mapStyles';
+import RegionInfo from './RegionInfo';
+import {
+  setupLevel,
+  handleMarkerPress,
+  setupInitialRegion,
+  setupNextRegion,
+  toggleStartGame,
+} from '../../actions/thunks';
 
 class Map extends Component {
   state = {
@@ -16,10 +22,7 @@ class Map extends Component {
 
   componentDidMount() {
     // TODO: Call this when the player intially presses "Start Game" on welcome screen.
-    this.props.setupLevel();
-    animationTimeout = setTimeout(() => {
-      this.focusMap(this.props.markers, true);
-    }, 2000);
+    this.startGame();
   }
 
   componentDidUpdate(prevProps) {
@@ -27,6 +30,12 @@ class Map extends Component {
       animationTimeout = setTimeout(() => {
         this.focusMap(this.props.markers, true);
       }, 500);
+    }
+    if (this.props.startGame) {
+      // Toggle startGame back to false
+      this.props.toggleStartGame();
+      // Start a new game
+      this.startGame();
     }
   }
 
@@ -43,8 +52,27 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
+  startGame() {
+    this.props.setupInitialRegion();
+    animationTimeout = setTimeout(() => {
+      this.focusMap(this.props.markers, true);
+    }, 2000);
+  }
+
   render() {
-    const { debug, markers } = this.props;
+    const { debug, markers, markersLeft } = this.props;
+
+    const red = 'red';
+    const green = 'green';
+
+    let markerLeftIds = markersLeft.map(marker => marker.id);
+
+    let redMarkers = markers.filter(marker =>
+      markerLeftIds.includes(marker.id),
+    );
+    let greenMarkers = markers.filter(
+      marker => !markerLeftIds.includes(marker.id),
+    );
 
     return (
       <View style={styles.container}>
@@ -62,15 +90,25 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {markers.map(marker => {
+          {redMarkers.map(marker => {
             return (
               <MapView.Marker
                 key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
-                onPress={() => {
-                  this.props.handleMarkerPress(marker.id);
-                }}
+                onPress={() => this.props.handleMarkerPress(marker.id)}
+                pinColor={red}
+              />
+            );
+          })}
+          {greenMarkers.map(marker => {
+            return (
+              <MapView.Marker
+                key={marker.id}
+                identifier={marker.title}
+                coordinate={marker.coordinate}
+                onPress={null}
+                pinColor={green}
               />
             );
           })}
@@ -79,15 +117,24 @@ class Map extends Component {
       </View>
     );
   }
+  // {this.renderMarkers(greenMarkers, green)}
 }
 
 const mapStateToProps = ({ game, settings }) => ({
   debug: settings.debug,
-  markers: game.markers,
   region: game.region,
+  markers: game.markers,
+  markersLeft: game.markersLeft,
+  startGame: game.startGame,
 });
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupLevel },
+  {
+    handleMarkerPress,
+    setupInitialRegion,
+    setupNextRegion,
+    toggleStartGame,
+    setupLevel,
+  },
 )(Map);

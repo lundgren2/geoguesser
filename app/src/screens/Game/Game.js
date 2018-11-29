@@ -7,16 +7,23 @@ import GameMenu from '../../components/GameMenu';
 import GameBar from '../../components/GameBar';
 import MainMenu from '../../components/MainMenu';
 import styles from './styles';
+import GameWon from '../../components/GameWon';
+import GameLost from '../../components/GameLost';
+import Score from '../../components/Score';
 
 export default ({ showMainMenu }) => {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Map />
-      <GameBar />
+      <View style={styles.container}>
+        <Map />
+        <GameBar />
+      </View>
+      <Score />
       <SettingsButton />
       <GameMenu />
-      <MainMenu />
+      <GameWon />
+      <GameLost />
     </View>
   );
 };
