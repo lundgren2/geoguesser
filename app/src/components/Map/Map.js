@@ -56,18 +56,6 @@ class Map extends Component {
         />
       );
 
-    else if (marker.markerType === "MARKER")
-      return (
-        <MapView.Marker
-          key={marker.id}
-          identifier={marker.title}
-          coordinate={marker.coordinate}
-          onPress={() => {
-            this.props.handleMarkerPress(marker.id);
-          }}
-        />
-      );
-
     else
       return (
         <MapView.Marker
