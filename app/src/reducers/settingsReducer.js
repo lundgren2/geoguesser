@@ -1,7 +1,7 @@
 import { TOGGLE_DEBUG } from '../actions';
 
 const initialState = {
-  debug: false
+  debug: false,
 };
 
 const debug = (state = initialState, action) => {

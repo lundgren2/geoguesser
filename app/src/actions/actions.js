@@ -2,7 +2,13 @@
 export const TOGGLE_DEBUG = 'TOGGLE_DEBUG';
 
 // layers
-export const TOGGLE_OPTIONS_MENU = 'TOGGLE_OPTIONS_MENU';
+export const TOGGLE_GAME_MENU = 'TOGGLE_GAME_MENU';
+export const START_GAME = 'START_GAME';
+export const STOP_GAME = 'STOP_GAME';
+export const PAUSE_GAME = 'PAUSE_GAME';
+export const GAME_OFF = 'GAME_OFF';
+export const GAME_ON = 'GAME_ON';
+export const GAME_PAUSED = 'GAME_PAUSED';
 export const TOGGLE_GAME_WON = 'TOGGLE_GAME_WON';
 export const TOGGLE_GAME_LOST = 'TOGGLE_GAME_LOST';
 

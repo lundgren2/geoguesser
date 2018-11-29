@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
-import { toggleDebug } from '../../actions/settings';
-import { stopGame, toggleGameMenu } from '../../actions/layers';
+import FadeView from '../FadeView';
+import { startGame } from '../../actions/layers';
 import styles from './styles';
 
-export class GameMenu extends Component {
+export class MainMenu extends Component {
   menuButton = ({ title, onPress }) => (
     <Button
       key={title}
@@ -18,48 +18,38 @@ export class GameMenu extends Component {
   );
 
   render() {
-    const { toggleGameMenu, stopGame, toggleDebug, showGameMenu } = this.props;
-
+    const { startGame, showMainMenu } = this.props;
     const buttons = [
-      {
-        title: 'Resume Game',
-        onPress: toggleGameMenu,
-      },
-      {
-        title: 'Main Menu',
-        onPress: stopGame,
-      },
-      {
-        title: 'Options',
-        onPress: toggleDebug,
-      },
+      { title: 'Start Game', onPress: startGame },
+      { title: 'Highscore', onPress: startGame },
+      { title: 'Settings', onPress: startGame },
     ];
 
     return (
       <Overlay
         overlayStyle={styles.overlay}
-        isVisible={showGameMenu}
+        isVisible={showMainMenu}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
       >
-        {buttons.map(button => this.menuButton(button))}
+        <FadeView isVisible={showMainMenu} finished={startGame}>
+          {buttons.map(button => this.menuButton(button))}
+        </FadeView>
       </Overlay>
     );
   }
 }
 
 const mapStateToProps = ({ layers }) => ({
-  showGameMenu: layers.gameMenu,
+  showMainMenu: layers.mainMenu,
 });
 
 const mapDispatchToProps = {
-  toggleDebug,
-  stopGame,
-  toggleGameMenu,
+  startGame,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(GameMenu);
+)(MainMenu);

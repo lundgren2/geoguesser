@@ -9,6 +9,6 @@ export default combineReducers({
   game: gameReducer,
   map: {
     activeRegion: {},
-    blurred: false
-  }
+    blurred: false,
+  },
 });

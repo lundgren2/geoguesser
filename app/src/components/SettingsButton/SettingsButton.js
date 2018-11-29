@@ -1,41 +1,34 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
-import { toggleOptionsMenu } from '../../actions/layers';
+import { toggleGameMenu } from '../../actions/layers';
+import styles from './styles';
 
-const whiteButtonBackground = '#ECECEC';
 class SettingsButton extends Component {
   render() {
+    const { showMainMenu } = this.props;
+
+    if (showMainMenu) return null;
+
     return (
       <View style={styles.container}>
         <Button
           title={null}
           icon={{ name: 'settings' }}
-          buttonStyle={{
-            backgroundColor: whiteButtonBackground,
-            padding: 5
-          }}
-          onPress={this.props.toggleOptionsMenu}
+          buttonStyle={styles.button}
+          onPress={this.props.toggleGameMenu}
         />
       </View>
     );
   }
 }
 
-export default connect(
-  null,
-  { toggleOptionsMenu }
-)(SettingsButton);
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    margin: 10
-  },
-  button: {
-    padding: 5
-  }
+const mapStateToProps = ({ game, layers }) => ({
+  showMainMenu: layers.mainMenu,
 });
+
+export default connect(
+  mapStateToProps,
+  { toggleGameMenu },
+)(SettingsButton);

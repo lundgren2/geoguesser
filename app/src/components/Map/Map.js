@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
+import styles from './styles';
 import { brightColors } from '../../constants/mapStyles';
+import RegionInfo from './RegionInfo';
 import {
+  setupLevel,
   handleMarkerPress,
   setupInitialRegion,
   setupNextRegion,
-  toggleStartGame
+  toggleStartGame,
 } from '../../actions/thunks';
-import { RegionInfo } from './components';
 
 class Map extends Component {
   state = {
     debugMarker: null,
-    mapRegion: null
+    mapRegion: null,
   };
 
   componentDidMount() {
@@ -42,7 +44,7 @@ class Map extends Component {
     const options = {
       // TODO: These are constants. Put them somewhere safe.
       edgePadding: { top: 200, right: 50, left: 50, bottom: 300 }, // High bottom padding since the map extends below the screen to hide google logo.
-      animated
+      animated,
     };
     const coords = markers.map(marker => marker.coordinate);
     this.map.fitToCoordinates(coords, options);
@@ -66,10 +68,10 @@ class Map extends Component {
     let markerLeftIds = markersLeft.map(marker => marker.id);
 
     let redMarkers = markers.filter(marker =>
-      markerLeftIds.includes(marker.id)
+      markerLeftIds.includes(marker.id),
     );
     let greenMarkers = markers.filter(
-      marker => !markerLeftIds.includes(marker.id)
+      marker => !markerLeftIds.includes(marker.id),
     );
 
     return (
@@ -123,21 +125,16 @@ const mapStateToProps = ({ game, settings }) => ({
   region: game.region,
   markers: game.markers,
   markersLeft: game.markersLeft,
-  startGame: game.startGame
+  startGame: game.startGame,
 });
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress, setupInitialRegion, setupNextRegion, toggleStartGame }
-)(Map);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
+  {
+    handleMarkerPress,
+    setupInitialRegion,
+    setupNextRegion,
+    toggleStartGame,
+    setupLevel,
   },
-  map: {
-    height: '108%', // Uses height over 100% to hide the google logo.
-    width: '100%',
-    margin: 'auto'
-  }
-});
+)(Map);
