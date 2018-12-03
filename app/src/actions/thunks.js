@@ -28,7 +28,6 @@ export const toggleStartGame = () => {
  */
 export const handleMarkerPress = markerId => {
   return (dispatch, getState) => {
-    console.log('klickade');
     const {
       game: { correctMarker },
     } = getState();
