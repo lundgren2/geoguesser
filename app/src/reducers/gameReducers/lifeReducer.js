@@ -7,7 +7,6 @@ const initialState = {
 };
 
 const playerLife = (state = initialState, action) => {
-  console.log("Life: " + state.life);
   switch (action.type) {
     case REDUCE_LIFE:
       return {

@@ -12,7 +12,7 @@ import {
   GAME_NEXT_REGION,
 } from '../actions';
 import { requestPoints, clearScore } from './score';
-import { addLife, removeLife } from './life';
+import { addLife, removeLife, resetLife } from './life';
 
 /**
  * Checks if pressed marker during game is correct.
@@ -117,7 +117,7 @@ export const randomizeCorrectMarker = () => {
 };
 
 export const timeRanOut = () => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({ type: TOGGLE_GAME_LOST });
     dispatch({ type: STOP_GAME });
   };
@@ -126,6 +126,7 @@ export const timeRanOut = () => {
 export const resetGame = () => {
   return (dispatch, getState) => {
     dispatch(clearScore());
+    dispatch(resetLife());
     dispatch(setupNextRegion(true));
   };
 };

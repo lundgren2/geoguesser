@@ -17,7 +17,6 @@ import {
   setupNextRegion,
 } from '../../actions/thunks';
 import { addPoints } from '../../actions/score';
-import { resetLife } from '../../actions/life';
 
 class GameBar extends Component {
   state = {
@@ -67,7 +66,6 @@ class GameBar extends Component {
     // If the played win or lose the game, stop the timer
     if (showGameWon || showGameLost) {
       this.stopTimer();
-      resetLife();
     }
   }
 
