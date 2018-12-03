@@ -3,12 +3,13 @@ import { Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
 import { toggleGameWon } from '../../actions/layers';
-import { toggleStartGame } from '../../actions/thunks';
+import { resetGame } from '../../actions/thunks';
 
 export class GameWon extends Component {
   render() {
     const buttonTitle = 'Play again';
     const gameWonText = 'Congratulations, you won the game!';
+    const { toggleGameWon, resetGame } = this.props;
 
     return (
       <Overlay
@@ -24,8 +25,8 @@ export class GameWon extends Component {
           title={buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
-            this.props.toggleStartGame();
-            this.props.toggleGameWon();
+            toggleGameWon();
+            resetGame();
           }}
           containerStyle={styles.buttonContainer}
           titleStyle={styles.buttonText}
@@ -41,7 +42,7 @@ mapStateToProps = ({ layers }) => ({
 
 const mapDispatchToProps = {
   toggleGameWon,
-  toggleStartGame,
+  resetGame,
 };
 
 export default connect(

@@ -6,13 +6,7 @@ import _ from 'lodash';
 import styles from './styles';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
-import {
-  handleMarkerPress,
-  setupInitialRegion,
-  setupNextRegion,
-  toggleStartGame,
-} from '../../actions/thunks';
-import { setUserPosition } from '../../actions/thunks';
+import { handleMarkerPress, setUserPosition } from '../../actions/thunks';
 
 class Map extends Component {
   state = {
@@ -31,12 +25,6 @@ class Map extends Component {
         this.focusMap(this.props.markers, true);
       }, 500);
     }
-    if (this.props.startGame) {
-      // Toggle startGame back to false
-      this.props.toggleStartGame();
-      // Start a new game
-      this.startGame();
-    }
   }
 
   focusMap(markers, animated) {
@@ -52,7 +40,7 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
-  getMarker = (marker, color) => {
+  getMarker = (marker, color, handleMarkerPress) => {
     if (marker.markerType === 'CIRCLE')
       return (
         <MapView.Circle
@@ -72,21 +60,16 @@ class Map extends Component {
           key={marker.id}
           identifier={marker.title}
           coordinate={marker.coordinate}
-          onPress={() => this.props.handleMarkerPress(marker.id)}
+          onPress={() => {
+            if (handleMarkerPress) handleMarkerPress(marker.id);
+          }}
           pinColor={color}
         />
       );
   };
 
-  startGame() {
-    this.props.setupInitialRegion();
-    animationTimeout = setTimeout(() => {
-      this.focusMap(this.props.markers, true);
-    }, 2000);
-  }
-
   render() {
-    const { debug, markers, markersLeft } = this.props;
+    const { debug, markers, markersLeft, handleMarkerPress } = this.props;
 
     const red = 'red';
     const green = 'green';
@@ -117,10 +100,10 @@ class Map extends Component {
           moveOnMarkerPress={false}
         >
           {redMarkers.map(marker => {
-            return this.getMarker(marker, red);
+            return this.getMarker(marker, red, handleMarkerPress);
           })}
           {greenMarkers.map(marker => {
-            return this.getMarker(marker, green);
+            return this.getMarker(marker, green, null);
           })}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
@@ -142,9 +125,6 @@ export default connect(
   mapStateToProps,
   {
     handleMarkerPress,
-    setupInitialRegion,
-    setupNextRegion,
-    toggleStartGame,
     setUserPosition,
   },
 )(Map);

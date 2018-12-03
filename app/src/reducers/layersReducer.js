@@ -2,11 +2,15 @@ import {
   TOGGLE_GAME_MENU,
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
+  TOGGLE_MAIN_MENU,
   START_GAME,
   STOP_GAME,
+  SETUP_GAME,
   GAME_OFF,
   GAME_ON,
   GAME_PAUSED,
+  GAME_STARTING,
+  GAME_NEXT_REGION,
 } from '../actions';
 
 const initialState = {
@@ -26,19 +30,31 @@ const layers = (state = initialState, action) => {
         gameMenu: !state.gameMenu,
         gameStatus: !state.gameMenu ? GAME_PAUSED : GAME_ON,
       };
+    case TOGGLE_MAIN_MENU:
+      return {
+        ...state,
+        mainMenu: !state.mainMenu,
+        gameStatus: !state.mainMenu ? GAME_OFF : state.gameStatus,
+      };
     case STOP_GAME:
       return {
         ...state,
         gameStatus: GAME_OFF,
-        mainMenu: true,
-        gameMenu: false,
+      };
+    case SETUP_GAME:
+      return {
+        ...state,
+        gameStatus: GAME_STARTING,
+      };
+    case GAME_NEXT_REGION:
+      return {
+        ...state,
+        gameStatus: GAME_NEXT_REGION,
       };
     case START_GAME:
       return {
         ...state,
         gameStatus: GAME_ON,
-        mainMenu: false,
-        gameMenu: false,
       };
     case TOGGLE_GAME_WON:
       return { ...state, gameWon: !state.gameWon };

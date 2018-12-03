@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
 import { toggleDebug } from '../../actions/settings';
-import { stopGame, toggleGameMenu } from '../../actions/layers';
+import { stopGame, toggleGameMenu, toggleMainMenu } from '../../actions/layers';
 import styles from './styles';
 
 export class GameMenu extends Component {
@@ -18,7 +18,13 @@ export class GameMenu extends Component {
   );
 
   render() {
-    const { toggleGameMenu, stopGame, toggleDebug, showGameMenu } = this.props;
+    const {
+      toggleGameMenu,
+      toggleMainMenu,
+      stopGame,
+      toggleDebug,
+      showGameMenu,
+    } = this.props;
 
     const buttons = [
       {
@@ -27,7 +33,11 @@ export class GameMenu extends Component {
       },
       {
         title: 'Main Menu',
-        onPress: stopGame,
+        onPress: () => {
+          stopGame();
+          toggleGameMenu();
+          toggleMainMenu();
+        },
       },
       {
         title: 'Options',
@@ -57,6 +67,7 @@ const mapDispatchToProps = {
   toggleDebug,
   stopGame,
   toggleGameMenu,
+  toggleMainMenu,
 };
 
 export default connect(

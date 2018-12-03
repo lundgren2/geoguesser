@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
 import styles from './styles';
-import { GAME_PAUSED, GAME_ON, GAME_OFF } from '../../actions';
-import { wrongMarkerChosen } from '../../actions/thunks';
+import {
+  GAME_PAUSED,
+  GAME_ON,
+  GAME_OFF,
+  GAME_STARTING,
+  GAME_NEXT_REGION,
+} from '../../actions';
+import {
+  wrongMarkerChosen,
+  timeRanOut,
+  setupNextRegion,
+} from '../../actions/thunks';
 import { addPoints } from '../../actions/score';
 
 class GameBar extends Component {
@@ -13,24 +22,26 @@ class GameBar extends Component {
     timer: new Animated.Value(100),
   };
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.startTimer();
-    }, 1500);
-  }
-
   componentDidUpdate(prevProps) {
     const {
-      correctMarker,
       gameStatus,
       scoreboard,
       addPoints,
       showGameWon,
       showGameLost,
+      setupNextRegion,
     } = this.props;
 
     switch (gameStatus) {
+      case GAME_STARTING:
+        setupNextRegion(true);
+        this.resetTimer();
+        break;
       case GAME_PAUSED:
+        this.stopTimer();
+        break;
+      case GAME_NEXT_REGION:
+        this.resetTimer();
         this.stopTimer();
         break;
       case GAME_ON:
@@ -42,12 +53,13 @@ class GameBar extends Component {
         if (prevProps.gameStatus !== gameStatus) this.resetTimer();
         break;
     }
-    this.checkCorrectMarker(prevProps.correctMarker, correctMarker);
 
     // Add points whenever they are requested
+    // Also reset the timer since the correct marker was chosen.
     if (scoreboard.requestPoints) {
       const points = Math.floor(this.state.timer.__getValue());
       addPoints(points);
+      this.resetTimer();
     }
 
     // If the played win or lose the game, stop the timer
@@ -56,28 +68,17 @@ class GameBar extends Component {
     }
   }
 
-  checkCorrectMarker(prevMarker, correctMarker) {
-    if (!_.isEqual(prevMarker, correctMarker)) {
-      this.stopTimer();
-      this.resetTimer();
-
-      // Delay game to start after a correct marker is picked
-      setTimeout(() => {
-        this.startTimer();
-      }, 1500);
-    }
-  }
-
   startTimer() {
+    const { timeRanOut } = this.props;
+
     Animated.timing(this.state.timer, {
       toValue: 0,
       duration: 14000,
       easing: Easing.linear,
     }).start(({ finished }) => {
-      // TODO: CHECK IF IS THIS IS CORRECT?
       if (finished) {
         // Time ran out, player lost the game
-        this.props.wrongMarkerChosen();
+        timeRanOut();
       }
     });
   }
@@ -92,16 +93,17 @@ class GameBar extends Component {
 
   render() {
     const { timer } = this.state;
-    const { correctMarker, showMainMenu } = this.props;
+    const { correctMarker, gameStatus } = this.props;
 
-    if (showMainMenu) return null;
-
-    return (
-      <View style={styles.bar}>
-        <Filler progress={timer} />
-        <Text style={styles.barText}>{correctMarker.title}</Text>
-      </View>
-    );
+    if (gameStatus === GAME_ON) {
+      return (
+        <View style={styles.bar}>
+          <Filler progress={timer} />
+          <Text style={styles.barText}>{correctMarker.title}</Text>
+        </View>
+      );
+    }
+    return null;
   }
 }
 
@@ -116,5 +118,5 @@ const mapStateToProps = ({ game, layers }) => ({
 
 export default connect(
   mapStateToProps,
-  { wrongMarkerChosen, addPoints },
+  { wrongMarkerChosen, addPoints, timeRanOut, setupNextRegion },
 )(GameBar);
