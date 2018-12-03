@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
 import FadeView from '../FadeView';
-import { startGame } from '../../actions/layers';
+import { setupGame, toggleMainMenu } from '../../actions/layers';
 import styles from './styles';
 
 export class MainMenu extends Component {
@@ -18,11 +18,17 @@ export class MainMenu extends Component {
   );
 
   render() {
-    const { startGame, showMainMenu } = this.props;
+    const { setupGame, showMainMenu, toggleMainMenu } = this.props;
     const buttons = [
-      { title: 'Start Game', onPress: startGame },
-      { title: 'Highscore', onPress: startGame },
-      { title: 'Settings', onPress: startGame },
+      {
+        title: 'Start Game',
+        onPress: () => {
+          setupGame();
+          toggleMainMenu();
+        },
+      },
+      { title: 'Highscore', onPress: () => {} },
+      { title: 'Settings', onPress: () => {} },
     ];
 
     return (
@@ -33,7 +39,7 @@ export class MainMenu extends Component {
         width="auto"
         height="auto"
       >
-        <FadeView isVisible={showMainMenu} finished={startGame}>
+        <FadeView isVisible={showMainMenu}>
           {buttons.map(button => this.menuButton(button))}
         </FadeView>
       </Overlay>
@@ -46,7 +52,8 @@ const mapStateToProps = ({ layers }) => ({
 });
 
 const mapDispatchToProps = {
-  startGame,
+  setupGame,
+  toggleMainMenu,
 };
 
 export default connect(

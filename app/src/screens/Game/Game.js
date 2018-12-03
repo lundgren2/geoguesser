@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { View, StyleSheet, StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import Map from '../../components/Map';
 import SettingsButton from '../../components/SettingsButton';
 import GameMenu from '../../components/GameMenu';
