@@ -3,6 +3,7 @@ import {
   TOGGLE_GAME_MENU,
   START_GAME,
   STOP_GAME,
+  SETUP_GAME,
   PAUSE_GAME,
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
@@ -13,6 +14,8 @@ export const toggleMainMenu = () => ({ type: TOGGLE_MAIN_MENU });
 export const toggleGameMenu = () => ({ type: TOGGLE_GAME_MENU });
 
 export const startGame = () => ({ type: START_GAME });
+
+export const setupGame = () => ({ type: SETUP_GAME });
 
 export const stopGame = () => ({ type: STOP_GAME });
 

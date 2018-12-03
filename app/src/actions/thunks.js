@@ -7,9 +7,10 @@ import {
   REMOVE_CORRECT_MARKER,
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
-  TOGGLE_START_GAME
+  TOGGLE_START_GAME,
 } from '../actions';
 import { requestPoints, clearScore } from './score';
+import { START_GAME, STOP_GAME, GAME_NEXT_REGION } from './actions';
 
 // NOTE: Redux-thunks should never be async-await.
 
@@ -27,8 +28,9 @@ export const toggleStartGame = () => {
  */
 export const handleMarkerPress = markerId => {
   return (dispatch, getState) => {
+    console.log('klickade');
     const {
-      game: { correctMarker }
+      game: { correctMarker },
     } = getState();
 
     if (markerId === correctMarker.id) {
@@ -63,9 +65,8 @@ export const correctMarkerChosen = markerId => {
 // The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = () => {
   return dispatch => {
-    // In the future we will probably add logic for multiple lifes here.
+    dispatch({ type: STOP_GAME });
     dispatch({ type: TOGGLE_GAME_LOST });
-    dispatch(clearScore());
   };
 };
 
@@ -73,7 +74,7 @@ export const wrongMarkerChosen = () => {
 export const lastCorrectMarker = () => {
   return (dispatch, getState) => {
     const {
-      game: { region }
+      game: { region },
     } = getState();
 
     // Player wins the game if this was the last region
@@ -86,31 +87,22 @@ export const lastCorrectMarker = () => {
   };
 };
 
-// Setup the initial region/level to play
-export const setupInitialRegion = () => {
-  return dispatch => {
-    const region = 1;
-
-    dispatch({ type: SET_REGION, payload: region });
-    dispatch({ type: SET_INITIAL_MARKERS, payload: region });
-    dispatch({ type: SET_MARKERS, payload: region });
-    dispatch(randomizeCorrectMarker());
-  };
-};
-
 // Setup the next region/level to play
-export const setupNextRegion = () => {
+export const setupNextRegion = (initialRegion = false) => {
   return (dispatch, getState) => {
     const {
-      game: { region }
+      game: { region },
     } = getState();
 
     // Just take the next region, no randomization
-    const newRegion = region + 1;
+    const newRegion = initialRegion ? 1 : region + 1;
     dispatch({ type: SET_REGION, payload: newRegion });
     dispatch({ type: SET_INITIAL_MARKERS, payload: newRegion });
     dispatch({ type: SET_MARKERS, payload: newRegion });
     dispatch(randomizeCorrectMarker());
+
+    dispatch({ type: GAME_NEXT_REGION });
+    dispatch({ type: START_GAME });
   };
 };
 
@@ -124,5 +116,19 @@ export const randomizeCorrectMarker = () => {
     const correctMarker = _.nth(game.markersLeft, id);
 
     dispatch({ type: SET_CORRECT_MARKER, payload: correctMarker });
+  };
+};
+
+export const timeRanOut = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: TOGGLE_GAME_LOST });
+    dispatch({ type: STOP_GAME });
+  };
+};
+
+export const resetGame = () => {
+  return (dispatch, getState) => {
+    dispatch(clearScore());
+    dispatch(setupNextRegion(true));
   };
 };

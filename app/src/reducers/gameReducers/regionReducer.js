@@ -1,6 +1,6 @@
 import { SET_REGION } from '../../actions';
 
-const initialState = 1; // Default to Sweden
+const initialState = 0; // Default to Sweden
 
 const region = (state = initialState, action) => {
   switch (action.type) {
