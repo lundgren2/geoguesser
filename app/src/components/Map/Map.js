@@ -15,7 +15,6 @@ class Map extends Component {
   };
 
   componentDidMount() {
-    // TODO: Call this when the player intially presses "Start Game" on welcome screen.
     this.props.setUserPosition();
   }
 
