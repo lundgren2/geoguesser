@@ -6,13 +6,7 @@ import _ from 'lodash';
 import styles from './styles';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
-import {
-  setupLevel,
-  handleMarkerPress,
-  setupInitialRegion,
-  setupNextRegion,
-  toggleStartGame,
-} from '../../actions/thunks';
+import { setupLevel, handleMarkerPress } from '../../actions/thunks';
 
 class Map extends Component {
   state = {
@@ -20,22 +14,11 @@ class Map extends Component {
     mapRegion: null,
   };
 
-  componentDidMount() {
-    // TODO: Call this when the player intially presses "Start Game" on welcome screen.
-    this.startGame();
-  }
-
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.markers, this.props.markers)) {
       animationTimeout = setTimeout(() => {
         this.focusMap(this.props.markers, true);
       }, 500);
-    }
-    if (this.props.startGame) {
-      // Toggle startGame back to false
-      this.props.toggleStartGame();
-      // Start a new game
-      this.startGame();
     }
   }
 
@@ -52,15 +35,8 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
-  startGame() {
-    this.props.setupInitialRegion();
-    animationTimeout = setTimeout(() => {
-      this.focusMap(this.props.markers, true);
-    }, 2000);
-  }
-
   render() {
-    const { debug, markers, markersLeft } = this.props;
+    const { debug, markers, markersLeft, handleMarkerPress } = this.props;
 
     const red = 'red';
     const green = 'green';
@@ -96,7 +72,7 @@ class Map extends Component {
                 key={marker.id}
                 identifier={marker.title}
                 coordinate={marker.coordinate}
-                onPress={() => this.props.handleMarkerPress(marker.id)}
+                onPress={() => handleMarkerPress(marker.id)}
                 pinColor={red}
               />
             );
@@ -132,9 +108,6 @@ export default connect(
   mapStateToProps,
   {
     handleMarkerPress,
-    setupInitialRegion,
-    setupNextRegion,
-    toggleStartGame,
     setupLevel,
   },
 )(Map);

@@ -1,7 +1,7 @@
 import getInitialMarkers from './helpers/getInitialMarkers';
 import { SET_INITIAL_MARKERS } from '../../actions';
 
-const initialState = getInitialMarkers(1);
+const initialState = [];
 
 const markers = (state = initialState, action) => {
   switch (action.type) {

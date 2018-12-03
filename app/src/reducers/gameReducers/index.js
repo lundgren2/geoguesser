@@ -4,7 +4,6 @@ import regionReducer from './regionReducer';
 import markersReducer from './markersReducer';
 import markersLeftReducer from './markersLeftReducer';
 import correctMarkerReducer from './correctMarkerReducer';
-import startGameReducer from './startGameReducer';
 import scoreReducer from './scoreReducer';
 
 export default combineReducers({
@@ -12,6 +11,5 @@ export default combineReducers({
   markers: markersReducer,
   markersLeft: markersLeftReducer,
   correctMarker: correctMarkerReducer,
-  startGame: startGameReducer,
-  scoreboard: scoreReducer
+  scoreboard: scoreReducer,
 });

@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
+import { resetGame } from '../../actions/thunks';
 import { toggleGameLost } from '../../actions/layers';
-import { toggleStartGame } from '../../actions/thunks';
 
 export class GameLost extends Component {
   render() {
     const buttonTitle = 'Try again';
     gameOverText = 'You lost the game!';
 
+    const { resetGame, showGameLost, toggleGameLost } = this.props;
+
     return (
       <Overlay
         overlayStyle={styles.overlay}
-        isVisible={this.props.showGameLost}
+        isVisible={showGameLost}
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
@@ -24,8 +26,8 @@ export class GameLost extends Component {
           title={buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
-            this.props.toggleStartGame();
-            this.props.toggleGameLost();
+            resetGame();
+            toggleGameLost();
           }}
           containerStyle={styles.buttonContainer}
           titleStyle={styles.buttonText}
@@ -40,8 +42,8 @@ mapStateToProps = ({ layers }) => ({
 });
 
 const mapDispatchToProps = {
+  resetGame,
   toggleGameLost,
-  toggleStartGame,
 };
 
 export default connect(
