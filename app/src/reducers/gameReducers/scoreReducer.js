@@ -10,7 +10,7 @@ const scoreboard = (state = initialState, action) => {
     case ADD_POINTS:
       return {
         ...state,
-        score: state.score + action.payload,
+        score: (state.score + action.payload <= 0) ? 0 : state.score + action.payload,
         requestPoints: false
       };
 

@@ -17,7 +17,7 @@ const playerLife = (state = initialState, action) => {
     case INCREASE_LIFE:
       return {
         ...state,
-        life: state.life + 1
+        life: state.life == STARTLIFE ? state.life : state.life + 1
       };
 
     case RESET_LIFE:

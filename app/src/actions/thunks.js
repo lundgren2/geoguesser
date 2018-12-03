@@ -11,7 +11,7 @@ import {
   STOP_GAME,
   GAME_NEXT_REGION,
 } from '../actions';
-import { requestPoints, clearScore } from './score';
+import { requestPoints, clearScore, addPoints } from './score';
 import { addLife, removeLife, resetLife } from './life';
 
 /**
@@ -58,6 +58,7 @@ export const correctMarkerChosen = markerId => {
 export const wrongMarkerChosen = () => {
   return (dispatch, getState) => {
     dispatch(removeLife());
+    dispatch(addPoints(-100));
     const { game } = getState();
     if (game.playerLife.life <= 0) {
       dispatch({ type: STOP_GAME });

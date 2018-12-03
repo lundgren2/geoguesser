@@ -8,23 +8,23 @@ const Life = props => {
   return (
     !debug && (
       <View style={styles.bar}>
-        <Text style={styles.text}>Score: {props.life}</Text>
+        <Text style={styles.text}>Life: {props.life}</Text>
       </View>
     )
   );
 };
 
 const mapStateToProps = ({ game, settings }) => ({
-  score: game.playerLife.life,
+  life: game.playerLife.life,
   debug: settings.debug
 });
 
-export default connect(mapStateToProps)(Score);
+export default connect(mapStateToProps)(Life);
 
 const styles = StyleSheet.create({
   bar: {
     position: 'absolute',
-    top: 10,
+    top: 30,
     left: 10,
     zIndex: 10
   },
