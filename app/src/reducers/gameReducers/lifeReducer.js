@@ -3,8 +3,7 @@ import { RESET_LIFE, REDUCE_LIFE, INCREASE_LIFE} from '../../actions';
 const STARTLIFE = 3;
 
 const initialState = {
-  life: STARTLIFE,
-  removeScore: -100
+  life: STARTLIFE
 };
 
 const playerLife = (state = initialState, action) => {

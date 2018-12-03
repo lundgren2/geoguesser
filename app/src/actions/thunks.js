@@ -56,6 +56,8 @@ export const correctMarkerChosen = markerId => {
 
 // The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = () => {
+  const removeScore = 100;
+
   return (dispatch, getState) => {
     dispatch(removeLife());
     const { game } = getState();
@@ -63,7 +65,7 @@ export const wrongMarkerChosen = () => {
       dispatch({ type: STOP_GAME });
       dispatch({ type: TOGGLE_GAME_LOST });
     } else {
-      dispatch(addPoints(game.playerLife.removeScore));
+      dispatch(addPoints(-removeScore));
     }
   };
 };
