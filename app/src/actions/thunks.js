@@ -7,19 +7,9 @@ import {
   REMOVE_CORRECT_MARKER,
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
-  TOGGLE_START_GAME,
 } from '../actions';
 import { requestPoints, clearScore } from './score';
 import { START_GAME, STOP_GAME, GAME_NEXT_REGION } from './actions';
-
-// NOTE: Redux-thunks should never be async-await.
-
-/* Start the game from the beginning */
-export const toggleStartGame = () => {
-  return dispatch => {
-    dispatch({ type: TOGGLE_START_GAME });
-  };
-};
 
 /**
  * Checks if pressed marker during game is correct.
