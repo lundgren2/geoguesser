@@ -7,10 +7,9 @@ import {
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
   SET_USER_POSITION,
-  START_GAME,
-  STOP_GAME,
   GAME_NEXT_REGION,
 } from '../actions';
+import { startGame, stopGame } from './layers';
 import { requestPoints, clearScore } from './score';
 import getUserPosition from './helpers/getUserPosition';
 import _ from 'lodash';
@@ -58,7 +57,7 @@ export const correctMarkerChosen = () => {
 // The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = () => {
   return dispatch => {
-    dispatch({ type: STOP_GAME });
+    dispatch(stopGame());
     dispatch({ type: TOGGLE_GAME_LOST });
   };
 };
@@ -104,7 +103,7 @@ export const setupNextRegion = (initialRegion = false) => {
     dispatch(randomizeCorrectMarker());
 
     dispatch({ type: GAME_NEXT_REGION });
-    dispatch({ type: START_GAME });
+    dispatch(startGame());
   };
 };
 
@@ -124,7 +123,7 @@ export const randomizeCorrectMarker = () => {
 export const timeRanOut = () => {
   return dispatch => {
     dispatch({ type: TOGGLE_GAME_LOST });
-    dispatch({ type: STOP_GAME });
+    dispatch(stopGame());
   };
 };
 

@@ -1,4 +1,5 @@
 import {
+  START_GAME,
   STOP_GAME,
   SETUP_GAME,
   TOGGLE_GAME_WON,
@@ -8,6 +9,8 @@ import {
 } from './actions';
 
 export const setupGame = () => ({ type: SETUP_GAME });
+
+export const startGame = () => ({ type: START_GAME });
 
 export const stopGame = () => ({ type: STOP_GAME });
 
