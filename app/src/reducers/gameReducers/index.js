@@ -1,11 +1,17 @@
 import { combineReducers } from 'redux';
 
-import markersReducer from './markersReducer';
-import correctMarkerReducer from './correctMarkerReducer';
 import regionReducer from './regionReducer';
+import markersReducer from './markersReducer';
+import markersLeftReducer from './markersLeftReducer';
+import correctMarkerReducer from './correctMarkerReducer';
+import startGameReducer from './startGameReducer';
+import scoreReducer from './scoreReducer';
 
 export default combineReducers({
   region: regionReducer,
   markers: markersReducer,
-  correctMarker: correctMarkerReducer
+  markersLeft: markersLeftReducer,
+  correctMarker: correctMarkerReducer,
+  startGame: startGameReducer,
+  scoreboard: scoreReducer,
 });

@@ -1,14 +1,14 @@
-import getMarkers from './helpers/getMarkers';
-import { SET_MARKERS, SET_MARKERS_FORCE } from '../../actions';
+import getInitialMarkers from './helpers/getInitialMarkers';
+import { SET_INITIAL_MARKERS, SET_USER_POSITION } from '../../actions';
 
-const initialState = getMarkers(3, true);
+const initialState = [];
 
 const markers = (state = initialState, action) => {
   switch (action.type) {
-    case SET_MARKERS:
-      return getMarkers(action.payload, true);
-    case SET_MARKERS_FORCE:
-      return [action.payload];
+    case SET_INITIAL_MARKERS:
+      return getInitialMarkers(action.payload);
+    case SET_USER_POSITION:
+      return action.payload;
     default:
       return state;
   }

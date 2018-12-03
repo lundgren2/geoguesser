@@ -5,6 +5,8 @@ import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
 import styles from './styles';
 import { GAME_PAUSED, GAME_ON, GAME_OFF } from '../../actions';
+import { wrongMarkerChosen } from '../../actions/thunks';
+import { addPoints } from '../../actions/score';
 
 class GameBar extends Component {
   state = {
@@ -18,7 +20,14 @@ class GameBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { correctMarker, gameStatus } = this.props;
+    const {
+      correctMarker,
+      gameStatus,
+      scoreboard,
+      addPoints,
+      showGameWon,
+      showGameLost,
+    } = this.props;
 
     switch (gameStatus) {
       case GAME_PAUSED:
@@ -33,8 +42,18 @@ class GameBar extends Component {
         if (prevProps.gameStatus !== gameStatus) this.resetTimer();
         break;
     }
-
     this.checkCorrectMarker(prevProps.correctMarker, correctMarker);
+
+    // Add points whenever they are requested
+    if (scoreboard.requestPoints) {
+      const points = Math.floor(this.state.timer.__getValue());
+      addPoints(points);
+    }
+
+    // If the played win or lose the game, stop the timer
+    if (showGameWon || showGameLost) {
+      this.stopTimer();
+    }
   }
 
   checkCorrectMarker(prevMarker, correctMarker) {
@@ -54,7 +73,13 @@ class GameBar extends Component {
       toValue: 0,
       duration: 14000,
       easing: Easing.linear,
-    }).start();
+    }).start(({ finished }) => {
+      // TODO: CHECK IF IS THIS IS CORRECT?
+      if (finished) {
+        // Time ran out, player lost the game
+        this.props.wrongMarkerChosen();
+      }
+    });
   }
 
   stopTimer() {
@@ -84,6 +109,12 @@ const mapStateToProps = ({ game, layers }) => ({
   correctMarker: game.correctMarker,
   gameStatus: layers.gameStatus,
   showMainMenu: layers.mainMenu,
+  showGameWon: layers.gameWon,
+  showGameLost: layers.gameLost,
+  scoreboard: game.scoreboard,
 });
 
-export default connect(mapStateToProps)(GameBar);
+export default connect(
+  mapStateToProps,
+  { wrongMarkerChosen, addPoints },
+)(GameBar);

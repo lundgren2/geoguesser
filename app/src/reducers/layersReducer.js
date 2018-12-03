@@ -1,8 +1,9 @@
 import {
   TOGGLE_GAME_MENU,
+  TOGGLE_GAME_WON,
+  TOGGLE_GAME_LOST,
   START_GAME,
   STOP_GAME,
-  PAUSE_GAME,
   GAME_OFF,
   GAME_ON,
   GAME_PAUSED,
@@ -12,9 +13,11 @@ const initialState = {
   gameMenu: false,
   mainMenu: true,
   gameStatus: GAME_OFF,
+  gameWon: false,
+  gameLost: false,
 };
 
-const debug = (state = initialState, action) => {
+const layers = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
     case TOGGLE_GAME_MENU:
@@ -37,9 +40,13 @@ const debug = (state = initialState, action) => {
         mainMenu: false,
         gameMenu: false,
       };
+    case TOGGLE_GAME_WON:
+      return { ...state, gameWon: !state.gameWon };
+    case TOGGLE_GAME_LOST:
+      return { ...state, gameLost: !state.gameLost };
     default:
       return state;
   }
 };
 
-export default debug;
+export default layers;

@@ -3,10 +3,16 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { MapView } from 'expo';
 import _ from 'lodash';
-import { brightColors } from '../../constants/mapStyles';
-import { handleMarkerPress } from '../../actions/thunks';
-import RegionInfo from './RegionInfo';
 import styles from './styles';
+import { brightColors } from '../../constants/mapStyles';
+import RegionInfo from './RegionInfo';
+import {
+  handleMarkerPress,
+  setupInitialRegion,
+  setupNextRegion,
+  toggleStartGame,
+} from '../../actions/thunks';
+import { setUserPosition } from '../../actions/thunks';
 
 class Map extends Component {
   state = {
@@ -15,7 +21,8 @@ class Map extends Component {
   };
 
   componentDidMount() {
-    this.focusMap(this.props.markers, true);
+    // TODO: Call this when the player intially presses "Start Game" on welcome screen.
+    this.props.setUserPosition();
   }
 
   componentDidUpdate(prevProps) {
@@ -23,6 +30,12 @@ class Map extends Component {
       animationTimeout = setTimeout(() => {
         this.focusMap(this.props.markers, true);
       }, 500);
+    }
+    if (this.props.startGame) {
+      // Toggle startGame back to false
+      this.props.toggleStartGame();
+      // Start a new game
+      this.startGame();
     }
   }
 
@@ -39,38 +52,53 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
-  getMarker = (marker) => {
-    if (marker.markerType === "CIRCLE")
+  getMarker = (marker, color) => {
+    if (marker.markerType === 'CIRCLE')
       return (
         <MapView.Circle
+          center={marker.center}
+          radius={4}
+          fillColor="rgba(0, 0, 0, 0.2)"
+          strokeColor="rgba(0, 0, 0, 0.2)"
           key={marker.id}
           identifier={marker.title}
           coordinate={marker.coordinate}
-          onPress={() => {
-            this.props.handleMarkerPress(marker.id);
-          }}
-          center={marker.center}
-          radius={5}
-          fillColor="rgba(0, 0, 0, 0.2)"
-          strokeColor="rgba(0, 0, 0, 0.2)"
+          onPress={null}
         />
       );
-
     else
       return (
         <MapView.Marker
           key={marker.id}
           identifier={marker.title}
           coordinate={marker.coordinate}
-          onPress={() => {
-            this.props.handleMarkerPress(marker.id);
-          }}
+          onPress={() => this.props.handleMarkerPress(marker.id)}
+          pinColor={color}
         />
       );
   };
 
+  startGame() {
+    this.props.setupInitialRegion();
+    animationTimeout = setTimeout(() => {
+      this.focusMap(this.props.markers, true);
+    }, 2000);
+  }
+
   render() {
-    const { debug, markers } = this.props;
+    const { debug, markers, markersLeft } = this.props;
+
+    const red = 'red';
+    const green = 'green';
+
+    let markerLeftIds = markersLeft.map(marker => marker.id);
+
+    let redMarkers = markers.filter(marker =>
+      markerLeftIds.includes(marker.id),
+    );
+    let greenMarkers = markers.filter(
+      marker => !markerLeftIds.includes(marker.id),
+    );
 
     return (
       <View style={styles.container}>
@@ -88,21 +116,35 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {markers.map(marker => this.getMarker(marker))}
+          {redMarkers.map(marker => {
+            return this.getMarker(marker, red);
+          })}
+          {greenMarkers.map(marker => {
+            return this.getMarker(marker, green);
+          })}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
       </View>
     );
   }
+  // {this.renderMarkers(greenMarkers, green)}
 }
 
 const mapStateToProps = ({ game, settings }) => ({
   debug: settings.debug,
-  markers: game.markers,
   region: game.region,
+  markers: game.markers,
+  markersLeft: game.markersLeft,
+  startGame: game.startGame,
 });
 
 export default connect(
   mapStateToProps,
-  { handleMarkerPress },
+  {
+    handleMarkerPress,
+    setupInitialRegion,
+    setupNextRegion,
+    toggleStartGame,
+    setUserPosition,
+  },
 )(Map);
