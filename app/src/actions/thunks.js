@@ -58,11 +58,12 @@ export const correctMarkerChosen = markerId => {
 export const wrongMarkerChosen = () => {
   return (dispatch, getState) => {
     dispatch(removeLife());
-    dispatch(addPoints(-100));
     const { game } = getState();
     if (game.playerLife.life <= 0) {
       dispatch({ type: STOP_GAME });
       dispatch({ type: TOGGLE_GAME_LOST });
+    } else {
+      dispatch(addPoints(game.playerLife.removeScore));
     }
   };
 };
