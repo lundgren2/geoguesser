@@ -24,3 +24,8 @@ export const TOGGLE_START_GAME = 'START_GAME';
 export const REQUEST_POINTS = 'REQUEST_POINTS';
 export const ADD_POINTS = 'ADD_POINTS';
 export const CLEAR_SCORE = 'CLEAR_SCORE';
+
+// life
+export const RESET_LIFE = 'RESET_LIFE';
+export const REDUCE_LIFE = 'REDUCE_LIFE';
+export const INCREASE_LIFE = 'INCREASE_LIFE';

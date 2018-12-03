@@ -7,9 +7,10 @@ import {
   REMOVE_CORRECT_MARKER,
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
-  TOGGLE_START_GAME
+  TOGGLE_START_GAME, HAS_LIFE
 } from '../actions';
 import { requestPoints, clearScore } from './score';
+import { addLife, removeLife } from './life';
 
 // NOTE: Redux-thunks should never be async-await.
 
@@ -62,10 +63,15 @@ export const correctMarkerChosen = markerId => {
 
 // The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = () => {
-  return dispatch => {
-    // In the future we will probably add logic for multiple lifes here.
-    dispatch({ type: TOGGLE_GAME_LOST });
-    dispatch(clearScore());
+  return (dispatch, getState) => {
+    dispatch(removeLife());
+    const {
+      game
+    } = getState();
+    if (game.playerLife.life <= 0) {
+      dispatch({ type: TOGGLE_GAME_LOST });
+      dispatch(clearScore());
+    };
   };
 };
 
@@ -81,6 +87,7 @@ export const lastCorrectMarker = () => {
       dispatch({ type: TOGGLE_GAME_WON });
     } else {
       // Setup next region
+      dispatch(addLife());
       dispatch(setupNextRegion());
     }
   };

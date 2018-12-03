@@ -7,6 +7,7 @@ import styles from './styles';
 import { GAME_PAUSED, GAME_ON, GAME_OFF } from '../../actions';
 import { wrongMarkerChosen } from '../../actions/thunks';
 import { addPoints } from '../../actions/score';
+import { resetLife } from '../../actions/life';
 
 class GameBar extends Component {
   state = {
@@ -26,7 +27,7 @@ class GameBar extends Component {
       scoreboard,
       addPoints,
       showGameWon,
-      showGameLost,
+      showGameLost
     } = this.props;
 
     switch (gameStatus) {
@@ -53,6 +54,7 @@ class GameBar extends Component {
     // If the played win or lose the game, stop the timer
     if (showGameWon || showGameLost) {
       this.stopTimer();
+      resetLife();
     }
   }
 

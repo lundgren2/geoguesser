@@ -6,6 +6,7 @@ import markersLeftReducer from './markersLeftReducer';
 import correctMarkerReducer from './correctMarkerReducer';
 import startGameReducer from './startGameReducer';
 import scoreReducer from './scoreReducer';
+import lifeReducer from './lifeReducer';
 
 export default combineReducers({
   region: regionReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   markersLeft: markersLeftReducer,
   correctMarker: correctMarkerReducer,
   startGame: startGameReducer,
-  scoreboard: scoreReducer
+  scoreboard: scoreReducer,
+  playerLife: lifeReducer
 });
