@@ -6,13 +6,17 @@ import _ from 'lodash';
 import styles from './styles';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
-import { setupLevel, handleMarkerPress } from '../../actions/thunks';
+import { handleMarkerPress, setUserPosition } from '../../actions/thunks';
 
 class Map extends Component {
   state = {
     debugMarker: null,
     mapRegion: null,
   };
+
+  componentDidMount() {
+    this.props.setUserPosition();
+  }
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.markers, this.props.markers)) {
@@ -23,7 +27,7 @@ class Map extends Component {
   }
 
   focusMap(markers, animated) {
-    if (markers.length == 0) return;
+    if (markers.length === 0) return;
     const options = {
       // TODO: These are constants. Put them somewhere safe.
       edgePadding: { top: 200, right: 50, left: 50, bottom: 300 }, // High bottom padding since the map extends below the screen to hide google logo.
@@ -34,6 +38,34 @@ class Map extends Component {
   }
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
+
+  getMarker = (marker, color, handleMarkerPress) => {
+    if (marker.markerType === 'CIRCLE')
+      return (
+        <MapView.Circle
+          center={marker.center}
+          radius={4}
+          fillColor="rgba(0, 0, 0, 0.2)"
+          strokeColor="rgba(0, 0, 0, 0.2)"
+          key={marker.id}
+          identifier={marker.title}
+          coordinate={marker.coordinate}
+          onPress={null}
+        />
+      );
+    else
+      return (
+        <MapView.Marker
+          key={marker.id}
+          identifier={marker.title}
+          coordinate={marker.coordinate}
+          onPress={() => {
+            if (handleMarkerPress) handleMarkerPress(marker.id);
+          }}
+          pinColor={color}
+        />
+      );
+  };
 
   render() {
     const { debug, markers, markersLeft, handleMarkerPress } = this.props;
@@ -67,26 +99,10 @@ class Map extends Component {
           moveOnMarkerPress={false}
         >
           {redMarkers.map(marker => {
-            return (
-              <MapView.Marker
-                key={marker.id}
-                identifier={marker.title}
-                coordinate={marker.coordinate}
-                onPress={() => handleMarkerPress(marker.id)}
-                pinColor={red}
-              />
-            );
+            return this.getMarker(marker, red, handleMarkerPress);
           })}
           {greenMarkers.map(marker => {
-            return (
-              <MapView.Marker
-                key={marker.id}
-                identifier={marker.title}
-                coordinate={marker.coordinate}
-                onPress={null}
-                pinColor={green}
-              />
-            );
+            return this.getMarker(marker, green, null);
           })}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
@@ -108,6 +124,6 @@ export default connect(
   mapStateToProps,
   {
     handleMarkerPress,
-    setupLevel,
+    setUserPosition,
   },
 )(Map);

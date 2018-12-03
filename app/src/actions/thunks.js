@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   SET_REGION,
   SET_INITIAL_MARKERS,
@@ -7,9 +6,13 @@ import {
   REMOVE_CORRECT_MARKER,
   TOGGLE_GAME_WON,
   TOGGLE_GAME_LOST,
+  SET_USER_POSITION,
+  GAME_NEXT_REGION,
 } from '../actions';
+import { startGame, stopGame } from './layers';
 import { requestPoints, clearScore } from './score';
-import { START_GAME, STOP_GAME, GAME_NEXT_REGION } from './actions';
+import getUserPosition from './helpers/getUserPosition';
+import _ from 'lodash';
 
 /**
  * Checks if pressed marker during game is correct.
@@ -31,7 +34,7 @@ export const handleMarkerPress = markerId => {
 };
 
 // The player has chosen the correct marker
-export const correctMarkerChosen = markerId => {
+export const correctMarkerChosen = () => {
   return (dispatch, getState) => {
     const { game } = getState();
 
@@ -54,7 +57,7 @@ export const correctMarkerChosen = markerId => {
 // The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = () => {
   return dispatch => {
-    dispatch({ type: STOP_GAME });
+    dispatch(stopGame());
     dispatch({ type: TOGGLE_GAME_LOST });
   };
 };
@@ -76,6 +79,15 @@ export const lastCorrectMarker = () => {
   };
 };
 
+// Set user position
+export const setUserPosition = () => {
+  return dispatch => {
+    getUserPosition().then(userMarker =>
+      dispatch({ type: SET_USER_POSITION, payload: userMarker }),
+    );
+  };
+};
+
 // Setup the next region/level to play
 export const setupNextRegion = (initialRegion = false) => {
   return (dispatch, getState) => {
@@ -91,7 +103,7 @@ export const setupNextRegion = (initialRegion = false) => {
     dispatch(randomizeCorrectMarker());
 
     dispatch({ type: GAME_NEXT_REGION });
-    dispatch({ type: START_GAME });
+    dispatch(startGame());
   };
 };
 
@@ -109,14 +121,14 @@ export const randomizeCorrectMarker = () => {
 };
 
 export const timeRanOut = () => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({ type: TOGGLE_GAME_LOST });
-    dispatch({ type: STOP_GAME });
+    dispatch(stopGame());
   };
 };
 
 export const resetGame = () => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(clearScore());
     dispatch(setupNextRegion(true));
   };
