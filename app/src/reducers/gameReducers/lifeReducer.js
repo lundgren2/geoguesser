@@ -10,19 +10,16 @@ const playerLife = (state = initialState, action) => {
   switch (action.type) {
     case REDUCE_LIFE:
       return {
-        ...state,
         life: state.life - 1
       };
 
     case INCREASE_LIFE:
       return {
-        ...state,
         life: state.life == STARTLIFE ? state.life : state.life + 1
       };
 
     case RESET_LIFE:
       return {
-        ...state,
         life: STARTLIFE
       };
 

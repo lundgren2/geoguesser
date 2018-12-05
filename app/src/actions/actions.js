@@ -26,6 +26,7 @@ export const REMOVE_CORRECT_MARKER = 'REMOVE_CORRECT_MARKER';
 // score
 export const REQUEST_POINTS = 'REQUEST_POINTS';
 export const ADD_POINTS = 'ADD_POINTS';
+export const REDUCE_POINTS = 'REDUCE_POINTS';
 export const CLEAR_SCORE = 'CLEAR_SCORE';
 
 // life

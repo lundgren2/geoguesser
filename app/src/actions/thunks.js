@@ -11,7 +11,7 @@ import {
   STOP_GAME,
   GAME_NEXT_REGION,
 } from '../actions';
-import { requestPoints, clearScore, addPoints } from './score';
+import { requestPoints, clearScore, addPoints, reducePoints } from './score';
 import { addLife, removeLife, resetLife } from './life';
 
 /**
@@ -65,7 +65,7 @@ export const wrongMarkerChosen = () => {
       dispatch({ type: STOP_GAME });
       dispatch({ type: TOGGLE_GAME_LOST });
     } else {
-      dispatch(addPoints(-removeScore));
+      dispatch(reducePoints(removeScore));
     }
   };
 };

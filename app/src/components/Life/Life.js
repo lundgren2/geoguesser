@@ -3,14 +3,10 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Life = props => {
-  const { debug } = props;
-
   return (
-    !debug && (
-      <View style={styles.bar}>
-        <Text style={styles.text}>Life: {props.life}</Text>
-      </View>
-    )
+    <View style={styles.bar}>
+      <Text style={styles.text}>Life: {props.life}</Text>
+    </View>
   );
 };
 
