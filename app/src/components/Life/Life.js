@@ -13,9 +13,9 @@ const Life = props => {
   );
 };
 
-const drawHearts = nr_hearts => {
+const drawHearts = nrHearts => {
   let heartList = [];
-  for (let i = 0; i < nr_hearts; i++) {
+  for (let i = 0; i < nrHearts; i++) {
     heartList.push(<Icon key={i} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />)
   }
   return heartList;
