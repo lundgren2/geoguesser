@@ -9,5 +9,5 @@ export default {
   no,
   dk,
   fi,
-  de
+  de,
 };

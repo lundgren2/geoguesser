@@ -16,7 +16,7 @@ const Score = props => {
 
 const mapStateToProps = ({ game, settings }) => ({
   score: game.scoreboard.score,
-  debug: settings.debug
+  debug: settings.debug,
 });
 
 export default connect(mapStateToProps)(Score);
@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 10,
-    zIndex: 10
+    zIndex: 10,
   },
   text: {
     fontSize: 20,
     color: 'black',
-    zIndex: 30
-  }
+    zIndex: 30,
+  },
 });

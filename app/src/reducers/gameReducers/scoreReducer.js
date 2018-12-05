@@ -2,7 +2,7 @@ import { ADD_POINTS, REDUCE_POINTS, CLEAR_SCORE, REQUEST_POINTS } from '../../ac
 
 const initialState = {
   score: 0.0,
-  requestPoints: false
+  requestPoints: false,
 };
 
 const scoreboard = (state = initialState, action) => {
@@ -11,7 +11,7 @@ const scoreboard = (state = initialState, action) => {
       return {
         ...state,
         score: state.score + action.payload,
-        requestPoints: false
+        requestPoints: false,
       };
 
     case REDUCE_POINTS:
@@ -28,13 +28,13 @@ const scoreboard = (state = initialState, action) => {
     case REQUEST_POINTS:
       return {
         ...state,
-        requestPoints: true
+        requestPoints: true,
       };
 
     case CLEAR_SCORE:
       return {
         ...state,
-        score: 0.0
+        score: 0.0,
       };
 
     default:

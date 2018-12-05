@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import countries from '../../../constants/levelsJson/countries';
 
 // Write amount of markers to be shown
@@ -35,8 +34,8 @@ const getInitialMarkers = level => {
     description: city.toponymName,
     coordinate: {
       latitude: parseFloat(city.lat),
-      longitude: parseFloat(city.lng)
-    }
+      longitude: parseFloat(city.lng),
+    },
   }));
 };
 
