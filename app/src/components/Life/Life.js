@@ -4,8 +4,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const Life = props => {
-  let hearts = [1, 2, 3];
-
   return (
     <View style={styles.bar}>
       <Text style={styles.text}>Life: </Text>
