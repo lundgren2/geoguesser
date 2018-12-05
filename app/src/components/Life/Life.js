@@ -1,14 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 const Life = props => {
+  let hearts = [1, 2, 3];
+
   return (
     <View style={styles.bar}>
-      <Text style={styles.text}>Life: {props.life}</Text>
+      <Text style={styles.text}>Life: </Text>
+      {drawHearts(props.life).map(h => {return h})}
+
     </View>
   );
 };
+
+const drawHearts = nr_hearts => {
+  let heartList = [];
+  for (let i = 0; i < nr_hearts; i++) {
+    heartList.push(<Icon key={i} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />)
+  }
+  return heartList;
+}
 
 const mapStateToProps = ({ game, settings }) => ({
   life: game.playerLife.life,
@@ -20,7 +33,8 @@ export default connect(mapStateToProps)(Life);
 const styles = StyleSheet.create({
   bar: {
     position: 'absolute',
-    top: 30,
+    flexDirection: 'row',
+    top: 35,
     left: 10,
     zIndex: 10
   },
@@ -28,5 +42,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
     zIndex: 30
+  },
+  icon: {
+    margin: 2
   }
 });
