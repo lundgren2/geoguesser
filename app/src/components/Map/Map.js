@@ -38,12 +38,11 @@ class Map extends Component {
     this.map.fitToCoordinates(coords, options);
   }
 
-  onMapRegionChange = mapRegion => {
-    this.setState({ mapRegion });
-  };
+  onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
   render() {
     const { debug, markers, markersLeft } = this.props;
+
     const red = 'red';
     const green = 'green';
 
