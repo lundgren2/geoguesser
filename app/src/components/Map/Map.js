@@ -72,10 +72,10 @@ class Map extends Component {
           moveOnMarkerPress={false}
         >
           {redMarkers.map((marker, index) => (
-            <Marker key={index} marker={marker} color={red} />
+            <Marker key={index} marker={marker} color={red} shouldHandleMarkerPress={true} />
           ))}
           {greenMarkers.map((marker, index) => (
-            <Marker key={index} marker={marker} color={green} />
+            <Marker key={index} marker={marker} color={green} shouldHandleMarkerPress={false} />
           ))}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}

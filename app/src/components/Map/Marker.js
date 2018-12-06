@@ -37,6 +37,7 @@ class Marker extends Component {
       marker,
       color,
       handleMarkerPress,
+      shouldHandleMarkerPress,
       markerHighlighted: { markerId },
     } = this.props;
     if (marker.markerType === 'CIRCLE')
@@ -60,7 +61,7 @@ class Marker extends Component {
           identifier={marker.title}
           coordinate={marker.coordinate}
           onPress={() => {
-            if (handleMarkerPress) handleMarkerPress(marker.id);
+            if (handleMarkerPress && shouldHandleMarkerPress) handleMarkerPress(marker.id);
           }}
           pinColor={color}
           ref={ref => (this.ref = ref)}
