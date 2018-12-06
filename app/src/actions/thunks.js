@@ -10,7 +10,8 @@ import {
   GAME_NEXT_REGION,
 } from '../actions';
 import { startGame, stopGame } from './layers';
-import { requestPoints, clearScore } from './score';
+import { requestPoints, clearScore, subtractPoints } from './score';
+import { increaseLife, decreaseLife, resetLife } from './life';
 import getUserPosition from './helpers/getUserPosition';
 import _ from 'lodash';
 
@@ -54,11 +55,19 @@ export const correctMarkerChosen = () => {
   };
 };
 
-// The player has chosen an incorrect marker and lost the game
+// The player has chosen an incorrect marker
 export const wrongMarkerChosen = () => {
-  return dispatch => {
-    dispatch(stopGame());
-    dispatch({ type: TOGGLE_GAME_LOST });
+  const removeScore = 100;
+
+  return (dispatch, getState) => {
+    dispatch(decreaseLife());
+    const { game } = getState();
+    if (game.playerLife.life <= 0) {
+      dispatch(stopGame());
+      dispatch({ type: TOGGLE_GAME_LOST });
+    } else {
+      dispatch(subtractPoints(removeScore));
+    }
   };
 };
 
@@ -74,6 +83,7 @@ export const lastCorrectMarker = () => {
       dispatch({ type: TOGGLE_GAME_WON });
     } else {
       // Setup next region
+      dispatch(increaseLife());
       dispatch(setupNextRegion());
     }
   };
@@ -130,6 +140,7 @@ export const timeRanOut = () => {
 export const resetGame = () => {
   return dispatch => {
     dispatch(clearScore());
+    dispatch(resetLife());
     dispatch(setupNextRegion(true));
   };
 };

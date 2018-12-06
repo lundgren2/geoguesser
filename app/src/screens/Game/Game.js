@@ -9,6 +9,7 @@ import styles from './styles';
 import GameWon from '../../components/GameWon';
 import GameLost from '../../components/GameLost';
 import Score from '../../components/Score';
+import Life from '../../components/Life';
 
 export default () => {
   return (
@@ -19,6 +20,7 @@ export default () => {
         <GameBar />
       </View>
       <Score />
+      <Life />
       <SettingsButton />
       <GameWon />
       <GameLost />
