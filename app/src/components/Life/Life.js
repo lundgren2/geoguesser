@@ -2,24 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import _ from 'lodash';
 
 const Life = props => {
   return (
     <View style={styles.bar}>
       <Text style={styles.text}>Life: </Text>
-      {drawHearts(props.life).map(h => {return h})}
+      {_.times(props.life, (index) => {
+        return <Icon key={index} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />
+      })}
+
     </View>
   );
 };
-
-const drawHearts = nrHearts => {
-  const heartRepeate = new Array(nrHearts).fill(true);
-  let heartList = [];
-  heartList.push(heartRepeate.map( (bool, index) => {
-    return <Icon key={index} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />
-  }));
-  return heartList;
-}
 
 const mapStateToProps = ({ game, settings }) => ({
   life: game.playerLife.life,
