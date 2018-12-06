@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   SET_REGION,
   SET_INITIAL_MARKERS,
@@ -10,9 +11,10 @@ import {
   GAME_NEXT_REGION,
 } from '../actions';
 import { startGame, stopGame } from './layers';
-import { requestPoints, clearScore } from './score';
+import { requestPoints, clearScore, subtractPoints } from './score';
 import getUserPosition from './helpers/getUserPosition';
 import { highlightMarker, clearHighlightedMarker } from './marker';
+import { resetLife, decreaseLife, increaseLife } from './life';
 
 /**
  * Checks if pressed marker during game is correct.
@@ -79,7 +81,7 @@ export const showPressedMarker = pressedMarkerId => {
 };
 
 // The player has chosen an incorrect marker
-export const wrongMarkerChosen = () => {
+export const wrongMarkerChosen = pressedMarkerId => {
   const removeScore = 100;
 
   return (dispatch, getState) => {

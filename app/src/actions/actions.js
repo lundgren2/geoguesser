@@ -10,7 +10,6 @@ export const TOGGLE_GAME_LOST = 'TOGGLE_GAME_LOST';
 // game
 export const START_GAME = 'START_GAME';
 export const STOP_GAME = 'STOP_GAME';
-export const PAUSE_GAME = 'PAUSE_GAME';
 export const SETUP_GAME = 'SETUP_GAME';
 export const GAME_OFF = 'GAME_OFF';
 export const GAME_ON = 'GAME_ON';
