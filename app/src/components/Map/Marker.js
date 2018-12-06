@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { handleMarkerPress } from '../../actions/thunks';
 import { MapView } from 'expo';
 import Callout from './Callout';
+import { GAME_ON } from '../../actions';
 
 class Marker extends Component {
   componentDidUpdate(prevProps) {
@@ -24,6 +25,7 @@ class Marker extends Component {
       color,
       handleMarkerPress,
       shouldHandleMarkerPress,
+      gameStatus,
       markerHighlighted: { markerId, description },
     } = this.props;
 
@@ -48,7 +50,11 @@ class Marker extends Component {
           identifier={marker.title}
           coordinate={marker.coordinate}
           onPress={() => {
-            if (handleMarkerPress && shouldHandleMarkerPress)
+            if (
+              handleMarkerPress &&
+              shouldHandleMarkerPress &&
+              gameStatus === GAME_ON
+            )
               handleMarkerPress(marker.id);
           }}
           pinColor={color}
@@ -64,8 +70,9 @@ class Marker extends Component {
   }
 }
 
-const mapStateToProps = ({ game }) => ({
+const mapStateToProps = ({ game, layers }) => ({
   markerHighlighted: game.markerHighlighted,
+  gameStatus: layers.gameStatus,
 });
 
 export default connect(
