@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleMarkerPress } from '../../actions/thunks';
 import { MapView } from 'expo';
-import { View, Text } from 'react-native';
+import Callout from './Callout';
 
 class Marker extends Component {
   componentDidUpdate(prevProps) {
@@ -18,28 +18,15 @@ class Marker extends Component {
       setTimeout(() => this.ref.hideCallout(), 30);
   }
 
-  getCalloutText = marker => {
-    const {
-      markerHighlighted: { markerId, description },
-    } = this.props;
-    if (markerId === marker.id)
-      return (
-        <View>
-          <Text>{marker.title}</Text>
-          <Text>{description}</Text>
-        </View>
-      );
-    else return null;
-  };
-
   render() {
     const {
       marker,
       color,
       handleMarkerPress,
       shouldHandleMarkerPress,
-      markerHighlighted: { markerId },
+      markerHighlighted: { markerId, description },
     } = this.props;
+
     if (marker.markerType === 'CIRCLE')
       return (
         <MapView.Circle
@@ -67,9 +54,11 @@ class Marker extends Component {
           pinColor={color}
           ref={ref => (this.ref = ref)}
         >
-          <MapView.Callout tooltip={marker.id !== markerId}>
-            {this.getCalloutText(marker)}
-          </MapView.Callout>
+          <Callout
+            isVisible={marker.id === markerId}
+            title={marker.title}
+            description={description}
+          />
         </MapView.Marker>
       );
   }
