@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   SET_REGION,
   SET_INITIAL_MARKERS,
@@ -79,11 +78,19 @@ export const showPressedMarker = pressedMarkerId => {
   };
 };
 
-// The player has chosen an incorrect marker and lost the game
-export const wrongMarkerChosen = pressedMarkerId => {
-  return dispatch => {
-    dispatch(stopGame());
-    dispatch(showPressedMarker(pressedMarkerId));
+// The player has chosen an incorrect marker
+export const wrongMarkerChosen = () => {
+  const removeScore = 100;
+
+  return (dispatch, getState) => {
+    dispatch(decreaseLife());
+    const { game } = getState();
+    if (game.playerLife.life <= 0) {
+      dispatch(stopGame());
+      dispatch(showPressedMarker(pressedMarkerId));
+    } else {
+      dispatch(subtractPoints(removeScore));
+    }
   };
 };
 
@@ -99,6 +106,7 @@ export const lastCorrectMarker = () => {
       dispatch({ type: TOGGLE_GAME_WON });
     } else {
       // Setup next region
+      dispatch(increaseLife());
       dispatch(setupNextRegion());
     }
   };
@@ -155,6 +163,7 @@ export const timeRanOut = () => {
 export const resetGame = () => {
   return dispatch => {
     dispatch(clearScore());
+    dispatch(resetLife());
     dispatch(setupNextRegion(true));
   };
 };

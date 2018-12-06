@@ -1,4 +1,4 @@
-import { ADD_POINTS, CLEAR_SCORE, REQUEST_POINTS } from '../../actions';
+import { ADD_POINTS, SUBTRACT_POINTS, CLEAR_SCORE, REQUEST_POINTS } from '../../actions';
 
 const initialState = {
   score: 0.0,
@@ -9,10 +9,19 @@ const scoreboard = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POINTS:
       return {
-        ...state,
         score: state.score + action.payload,
         requestPoints: false,
       };
+
+    case SUBTRACT_POINTS:
+      let newScore = 0.0;
+      if (state.score >= action.payload)
+        newScore = state.score - action.payload
+      return {
+        score: newScore,
+        requestPoints: false
+      };
+
 
     case REQUEST_POINTS:
       return {

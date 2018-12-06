@@ -29,4 +29,10 @@ export const CLEAR_HIGHLIGHTED_MARKER = 'CLEAR_HIGHLIGHTED_MARKER';
 // score
 export const REQUEST_POINTS = 'REQUEST_POINTS';
 export const ADD_POINTS = 'ADD_POINTS';
+export const SUBTRACT_POINTS = 'SUBTRACT_POINTS';
 export const CLEAR_SCORE = 'CLEAR_SCORE';
+
+// life
+export const RESET_LIFE = 'RESET_LIFE';
+export const DECREASE_LIFE = 'DECREASE_LIFE';
+export const INCREASE_LIFE = 'INCREASE_LIFE';
