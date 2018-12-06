@@ -72,8 +72,12 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {redMarkers.map((marker, index) => <Marker key={index} marker={marker} color={red} />)}
-          {greenMarkers.map((marker, index) => <Marker key={index} marker={marker} color={green} />)}
+          {redMarkers.map((marker, index) => (
+            <Marker key={index} marker={marker} color={red} />
+          ))}
+          {greenMarkers.map((marker, index) => (
+            <Marker key={index} marker={marker} color={green} />
+          ))}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
       </View>

@@ -13,7 +13,7 @@ import { startGame, stopGame } from './layers';
 import { requestPoints, clearScore } from './score';
 import getUserPosition from './helpers/getUserPosition';
 import _ from 'lodash';
-import {SET_HIGHLIGHTED_MARKERS} from "./actions";
+import { highlightMarker, clearHighlightedMarker } from './marker';
 
 /**
  * Checks if pressed marker during game is correct.
@@ -55,21 +55,35 @@ export const correctMarkerChosen = () => {
   };
 };
 
-export const highlightMarkers = (...markerId) => {
+// Displays correct marker, then moves on to displaying the game over menu
+export const showCorrectMarker = () => {
   return (dispatch, getState) => {
-    const { game: { markersHighlighted } } = getState();
-    const highlightedMarkers = [...markersHighlighted, ...markerId];
-    dispatch({type: SET_HIGHLIGHTED_MARKERS, payload: highlightedMarkers})
-  }
+    const {
+      game: { correctMarker },
+    } = getState();
+    dispatch(highlightMarker(correctMarker.id, 'Correct!'));
+    setTimeout(() => {
+      dispatch(clearHighlightedMarker());
+      dispatch({ type: TOGGLE_GAME_LOST });
+    }, 2000);
+  };
+};
+
+// Displays the pressed marker, then moves on to correct marker
+export const showPressedMarker = pressedMarkerId => {
+  return dispatch => {
+    dispatch(highlightMarker(pressedMarkerId, 'Wrong!'));
+    setTimeout(() => {
+      dispatch(showCorrectMarker());
+    }, 2000);
+  };
 };
 
 // The player has chosen an incorrect marker and lost the game
 export const wrongMarkerChosen = pressedMarkerId => {
-  return (dispatch, getState) => {
-    const { game: { correctMarker }} = getState();
-    dispatch(highlightMarkers(correctMarker.id, pressedMarkerId));
-    // dispatch(stopGame());
-    // dispatch({ type: TOGGLE_GAME_LOST });
+  return dispatch => {
+    dispatch(stopGame());
+    dispatch(showPressedMarker(pressedMarkerId));
   };
 };
 

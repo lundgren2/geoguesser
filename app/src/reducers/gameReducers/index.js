@@ -5,13 +5,13 @@ import markersReducer from './markersReducer';
 import markersLeftReducer from './markersLeftReducer';
 import correctMarkerReducer from './correctMarkerReducer';
 import scoreReducer from './scoreReducer';
-import markersHighlighted from "./markersHighlighted";
+import markerHighlighted from './markerHighlightedReducer';
 
 export default combineReducers({
   region: regionReducer,
   markers: markersReducer,
   markersLeft: markersLeftReducer,
-  markersHighlighted: markersHighlighted,
+  markerHighlighted: markerHighlighted,
   correctMarker: correctMarkerReducer,
   scoreboard: scoreReducer,
 });
