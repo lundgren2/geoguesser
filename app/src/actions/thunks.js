@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   SET_REGION,
   SET_INITIAL_MARKERS,
@@ -12,7 +13,6 @@ import {
 import { startGame, stopGame } from './layers';
 import { requestPoints, clearScore } from './score';
 import getUserPosition from './helpers/getUserPosition';
-import _ from 'lodash';
 import { highlightMarker, clearHighlightedMarker } from './marker';
 
 /**
