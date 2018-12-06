@@ -10,8 +10,8 @@ import {
   GAME_NEXT_REGION,
 } from '../actions';
 import { startGame, stopGame } from './layers';
-import { requestPoints, clearScore, addPoints, reducePoints } from './score';
-import { addLife, removeLife, resetLife } from './life';
+import { requestPoints, clearScore, subtractPoints } from './score';
+import { increaseLife, decreaseLife, resetLife } from './life';
 import getUserPosition from './helpers/getUserPosition';
 import _ from 'lodash';
 
@@ -60,13 +60,13 @@ export const wrongMarkerChosen = () => {
   const removeScore = 100;
 
   return (dispatch, getState) => {
-    dispatch(removeLife());
+    dispatch(decreaseLife());
     const { game } = getState();
     if (game.playerLife.life <= 0) {
       dispatch(stopGame());
       dispatch({ type: TOGGLE_GAME_LOST });
     } else {
-      dispatch(reducePoints(removeScore));
+      dispatch(subtractPoints(removeScore));
     }
   };
 };
@@ -83,7 +83,7 @@ export const lastCorrectMarker = () => {
       dispatch({ type: TOGGLE_GAME_WON });
     } else {
       // Setup next region
-      dispatch(addLife());
+      dispatch(increaseLife());
       dispatch(setupNextRegion());
     }
   };

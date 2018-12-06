@@ -1,4 +1,4 @@
-import { RESET_LIFE, REDUCE_LIFE, INCREASE_LIFE} from '../../actions';
+import { RESET_LIFE, DECREASE_LIFE, INCREASE_LIFE} from '../../actions';
 
 const STARTLIFE = 3;
 
@@ -8,7 +8,7 @@ const initialState = {
 
 const playerLife = (state = initialState, action) => {
   switch (action.type) {
-    case REDUCE_LIFE:
+    case DECREASE_LIFE:
       return {
         life: state.life - 1
       };

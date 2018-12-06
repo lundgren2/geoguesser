@@ -27,10 +27,10 @@ export const SET_USER_POSITION = 'SET_USER_POSITION';
 // score
 export const REQUEST_POINTS = 'REQUEST_POINTS';
 export const ADD_POINTS = 'ADD_POINTS';
-export const REDUCE_POINTS = 'REDUCE_POINTS';
+export const SUBTRACT_POINTS = 'SUBTRACT_POINTS';
 export const CLEAR_SCORE = 'CLEAR_SCORE';
 
 // life
 export const RESET_LIFE = 'RESET_LIFE';
-export const REDUCE_LIFE = 'REDUCE_LIFE';
+export const DECREASE_LIFE = 'DECREASE_LIFE';
 export const INCREASE_LIFE = 'INCREASE_LIFE';

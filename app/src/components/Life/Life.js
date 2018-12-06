@@ -8,16 +8,16 @@ const Life = props => {
     <View style={styles.bar}>
       <Text style={styles.text}>Life: </Text>
       {drawHearts(props.life).map(h => {return h})}
-
     </View>
   );
 };
 
 const drawHearts = nrHearts => {
+  const heartRepeate = new Array(nrHearts).fill(true);
   let heartList = [];
-  for (let i = 0; i < nrHearts; i++) {
-    heartList.push(<Icon key={i} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />)
-  }
+  heartList.push(heartRepeate.map( (bool, index) => {
+    return <Icon key={index} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />
+  }));
   return heartList;
 }
 
