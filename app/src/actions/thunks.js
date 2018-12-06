@@ -55,7 +55,7 @@ export const correctMarkerChosen = () => {
   };
 };
 
-// The player has chosen an incorrect marker and lost the game
+// The player has chosen an incorrect marker
 export const wrongMarkerChosen = () => {
   const removeScore = 100;
 
