@@ -61,7 +61,8 @@ class Marker extends Component {
           identifier={marker.title}
           coordinate={marker.coordinate}
           onPress={() => {
-            if (handleMarkerPress && shouldHandleMarkerPress) handleMarkerPress(marker.id);
+            if (handleMarkerPress && shouldHandleMarkerPress)
+              handleMarkerPress(marker.id);
           }}
           pinColor={color}
           ref={ref => (this.ref = ref)}
