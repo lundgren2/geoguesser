@@ -21,16 +21,16 @@ import { resetLife, decreaseLife, increaseLife } from './life';
  * If true starts next level.
  * TODO: If false, alerts user.
  */
-export const handleMarkerPress = pressedMarkerId => {
+export const handleMarkerPress = markerId => {
   return (dispatch, getState) => {
     const {
       game: { correctMarker },
     } = getState();
 
-    if (pressedMarkerId === correctMarker.id) {
+    if (markerId === correctMarker.id) {
       dispatch(correctMarkerChosen(correctMarker.id));
     } else {
-      dispatch(wrongMarkerChosen(pressedMarkerId));
+      dispatch(wrongMarkerChosen(markerId));
     }
   };
 };
@@ -81,7 +81,7 @@ export const showPressedMarker = pressedMarkerId => {
 };
 
 // The player has chosen an incorrect marker
-export const wrongMarkerChosen = pressedMarkerId => {
+export const wrongMarkerChosen = markerId => {
   const removeScore = 100;
 
   return (dispatch, getState) => {
@@ -89,7 +89,7 @@ export const wrongMarkerChosen = pressedMarkerId => {
     const { game } = getState();
     if (game.playerLife.life <= 0) {
       dispatch(stopGame());
-      dispatch(showPressedMarker(pressedMarkerId));
+      dispatch(showPressedMarker(markerId));
     } else {
       dispatch(subtractPoints(removeScore));
     }
