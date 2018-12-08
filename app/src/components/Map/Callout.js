@@ -4,14 +4,14 @@ import { View, Text } from 'react-native';
 
 const CalloutText = props => {
   const { isVisible, title, description } = props;
-  if (isVisible)
-    return (
-      <View>
-        <Text>{title}</Text>
-        <Text>{description}</Text>
-      </View>
-    );
-  else return null;
+  if (!isVisible) return null;
+
+  return (
+    <View>
+      <Text>{title}</Text>
+      <Text>{description}</Text>
+    </View>
+  );
 };
 
 const Callout = props => {

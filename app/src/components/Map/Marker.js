@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleMarkerPress } from '../../actions/thunks';
 import { MapView } from 'expo';
+import { handleMarkerPress } from '../../actions/thunks';
 import Callout from './Callout';
 import { GAME_ON } from '../../actions';
 
@@ -43,30 +43,30 @@ class Marker extends Component {
           ref={ref => (this.ref = ref)}
         />
       );
-    else
-      return (
-        <MapView.Marker
-          key={marker.id}
-          identifier={marker.title}
-          coordinate={marker.coordinate}
-          onPress={() => {
-            if (
-              handleMarkerPress &&
-              shouldHandleMarkerPress &&
-              gameStatus === GAME_ON
-            )
-              handleMarkerPress(marker.id);
-          }}
-          pinColor={color}
-          ref={ref => (this.ref = ref)}
-        >
-          <Callout
-            isVisible={marker.id === markerId}
-            title={marker.title}
-            description={description}
-          />
-        </MapView.Marker>
-      );
+
+    return (
+      <MapView.Marker
+        key={marker.id}
+        identifier={marker.title}
+        coordinate={marker.coordinate}
+        onPress={() => {
+          if (
+            handleMarkerPress &&
+            shouldHandleMarkerPress &&
+            gameStatus === GAME_ON
+          )
+            handleMarkerPress(marker.id);
+        }}
+        pinColor={color}
+        ref={ref => (this.ref = ref)}
+      >
+        <Callout
+          isVisible={marker.id === markerId}
+          title={marker.title}
+          description={description}
+        />
+      </MapView.Marker>
+    );
   }
 }
 
