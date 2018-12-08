@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   SET_REGION,
   SET_INITIAL_MARKERS,
@@ -11,9 +12,9 @@ import {
 } from '../actions';
 import { startGame, stopGame } from './layers';
 import { requestPoints, clearScore, subtractPoints } from './score';
-import { increaseLife, decreaseLife, resetLife } from './life';
 import getUserPosition from './helpers/getUserPosition';
-import _ from 'lodash';
+import { highlightMarker, clearHighlightedMarker } from './marker';
+import { resetLife, decreaseLife, increaseLife } from './life';
 
 /**
  * Checks if pressed marker during game is correct.
@@ -29,7 +30,7 @@ export const handleMarkerPress = markerId => {
     if (markerId === correctMarker.id) {
       dispatch(correctMarkerChosen(correctMarker.id));
     } else {
-      dispatch(wrongMarkerChosen());
+      dispatch(wrongMarkerChosen(markerId));
     }
   };
 };
@@ -55,8 +56,32 @@ export const correctMarkerChosen = () => {
   };
 };
 
+// Displays correct marker, then moves on to displaying the game over menu
+export const showCorrectMarker = () => {
+  return (dispatch, getState) => {
+    const {
+      game: { correctMarker },
+    } = getState();
+    dispatch(highlightMarker(correctMarker.id, 'Correct!'));
+    setTimeout(() => {
+      dispatch(clearHighlightedMarker());
+      dispatch({ type: TOGGLE_GAME_LOST });
+    }, 2000);
+  };
+};
+
+// Displays the pressed marker, then moves on to correct marker
+export const showPressedMarker = pressedMarkerId => {
+  return dispatch => {
+    dispatch(highlightMarker(pressedMarkerId, 'Wrong!'));
+    setTimeout(() => {
+      dispatch(showCorrectMarker());
+    }, 2000);
+  };
+};
+
 // The player has chosen an incorrect marker
-export const wrongMarkerChosen = () => {
+export const wrongMarkerChosen = markerId => {
   const removeScore = 100;
 
   return (dispatch, getState) => {
@@ -64,7 +89,7 @@ export const wrongMarkerChosen = () => {
     const { game } = getState();
     if (game.playerLife.life <= 0) {
       dispatch(stopGame());
-      dispatch({ type: TOGGLE_GAME_LOST });
+      dispatch(showPressedMarker(markerId));
     } else {
       dispatch(subtractPoints(removeScore));
     }

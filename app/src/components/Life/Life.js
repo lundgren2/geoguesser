@@ -8,17 +8,24 @@ const Life = props => {
   return (
     <View style={styles.bar}>
       <Text style={styles.text}>Life: </Text>
-      {_.times(props.life, (index) => {
-        return <Icon key={index} iconStyle={styles.icon} name='heartbeat' type='font-awesome' color='red' />
+      {_.times(props.life, index => {
+        return (
+          <Icon
+            key={index}
+            iconStyle={styles.icon}
+            name="heartbeat"
+            type="font-awesome"
+            color="red"
+          />
+        );
       })}
-
     </View>
   );
 };
 
 const mapStateToProps = ({ game, settings }) => ({
   life: game.playerLife.life,
-  debug: settings.debug
+  debug: settings.debug,
 });
 
 export default connect(mapStateToProps)(Life);
@@ -29,14 +36,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     top: 35,
     left: 10,
-    zIndex: 10
+    zIndex: 10,
   },
   text: {
     fontSize: 20,
     color: 'black',
-    zIndex: 30
+    zIndex: 30,
   },
   icon: {
-    margin: 2
-  }
+    margin: 2,
+  },
 });

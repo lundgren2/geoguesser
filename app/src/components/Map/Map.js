@@ -7,6 +7,7 @@ import styles from './styles';
 import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 import { handleMarkerPress, setUserPosition } from '../../actions/thunks';
+import Marker from './Marker';
 
 class Map extends Component {
   state = {
@@ -39,36 +40,8 @@ class Map extends Component {
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
-  getMarker = (marker, color, handleMarkerPress) => {
-    if (marker.markerType === 'CIRCLE')
-      return (
-        <MapView.Circle
-          center={marker.center}
-          radius={4}
-          fillColor="rgba(0, 0, 0, 0.2)"
-          strokeColor="rgba(0, 0, 0, 0.2)"
-          key={marker.id}
-          identifier={marker.title}
-          coordinate={marker.coordinate}
-          onPress={null}
-        />
-      );
-    else
-      return (
-        <MapView.Marker
-          key={marker.id}
-          identifier={marker.title}
-          coordinate={marker.coordinate}
-          onPress={() => {
-            if (handleMarkerPress) handleMarkerPress(marker.id);
-          }}
-          pinColor={color}
-        />
-      );
-  };
-
   render() {
-    const { debug, markers, markersLeft, handleMarkerPress } = this.props;
+    const { debug, markers, markersLeft } = this.props;
 
     const red = 'red';
     const green = 'green';
@@ -98,12 +71,22 @@ class Map extends Component {
           scrollEnabled={debug}
           moveOnMarkerPress={false}
         >
-          {redMarkers.map(marker => {
-            return this.getMarker(marker, red, handleMarkerPress);
-          })}
-          {greenMarkers.map(marker => {
-            return this.getMarker(marker, green, null);
-          })}
+          {redMarkers.map((marker, index) => (
+            <Marker
+              key={index}
+              marker={marker}
+              color={red}
+              shouldHandleMarkerPress={true}
+            />
+          ))}
+          {greenMarkers.map((marker, index) => (
+            <Marker
+              key={index}
+              marker={marker}
+              color={green}
+              shouldHandleMarkerPress={false}
+            />
+          ))}
         </MapView>
         {debug && <RegionInfo region={this.state.mapRegion} />}
       </View>

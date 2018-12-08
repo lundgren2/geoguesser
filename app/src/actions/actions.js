@@ -10,7 +10,6 @@ export const TOGGLE_GAME_LOST = 'TOGGLE_GAME_LOST';
 // game
 export const START_GAME = 'START_GAME';
 export const STOP_GAME = 'STOP_GAME';
-export const PAUSE_GAME = 'PAUSE_GAME';
 export const SETUP_GAME = 'SETUP_GAME';
 export const GAME_OFF = 'GAME_OFF';
 export const GAME_ON = 'GAME_ON';
@@ -23,6 +22,8 @@ export const SET_MARKERS = 'SET_MARKERS';
 export const SET_CORRECT_MARKER = 'SET_CORRECT_MARKER';
 export const REMOVE_CORRECT_MARKER = 'REMOVE_CORRECT_MARKER';
 export const SET_USER_POSITION = 'SET_USER_POSITION';
+export const SET_HIGHLIGHTED_MARKER = 'SET_HIGHLIGHTED_MARKER';
+export const CLEAR_HIGHLIGHTED_MARKER = 'CLEAR_HIGHLIGHTED_MARKER';
 
 // score
 export const REQUEST_POINTS = 'REQUEST_POINTS';
