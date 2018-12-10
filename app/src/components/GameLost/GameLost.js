@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
 import { resetGame } from '../../actions/thunks';
 import { toggleGameLost } from '../../actions/layers';
+import styles from '../GameMenu/styles';
 
 export class GameLost extends Component {
   render() {
@@ -17,8 +18,8 @@ export class GameLost extends Component {
         overlayStyle={styles.overlay}
         isVisible={showGameLost}
         onBackdropPress={() => undefined}
-        width="auto"
-        height="auto"
+        width="100%"
+        height="100%"
       >
         <Text style={styles.text}>{gameOverText}</Text>
         <Button
@@ -50,35 +51,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(GameLost);
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    paddingTop: 5,
-    paddingBottom: 5,
-    maxHeight: 190,
-    backgroundColor: '#00b894',
-    borderRadius: 5,
-  },
-  buttonContainer: {
-    margin: 'auto',
-  },
-  button: {
-    width: '100%',
-    borderRadius: 5,
-    padding: 5,
-    backgroundColor: '#0984e3',
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 20,
-  },
-  text: {
-    textAlign: 'center',
-    color: '#ffffff',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});
