@@ -8,6 +8,7 @@ import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 import { handleMarkerPress, setUserPosition } from '../../actions/thunks';
 import Marker from './Marker';
+import theme from 'constants/theme';
 
 class Map extends Component {
   state = {
@@ -43,9 +44,6 @@ class Map extends Component {
   render() {
     const { debug, markers, markersLeft } = this.props;
 
-    const red = 'red';
-    const green = 'green';
-
     let markerLeftIds = markersLeft.map(marker => marker.id);
 
     let redMarkers = markers.filter(marker =>
@@ -75,7 +73,7 @@ class Map extends Component {
             <Marker
               key={index}
               marker={marker}
-              color={red}
+              color={theme.red}
               shouldHandleMarkerPress={true}
             />
           ))}
@@ -83,7 +81,7 @@ class Map extends Component {
             <Marker
               key={index}
               marker={marker}
-              color={green}
+              color={theme.green}
               shouldHandleMarkerPress={false}
             />
           ))}
