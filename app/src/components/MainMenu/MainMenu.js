@@ -40,6 +40,7 @@ export class MainMenu extends Component {
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
+        windowBackgroundColor="rgba(255, 255, 255, .65)"
       >
         <FadeView isVisible={showMainMenu}>
           <View style={styles.logoContainer}>
