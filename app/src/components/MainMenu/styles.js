@@ -23,11 +23,15 @@ export default StyleSheet.create({
     color: '#dfe6e9',
   },
   logoContainer: {
-    marginTop: '22%',
-    marginBottom: 40,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '15%',
+    marginBottom: 60,
+    display: 'flex',
   },
   logo: {
-    height: 260,
+    height: 360,
     width: '100%',
   },
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
+import { Image } from 'react-native';
 import FadeView from '../FadeView';
 import { setupGame, toggleMainMenu } from '../../actions/layers';
 import logo from '../../images/logo.png';
