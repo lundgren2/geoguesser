@@ -22,4 +22,12 @@ export default StyleSheet.create({
   buttonText: {
     color: '#dfe6e9',
   },
+  logoContainer: {
+    marginTop: '22%',
+    marginBottom: 40,
+  },
+  logo: {
+    height: 260,
+    width: '100%',
+  },
 });

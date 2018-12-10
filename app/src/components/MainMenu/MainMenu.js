@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
 import FadeView from '../FadeView';
 import { setupGame, toggleMainMenu } from '../../actions/layers';
+import logo from '../../images/logo.png';
 import styles from './styles';
 
 export class MainMenu extends Component {
@@ -40,6 +41,7 @@ export class MainMenu extends Component {
         height="auto"
       >
         <FadeView isVisible={showMainMenu}>
+          <Image style={styles.logo} source={logo} resizeMode={'cover'} />
           {buttons.map(button => this.menuButton(button))}
         </FadeView>
       </Overlay>
