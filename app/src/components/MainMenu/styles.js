@@ -1,37 +1,33 @@
 import { StyleSheet } from 'react-native';
+import colors from 'constants/colors';
 
 export default StyleSheet.create({
   overlay: {
     flex: 1,
-    width: '100%',
-    height: '108%',
-    width: '100%',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    alignContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     zIndex: 100,
+    padding: 40,
   },
   buttonContainer: {
-    marginBottom: 20,
+    marginBottom: 18,
   },
   button: {
     width: '100%',
-    borderRadius: 5,
-    padding: 5,
-    backgroundColor: '#0984e3',
+    borderRadius: 35,
+    padding: 12,
   },
   buttonText: {
-    color: '#dfe6e9',
+    fontWeight: 'bold',
   },
   logoContainer: {
-    width: '100%',
-    justifyContent: 'center',
+    height: 280,
     alignItems: 'center',
-    marginTop: '15%',
-    marginBottom: 60,
-    display: 'flex',
+    marginBottom: 40,
   },
   logo: {
-    height: 360,
-    width: '100%',
+    maxHeight: '100%',
+    maxWidth: '90%',
   },
 });
