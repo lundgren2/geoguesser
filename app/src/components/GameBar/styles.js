@@ -31,8 +31,7 @@ export default StyleSheet.create({
     bottom: 0,
     zIndex: 30,
     position: 'absolute',
-    borderTopLeftRadius: 24,
-    borderBottomLeftRadius: 24,
+    overflow: 'hidden',
     backgroundColor: 'rgba(245, 223, 76, .88)',
   },
 });
