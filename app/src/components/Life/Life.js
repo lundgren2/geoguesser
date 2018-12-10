@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import theme from 'constants/theme';
 import _ from 'lodash';
+import styles from './styles';
+import { GAME_OFF } from '../../actions';
 
-const Life = props => {
+const Life = ({ gameStatus, life }) => {
+  if (gameStatus === GAME_OFF) return null;
+
   return (
     <View style={styles.bar}>
-      <Text style={styles.text}>Life: </Text>
-      {_.times(props.life, index => {
+      {_.times(life, index => {
         return (
           <Icon
             key={index}
             iconStyle={styles.icon}
-            name="heartbeat"
+            name="heart"
             type="font-awesome"
-            color="red"
+            color={theme.red}
+            size={24}
           />
         );
       })}
@@ -23,27 +28,10 @@ const Life = props => {
   );
 };
 
-const mapStateToProps = ({ game, settings }) => ({
+const mapStateToProps = ({ game, settings, layers }) => ({
   life: game.playerLife.life,
+  gameStatus: layers.gameStatus,
   debug: settings.debug,
 });
 
 export default connect(mapStateToProps)(Life);
-
-const styles = StyleSheet.create({
-  bar: {
-    position: 'absolute',
-    flexDirection: 'row',
-    top: 35,
-    left: 10,
-    zIndex: 10,
-  },
-  text: {
-    fontSize: 20,
-    color: 'black',
-    zIndex: 30,
-  },
-  icon: {
-    margin: 2,
-  },
-});
