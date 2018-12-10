@@ -36,7 +36,9 @@ class Map extends Component {
       animated,
     };
     const coords = markers.map(marker => marker.coordinate);
-    this.map.fitToCoordinates(coords, options);
+    if (markers.length > 1) {
+      this.map.fitToCoordinates(coords, options);
+    }
   }
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
@@ -53,6 +55,15 @@ class Map extends Component {
       marker => !markerLeftIds.includes(marker.id),
     );
 
+    const userPosition =
+      markers.length === 1
+        ? {
+            ...markers[0].coordinate,
+            latitudeDelta: 1.0922,
+            longitudeDelta: 1.0421,
+          }
+        : null;
+
     return (
       <View style={styles.container}>
         <MapView
@@ -60,6 +71,7 @@ class Map extends Component {
           ref={ref => {
             this.map = ref;
           }}
+          initialRegion={userPosition}
           onRegionChange={region => this.onMapRegionChange(region)}
           customMapStyle={brightColors}
           provider="google"
