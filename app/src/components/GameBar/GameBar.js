@@ -4,17 +4,17 @@ import { Animated, Easing, View, Text } from 'react-native';
 import Filler from './Filler';
 import styles from './styles';
 import {
+  wrongMarkerChosen,
+  timeRanOut,
+  setupNextRegion,
+} from '../../actions/thunks';
+import {
   GAME_PAUSED,
   GAME_ON,
   GAME_OFF,
   GAME_STARTING,
   GAME_NEXT_REGION,
 } from '../../actions';
-import {
-  wrongMarkerChosen,
-  timeRanOut,
-  setupNextRegion,
-} from '../../actions/thunks';
 import { addPoints } from '../../actions/score';
 
 class GameBar extends Component {
