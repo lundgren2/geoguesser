@@ -18,7 +18,7 @@ export class GameLost extends Component {
         overlayStyle={styles.overlay}
         isVisible={showGameLost}
         onBackdropPress={() => undefined}
-        width="100%"
+        width="90%"
         height="100%"
       >
         <Text style={styles.text}>{gameOverText}</Text>

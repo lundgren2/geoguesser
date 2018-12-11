@@ -17,7 +17,7 @@ export class GameWon extends Component {
         overlayStyle={styles.overlay}
         isVisible={this.props.showGameWon}
         onBackdropPress={() => undefined}
-        width="100%"
+        width="90%"
         height="100%"
       >
         <Text style={styles.text}>{gameWonText}</Text>
