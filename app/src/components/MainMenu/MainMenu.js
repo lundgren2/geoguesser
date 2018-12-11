@@ -23,14 +23,14 @@ export class MainMenu extends Component {
     const { setupGame, showMainMenu, toggleMainMenu } = this.props;
     const buttons = [
       {
-        title: 'Start Game'.toUpperCase(),
+        title: 'START GAME',
         onPress: () => {
           setupGame();
           toggleMainMenu();
         },
       },
-      { title: 'Highscore'.toUpperCase(), onPress: () => {} },
-      { title: 'Settings'.toUpperCase(), onPress: () => {} },
+      { title: 'HIGH SCORE', onPress: () => {} },
+      { title: 'SETTINGS', onPress: () => {} },
     ];
 
     return (
