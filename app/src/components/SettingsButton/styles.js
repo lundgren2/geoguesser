@@ -8,6 +8,7 @@ export default StyleSheet.create({
     margin: 10,
   },
   button: {
+    elevation: 0,
     backgroundColor: 'transparent',
   },
 });

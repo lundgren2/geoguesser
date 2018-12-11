@@ -6,6 +6,7 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
     zIndex: 100,
     padding: 20,
+    elevation: 0,
   },
   buttonContainer: {
     marginBottom: 18,
