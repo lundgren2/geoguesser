@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import theme from 'constants/theme';
 import _ from 'lodash';
