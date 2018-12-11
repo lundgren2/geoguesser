@@ -50,7 +50,7 @@ export class GameMenu extends Component {
         overlayStyle={styles.overlay}
         isVisible={showGameMenu}
         onBackdropPress={() => undefined}
-        width="auto"
+        width="90%"
         height="auto"
       >
         {buttons.map(button => this.menuButton(button))}

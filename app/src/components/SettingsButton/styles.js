@@ -3,9 +3,12 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: 5,
+    right: 5,
     margin: 10,
   },
-  button: { backgroundColor: '#ECECEC', padding: 5 },
+  button: {
+    elevation: 0,
+    backgroundColor: 'transparent',
+  },
 });

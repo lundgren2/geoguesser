@@ -15,6 +15,7 @@ export default StyleSheet.create({
     borderRadius: 24,
     borderColor: 'rgba(245, 223, 76, .88)',
     backgroundColor: 'rgba(255, 255, 255, 0.65)',
+    zIndex: 30,
   },
   barText: {
     color: 'black',
@@ -29,10 +30,10 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    zIndex: 30,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     position: 'absolute',
-    borderTopLeftRadius: 24,
-    borderBottomLeftRadius: 24,
+    overflow: 'hidden',
     backgroundColor: 'rgba(245, 223, 76, .88)',
   },
 });

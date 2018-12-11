@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Overlay, Button } from 'react-native-elements';
+import { View, Image } from 'react-native';
 import FadeView from '../FadeView';
 import { setupGame, toggleMainMenu } from '../../actions/layers';
+import logo from 'assets/images/logo.png';
 import styles from './styles';
 
 export class MainMenu extends Component {
@@ -21,14 +23,14 @@ export class MainMenu extends Component {
     const { setupGame, showMainMenu, toggleMainMenu } = this.props;
     const buttons = [
       {
-        title: 'Start Game',
+        title: 'START GAME',
         onPress: () => {
           setupGame();
           toggleMainMenu();
         },
       },
-      { title: 'Highscore', onPress: () => {} },
-      { title: 'Settings', onPress: () => {} },
+      { title: 'HIGH SCORE', onPress: () => {} },
+      { title: 'SETTINGS', onPress: () => {} },
     ];
 
     return (
@@ -38,8 +40,12 @@ export class MainMenu extends Component {
         onBackdropPress={() => undefined}
         width="auto"
         height="auto"
+        windowBackgroundColor="rgba(255, 255, 255, .65)"
       >
         <FadeView isVisible={showMainMenu}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} source={logo} resizeMode={'contain'} />
+          </View>
           {buttons.map(button => this.menuButton(button))}
         </FadeView>
       </Overlay>

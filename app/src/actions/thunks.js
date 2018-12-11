@@ -10,6 +10,7 @@ import {
   SET_USER_POSITION,
   GAME_NEXT_REGION,
 } from '../actions';
+import { Vibration } from 'react-native';
 import { startGame, stopGame } from './layers';
 import { requestPoints, clearScore, subtractPoints } from './score';
 import getUserPosition from './helpers/getUserPosition';
@@ -86,6 +87,7 @@ export const wrongMarkerChosen = markerId => {
 
   return (dispatch, getState) => {
     dispatch(decreaseLife());
+    Vibration.vibrate(500);
     const { game } = getState();
     if (game.playerLife.life <= 0) {
       dispatch(stopGame());

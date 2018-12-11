@@ -7,7 +7,7 @@ import styles from './styles';
 
 class SettingsButton extends Component {
   render() {
-    const { showMainMenu } = this.props;
+    const { showMainMenu, toggleGameMenu } = this.props;
 
     if (showMainMenu) return null;
 
@@ -15,9 +15,10 @@ class SettingsButton extends Component {
       <View style={styles.container}>
         <Button
           title={null}
-          icon={{ name: 'settings' }}
+          icon={{ name: 'settings', color: 'white', size: 28 }}
           buttonStyle={styles.button}
-          onPress={this.props.toggleGameMenu}
+          onPress={toggleGameMenu}
+          size="68"
         />
       </View>
     );

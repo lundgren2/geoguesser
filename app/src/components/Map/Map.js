@@ -8,6 +8,7 @@ import { brightColors } from '../../constants/mapStyles';
 import RegionInfo from './RegionInfo';
 import { handleMarkerPress, setUserPosition } from '../../actions/thunks';
 import Marker from './Marker';
+import theme from 'constants/theme';
 
 class Map extends Component {
   state = {
@@ -35,16 +36,15 @@ class Map extends Component {
       animated,
     };
     const coords = markers.map(marker => marker.coordinate);
-    this.map.fitToCoordinates(coords, options);
+    if (markers.length > 1) {
+      this.map.fitToCoordinates(coords, options);
+    }
   }
 
   onMapRegionChange = mapRegion => this.setState({ mapRegion });
 
   render() {
     const { debug, markers, markersLeft } = this.props;
-
-    const red = 'red';
-    const green = 'green';
 
     let markerLeftIds = markersLeft.map(marker => marker.id);
 
@@ -55,6 +55,15 @@ class Map extends Component {
       marker => !markerLeftIds.includes(marker.id),
     );
 
+    const userPosition =
+      markers.length === 1
+        ? {
+            ...markers[0].coordinate,
+            latitudeDelta: 1.0922,
+            longitudeDelta: 1.0421,
+          }
+        : null;
+
     return (
       <View style={styles.container}>
         <MapView
@@ -62,6 +71,7 @@ class Map extends Component {
           ref={ref => {
             this.map = ref;
           }}
+          initialRegion={userPosition}
           onRegionChange={region => this.onMapRegionChange(region)}
           customMapStyle={brightColors}
           provider="google"
@@ -75,7 +85,7 @@ class Map extends Component {
             <Marker
               key={index}
               marker={marker}
-              color={red}
+              color={theme.red}
               shouldHandleMarkerPress={true}
             />
           ))}
@@ -83,7 +93,7 @@ class Map extends Component {
             <Marker
               key={index}
               marker={marker}
-              color={green}
+              color={theme.green}
               shouldHandleMarkerPress={false}
             />
           ))}
