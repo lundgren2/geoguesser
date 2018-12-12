@@ -19,7 +19,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     textShadowColor: '#666',
-    textShadowOffset: { width: 0, height: 0 },
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
   },
   icon: {
