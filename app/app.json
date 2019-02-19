@@ -1,5 +1,18 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "mappy-native",
+    "slug": "mappy-native-app",
+    "entryPoint": "./src/index.js",
+    "sdkVersion": "30.0.0",
+    "privacy": "public",
+    "orientation": "portrait",
+    "android": {
+      "package": "com.liu.mappynative",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDOTQsSfeAXGPL8XgiOQ1Xd8IdVKeKtkxo"
+        }
+      }
+    }
   }
 }
