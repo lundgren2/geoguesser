@@ -10,7 +10,7 @@
       "package": "com.liu.mappynative",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyDOTQsSfeAXGPL8XgiOQ1Xd8IdVKeKtkxo"
+          "apiKey": "google_maps_api_key"
         }
       }
     }
