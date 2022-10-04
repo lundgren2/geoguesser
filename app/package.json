@@ -21,7 +21,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^30.0.0",
+    "expo": "^46.0.14",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "16.3.1",
